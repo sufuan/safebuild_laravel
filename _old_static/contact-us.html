@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en-US" class="no-js no-svg">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" href="assets/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sb-red': '#E0340D',
+                        'sb-orange': '#FF4E00',
+                        'sb-dark': '#0E0F0F',
+                        'sb-navy': '#282D47',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        roboto: ['Roboto', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <title>Contact Us – Safebuild Canada</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" id="style-css" href="assets/style.css" type="text/css" media="all">
+    <link rel="stylesheet" id="flaticon-css" href="assets/flaticon.css" type="text/css" media="all">
+    <link rel="stylesheet" id="fontawesome-all-css" href="assets/fontawesome-all.css" type="text/css" media="all">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" id="elementor-post-2294-css" href="assets/post-2294.css" type="text/css" media="all">
+    <link rel="stylesheet" id="widget-nav-menu-css" href="assets/widget-nav-menu.min.css" type="text/css" media="all">
+    <link rel="stylesheet" id="elementor-post-61-css" href="assets/post-61.css" type="text/css" media="all">
+</head>
+
+<body class="page-template-default page contact-us">
+    <div class="boxed_wrapper">
+
+        <!-- ── TOP BAR ─────────────────────────────────────────────── -->
+        <div class="flex items-stretch w-full overflow-hidden bg-white">
+            <div class="bg-black text-white py-4 px-8 relative z-20 flex items-center"
+                style="width:45%; clip-path:polygon(0 0, 92% 0, 100% 100%, 0% 100%);">
+                <a href="index.html" class="inline-block">
+                    <img src="assets/SafeBuild-Logo-Ai-file-1.png" alt="SafeBuild Logo" class="w-full max-w-[280px]">
+                </a>
+            </div>
+            <div class="bg-sb-orange text-white py-4 pr-8 pl-[120px] relative z-10 flex-1 flex items-center justify-end -ml-[10%]"
+                style="clip-path:polygon(8% 0, 100% 0, 100% 100%, 0% 100%);">
+                <div
+                    class="flex flex-col md:flex-row items-end md:items-center gap-4 md:gap-8 w-full justify-end pl-12">
+                    <!-- Social Icons -->
+                    <div class="flex items-center gap-3">
+                        <a href="https://www.facebook.com/safebuild.ca" target="_blank"
+                            class="w-8 h-8 flex items-center justify-center bg-white rounded-full text-sb-orange hover:-translate-y-1 transition-transform duration-300"><i
+                                class="fab fa-facebook-f text-sm"></i></a>
+                        <a href="#"
+                            class="w-8 h-8 flex items-center justify-center bg-white rounded-full text-sb-orange hover:-translate-y-1 transition-transform duration-300"><i
+                                class="fab fa-twitter text-sm"></i></a>
+                        <a href="#"
+                            class="w-8 h-8 flex items-center justify-center bg-white rounded-full text-sb-orange hover:-translate-y-1 transition-transform duration-300"><i
+                                class="fab fa-linkedin-in text-sm"></i></a>
+                        <a href="#"
+                            class="w-8 h-8 flex items-center justify-center bg-white rounded-full text-sb-orange hover:-translate-y-1 transition-transform duration-300"><i
+                                class="fab fa-youtube text-sm"></i></a>
+                    </div>
+                    <!-- Contact Info -->
+                    <div class="hidden md:flex items-center gap-6 text-right ml-4">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-8 h-8 fill-white flex-shrink-0" viewBox="0 0 512 512">
+                                <path
+                                    d="M497.39 361.8l-112-48a24 24 0 0 0-28 6.9l-49.6 60.6A370.66 370.66 0 0 1 130.6 204.11l60.6-49.6a23.94 23.94 0 0 0 6.9-28l-48-112A24.16 24.16 0 0 0 122.6.61l-104 24A24 24 0 0 0 0 48c0 256.5 207.9 464 464 464a24 24 0 0 0 23.4-18.6l24-104a24.29 24.29 0 0 0-14.01-27.6z" />
+                            </svg>
+                            <div>
+                                <p class="text-white text-xs leading-tight opacity-90">Contact Us</p>
+                                <a href="tel:+12508860059"
+                                    class="text-black font-bold text-sm leading-tight hover:text-white transition-colors">+1 (250) 886-0059</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-8 h-8 fill-white flex-shrink-0" viewBox="0 0 384 512">
+                                <path
+                                    d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z" />
+                            </svg>
+                            <div>
+                                <p class="text-white text-xs leading-tight opacity-90">Office Address</p>
+                                <p class="text-black font-bold text-sm leading-tight">3448 Karger Terrace, Victoria, BC ,V9C 3K5</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── STICKY NAVBAR ───────────────────────────────────────── -->
+        <nav id="main-navbar" class="z-[999] bg-sb-red font-poppins transition-all duration-300 relative">
+            <!-- BLACK HORIZONTAL BAR / STROKE (The "missing" part the user circled) -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-black -translate-y-full opacity-50"></div>
+
+            <div class="flex items-center px-4 md:px-8 h-[70px]">
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center flex-1">
+                    <ul class="flex items-center gap-0">
+                        <li>
+                            <a href="index.html"
+                                class="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">Home</a>
+                        </li>
+                        <li>
+                            <a href="about-us.html"
+                                class="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">About
+                                us</a>
+                        </li>
+                        <!-- Services dropdown -->
+                        <li class="relative nav-dropdown-parent">
+                            <a href="our-services.html"
+                                class="flex items-center gap-1 px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">
+                                Services
+                                <svg class="w-3 h-3 fill-current" viewBox="0 0 448 512">
+                                    <path
+                                        d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" />
+                                </svg>
+                            </a>
+                            <ul
+                                class="nav-dropdown invisible opacity-0 translate-y-2 transition-all duration-200 absolute top-full left-0 min-w-[260px] bg-white rounded-md shadow-[0_1px_33px_rgba(83,95,159,0.1)] py-2 z-50">
+                                <li><a href="our-services.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Our
+                                        Services</a></li>
+                                <li><a href="property-services-design.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Property
+                                        Services &amp; Design</a></li>
+                                <li><a href="renovation-and-remodeling-services.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Renovation
+                                        And Remodeling Services</a></li>
+                                <li><a href="architectural-design-services.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Architectural
+                                        Design Services</a></li>
+                                <li><a href="excavation-and-site-preparation-services.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Owner's
+                                        Representation</a></li>
+                                <li><a href="factory-manufacture.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Factory
+                                        Manufacture</a></li>
+                                <li><a href="custom-carpentry-and-cabinetry-services.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Custom
+                                        Carpentry And Cabinetry Services</a></li>
+                            </ul>
+                        </li>
+                        <!-- Pages dropdown -->
+                        <li class="relative nav-dropdown-parent">
+                            <a href="our-project.html"
+                                class="flex items-center gap-1 px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">
+                                Pages
+                                <svg class="w-3 h-3 fill-current" viewBox="0 0 448 512">
+                                    <path
+                                        d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" />
+                                </svg>
+                            </a>
+                            <ul
+                                class="nav-dropdown invisible opacity-0 translate-y-2 transition-all duration-200 absolute top-full left-0 min-w-[220px] bg-white rounded-md shadow-[0_1px_33px_rgba(83,95,159,0.1)] py-2 z-50">
+                                <li><a href="404.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Our
+                                        Team</a></li>
+                                <li><a href="404.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Testimonials</a>
+                                </li>
+                                <li><a href="404.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Faq</a>
+                                </li>
+                                <li><a href="our-project.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Our
+                                        All Projects</a></li>
+                                
+                            </ul>
+                        </li>
+                        <!-- Blog dropdown -->
+                        <li class="relative nav-dropdown-parent">
+                            <a href="blog.html"
+                                class="flex items-center gap-1 px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">
+                                Blog
+                                <svg class="w-3 h-3 fill-current" viewBox="0 0 448 512">
+                                    <path
+                                        d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" />
+                                </svg>
+                            </a>
+                            <ul
+                                class="nav-dropdown invisible opacity-0 translate-y-2 transition-all duration-200 absolute top-full left-0 min-w-[200px] bg-white rounded-md shadow-[0_1px_33px_rgba(83,95,159,0.1)] py-2 z-50">
+                                <li><a href="view-all-news.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">View
+                                        All News</a></li>
+                                <li><a href="blog.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Blog
+                                        Standard</a></li>
+                                <li><a href="news-details.html"
+                                        class="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">News
+                                        Details</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="contact-us.html"
+                                class="block px-4 text-sb-navy text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">Contact
+                                Us</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Mobile hamburger -->
+                <button id="mobile-menu-btn" class="md:hidden text-white p-2" aria-label="Menu Toggle">
+                    <svg id="burger-open" class="w-7 h-7" fill="currentColor" viewBox="0 0 1000 1000">
+                        <path
+                            d="M104 333H896C929 333 958 304 958 271S929 208 896 208H104C71 208 42 237 42 271S71 333 104 333ZM104 583H896C929 583 958 554 958 521S929 458 896 458H104C71 458 42 487 42 521S71 583 104 583ZM104 833H896C929 833 958 804 958 771S929 708 896 708H104C71 708 42 737 42 771S71 833 104 833Z" />
+                    </svg>
+                    <svg id="burger-close" class="w-7 h-7 hidden" fill="currentColor" viewBox="0 0 1000 1000">
+                        <path
+                            d="M742 167L500 408 258 167C246 154 233 150 217 150 196 150 179 158 167 167 154 179 150 196 150 212 150 229 154 242 171 254L408 500 167 742C138 771 138 800 167 829 196 858 225 858 254 829L496 587 738 829C750 842 767 846 783 846 800 846 817 842 829 829 842 817 846 804 846 783 846 767 842 750 829 737L588 500 833 258C863 229 863 200 833 171 804 137 775 137 742 167Z" />
+                    </svg>
+                </button>
+
+                <!-- Search icon -->
+                <button id="search-toggle" class="text-white ml-auto md:ml-4 p-2 hover:opacity-80 transition-opacity"
+                    aria-label="Search">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 512 512">
+                        <path
+                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z" />
+                    </svg>
+                </button>
+
+                <!-- Request a Quote CTA with black decorative background -->
+                <div class="hidden md:flex items-center ml-4 relative">
+                    <!-- Black diagonal decorative shape -->
+                    <div class="absolute -left-8 top-0 bottom-0 -right-8 bg-sb-dark -skew-x-[20deg] -z-10"
+                        style="width: calc(100% + 60px); margin-left: -30px;"></div>
+                    <a href="https://api.whatsapp.com/send?phone=+880"
+                        class="bg-sb-dark text-white font-poppins font-semibold text-[15px] leading-6 px-11 py-5 rounded-[40px] hover:bg-black transition-colors whitespace-nowrap relative z-10">
+                        Request a Quote
+                    </a>
+                </div>
+            </div>
+
+            <!-- Mobile Menu (hidden by default) -->
+            <div id="mobile-menu" class="hidden md:hidden bg-sb-red border-t border-white/20 px-4 pb-4">
+                <ul class="space-y-0">
+                    <li><a href="index.html"
+                            class="block py-3 text-white text-sm font-bold uppercase border-b border-white/10">Home</a>
+                    </li>
+                    <li><a href="about-us.html"
+                            class="block py-3 text-white text-sm font-bold uppercase border-b border-white/10">About
+                            us</a></li>
+                    <li class="border-b border-white/10">
+                        <button
+                            class="mobile-submenu-toggle flex items-center justify-between w-full py-3 text-white text-sm font-bold uppercase">
+                            Services
+                            <svg class="chevron-icon w-3 h-3 fill-current transition-transform duration-200"
+                                viewBox="0 0 448 512">
+                                <path
+                                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" />
+                            </svg>
+                        </button>
+                        <ul class="hidden pl-4 pb-2 space-y-1">
+                            <li><a href="our-services.html"
+                                    class="block py-2 text-white/80 text-sm font-semibold hover:text-white">Our
+                                    Services</a></li>
+                            <li><a href="property-services-design.html"
+                                    class="block py-2 text-white/80 text-sm font-semibold hover:text-white">Property
+                                    Services &amp; Design</a></li>
+                        </ul>
+                    </li>
+                    <li class="border-b border-white/10">
+                        <button
+                            class="mobile-submenu-toggle flex items-center justify-between w-full py-3 text-white text-sm font-bold uppercase">
+                            Pages
+                            <svg class="chevron-icon w-3 h-3 fill-current transition-transform duration-200"
+                                viewBox="0 0 448 512">
+                                <path
+                                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" />
+                            </svg>
+                        </button>
+                        <ul class="hidden pl-4 pb-2 space-y-1">
+                            <li><a href="404.html"
+                                    class="block py-2 text-white/80 text-sm font-semibold hover:text-white">Our Team</a>
+                            </li>
+                            <li><a href="404.html"
+                                    class="block py-2 text-white/80 text-sm font-semibold hover:text-white">Testimonials</a>
+                            </li>
+                            <li><a href="404.html"
+                                    class="block py-2 text-white/80 text-sm font-semibold hover:text-white">Faq</a></li>
+                        </ul>
+                    </li>
+                    <li class="border-b border-white/10">
+                        <button
+                            class="mobile-submenu-toggle flex items-center justify-between w-full py-3 text-white text-sm font-bold uppercase">
+                            Blog
+                            <svg class="chevron-icon w-3 h-3 fill-current transition-transform duration-200"
+                                viewBox="0 0 448 512">
+                                <path
+                                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" />
+                            </svg>
+                        </button>
+                        <ul class="hidden pl-4 pb-2 space-y-1">
+                            <li><a href="view-all-news.html"
+                                    class="block py-2 text-white/80 text-sm font-semibold hover:text-white">View All
+                                    News</a></li>
+                            <li><a href="blog.html"
+                                    class="block py-2 text-white/80 text-sm font-semibold hover:text-white">Blog
+                                    Standard</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact-us.html"
+                            class="block py-3 text-white text-sm font-bold uppercase border-b border-white/10">Contact
+                            Us</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- ── HERO SECTION ────────────────────────────────────────── -->
+        <section class="relative h-[400px] flex items-center justify-center bg-black overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style="background-image: url('assets/steptodown.com399351.webp');"></div>
+            <div class="absolute inset-0 bg-[#0E0F0F]/70"></div>
+            <div class="relative z-10 text-center px-4">
+                <h1 class="text-white text-5xl md:text-6xl font-poppins font-bold uppercase tracking-wider mb-4">CONTACT
+                </h1>
+                <nav class="flex items-center justify-center gap-2 text-white/80 text-sm font-bold uppercase">
+                    <a href="index.html" class="hover:text-sb-red transition-colors">Home</a>
+                    <span class="w-1.5 h-1.5 bg-sb-red rounded-full"></span>
+                    <span>Contact us</span>
+                </nav>
+            </div>
+        </section>
+
+        <!-- ── FORM & TESTIMONIAL ───────────────────────────────────── -->
+        <section class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 md:px-8">
+                <div class="flex flex-col lg:flex-row gap-16">
+                    <!-- Left: Contact Form -->
+                    <div class="lg:w-2/3">
+                        <h2 class="text-sb-dark text-3xl font-bold uppercase mb-4">REQUEST A QUOTE</h2>
+                        <p class="text-gray-600 mb-12">We'd love to hear from you! Send us your requirements & get a
+                            quote. We will get back to you soon<span class="text-sb-red">*</span></p>
+
+                        <form action="#" method="POST" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <input type="text" placeholder="Your Name*"
+                                    class="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none">
+                                <input type="email" placeholder="Email*"
+                                    class="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <input type="text" placeholder="Phone*"
+                                    class="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none">
+                                <input type="text" placeholder="Subject"
+                                    class="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none">
+                            </div>
+                            <textarea rows="6" placeholder="message"
+                                class="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none resize-none"></textarea>
+
+                            <button type="submit"
+                                class="bg-sb-dark text-white px-10 py-5 font-bold uppercase flex items-center gap-3 hover:bg-sb-red transition-all duration-300">
+                                SEND MESSAGE
+                                <i class="fas fa-long-arrow-alt-right"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Right: Featured Testimonial -->
+                    <div class="lg:w-1/3">
+                        <div class="bg-gray-50 border border-gray-100 p-12 relative flex flex-col h-full">
+                            <!-- Quote Icon -->
+                            <div class="mb-10">
+                                <svg class="w-16 h-16 fill-sb-orange" viewBox="0 0 100 80">
+                                    <path
+                                        d="M0 0h40v40H10c0 10 10 20 20 20v20C10 80 0 60 0 40V0zm60 0h40v40H70c0 10 10 20 20 20v20C70 80 60 60 60 40V0z" />
+                                </svg>
+                            </div>
+
+                            <p class="text-gray-600 text-lg leading-relaxed italic mb-12">
+                                "SafeBuild helped us transform our office space. They offered creative solutions, and
+                                the project was completed faster than expected."
+                            </p>
+
+                            <div class="mt-auto flex items-center justify-between">
+                                <div class="bg-sb-dark/5 p-6 pr-12">
+                                    <h4 class="text-sb-dark font-bold uppercase tracking-widest text-sm mb-1">Linda
+                                        Murphy.</h4>
+                                    <p class="text-gray-500 text-xs font-medium uppercase">Commercial Property Owner</p>
+                                </div>
+                                <div class="flex-shrink-0 -ml-12">
+                                    <img src="assets/steptodown.com426279.webp" alt="Linda Murphy"
+                                        class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-xl">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── CONTACT DETAILS GRID ────────────────────────────────── -->
+        <section class="py-20 border-t border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 md:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                    <!-- Address -->
+                    <div class="flex flex-col">
+                        <h4 class="text-sb-dark font-bold uppercase tracking-widest text-sm mb-6">ADDRESS</h4>
+                        <p class="text-gray-500 leading-relaxed font-medium">3448 Karger Terrace, Victoria, British
+                            Columbia V9C 3N2, Canada.</p>
+                    </div>
+                    <!-- Email -->
+                    <div class="flex flex-col">
+                        <h4 class="text-sb-dark font-bold uppercase tracking-widest text-sm mb-6">E-MAIL</h4>
+                        <a href="mailto:ceo@safebuild.ca"
+                            class="text-gray-500 hover:text-sb-red transition-colors font-medium">ceo@safebuild.ca</a>
+                    </div>
+                    <!-- Telephone -->
+                    <div class="flex flex-col">
+                        <h4 class="text-sb-dark font-bold uppercase tracking-widest text-sm mb-6">TELEPHONE</h4>
+                        <a href="tel:+12508860059"
+                            class="text-gray-500 hover:text-sb-red transition-colors font-medium">(+1 (250) 886-0059)</a>
+                    </div>
+                    <!-- Social -->
+                    <div class="flex flex-col">
+                        <h4 class="text-sb-dark font-bold uppercase tracking-widest text-sm mb-6">SOCIAL</h4>
+                        <div class="flex items-center gap-4">
+                            <a href="#" class="text-gray-400 hover:text-sb-red transition-colors text-lg"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-sb-red transition-colors text-lg"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-sb-red transition-colors text-lg"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-sb-red transition-colors text-lg"><i
+                                    class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── GOOGLE MAP ────────────────────────────────────────── -->
+        <section class="h-[500px] w-full relative">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2650.627712398506!2d-123.50424682337651!3d48.42512697136531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548f0df2944fa907%3A0xe549cd97c5cb1a1!2s3448%20Karger%20Terrace%2C%20Victoria%2C%20BC%20V9C%203K4%2C%20Canada!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </section>
+
+        <!-- ── BRAND LOGOS (White Strip with Dividers) ──────────────── -->
+        <section class="bg-white border-y border-gray-100 overflow-hidden">
+            <div class="max-w-full">
+                <div class="flex items-center">
+                    <!-- Logo 1 -->
+                    <div
+                        class="flex-1 min-w-[160px] h-32 flex items-center justify-center border-r border-gray-100 relative group hover:bg-sb-orange transition-colors duration-300">
+                        <img src="assets/brand-logo-1-1.png" alt="Brand"
+                            class="h-16 opacity-90 grayscale group-hover:opacity-0 transition-opacity duration-300">
+                        <img src="assets/brand-logo-1-overlay-1.png" alt="Brand Hover"
+                            class="absolute h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <!-- Logo 2 -->
+                    <div
+                        class="flex-1 min-w-[160px] h-32 flex items-center justify-center border-r border-gray-100 relative group hover:bg-sb-orange transition-colors duration-300">
+                        <img src="assets/brand-logo-2-1.png" alt="Brand"
+                            class="h-16 opacity-90 grayscale group-hover:opacity-0 transition-opacity duration-300">
+                        <img src="assets/brand-logo-2-overlay-1.png" alt="Brand Hover"
+                            class="absolute h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <!-- Logo 3 -->
+                    <div
+                        class="flex-1 min-w-[160px] h-32 flex items-center justify-center border-r border-gray-100 relative group hover:bg-sb-orange transition-colors duration-300">
+                        <img src="assets/brand-logo-3-1.png" alt="Brand"
+                            class="h-16 opacity-90 grayscale group-hover:opacity-0 transition-opacity duration-300">
+                        <img src="assets/brand-logo-3-overlay-1.png" alt="Brand Hover"
+                            class="absolute h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <!-- Logo 4 -->
+                    <div
+                        class="flex-1 min-w-[160px] h-32 flex items-center justify-center border-r border-gray-100 relative group hover:bg-sb-orange transition-colors duration-300">
+                        <img src="assets/brand-logo-4-1.png" alt="Brand"
+                            class="h-16 opacity-90 grayscale group-hover:opacity-0 transition-opacity duration-300">
+                        <img src="assets/brand-logo-4-overlay-1.png" alt="Brand Hover"
+                            class="absolute h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <!-- Logo 5 -->
+                    <div
+                        class="flex-1 min-w-[160px] h-32 flex items-center justify-center border-r border-gray-100 relative group hover:bg-sb-orange transition-colors duration-300">
+                        <img src="assets/brand-logo-5-1.png" alt="Brand"
+                            class="h-16 opacity-90 grayscale group-hover:opacity-0 transition-opacity duration-300">
+                        <img src="assets/brand-logo-5-overlay-1.png" alt="Brand Hover"
+                            class="absolute h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <!-- Logo 6 -->
+                    <div
+                        class="flex-1 min-w-[160px] h-32 flex items-center justify-center border-gray-100 relative group hover:bg-sb-orange transition-colors duration-300">
+                        <img src="assets/brand-logo-6-1.png" alt="Brand"
+                            class="h-16 opacity-90 grayscale group-hover:opacity-0 transition-opacity duration-300">
+                        <img src="assets/brand-logo-6-overlay-1.png" alt="Brand Hover"
+                            class="absolute h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── FOOTER ────────────────────────────────────────────── -->
+        <footer class="bg-[#11161e] pt-[90px] pb-[50px] font-roboto">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col lg:flex-row flex-wrap border-b border-white/5 pb-16">
+                    <div class="w-full lg:w-[37%] mb-12 lg:mb-0">
+                        <img src="assets/SafeBuild-Logo-Ai-file.png" alt="Logo"
+                            class="brightness-0 invert max-h-16 mb-8">
+                        <div class="footer-social-links flex gap-4">
+                            <a href="#"
+                                class="w-10 h-10 bg-white/5 text-white flex items-center justify-center rounded-full hover:bg-sb-red transition-all"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a href="#"
+                                class="w-10 h-10 bg-white/5 text-white flex items-center justify-center rounded-full hover:bg-sb-red transition-all"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a href="#"
+                                class="w-10 h-10 bg-white/5 text-white flex items-center justify-center rounded-full hover:bg-sb-red transition-all"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-[20%] mb-12 lg:mb-0 lg:ml-auto">
+                        <h3 class="text-white text-xl font-bold uppercase mb-8">Quick Links</h3>
+                        <ul class="space-y-4 text-white/60 text-sm">
+                            <li><a href="index.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><i
+                                        class="fa fa-angle-right"></i> Home</a></li>
+                            <li><a href="about-us.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><i
+                                        class="fa fa-angle-right"></i> About Us</a></li>
+                            <li><a href="our-services.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><i
+                                        class="fa fa-angle-right"></i> Services</a></li>
+                            <li><a href="contact-us.html" class="text-white flex items-center gap-2"><i
+                                        class="fa fa-angle-right text-sb-red"></i> Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="w-full lg:w-[25%]">
+                        <h3 class="text-white text-xl font-bold uppercase mb-8">Get In Touch</h3>
+                        <div class="flex items-start gap-4 mb-6">
+                            <i class="fas fa-phone-alt text-sb-red mt-1"></i>
+                            <div>
+                                <p class="text-white/40 text-xs uppercase mb-1">Make a Call</p>
+                                <a href="tel:+12508860059" class="text-white font-bold text-lg">+1 (250) 886-0059</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <i class="fas fa-envelope text-sb-red mt-1"></i>
+                            <div>
+                                <p class="text-white/40 text-xs uppercase mb-1">Email Us</p>
+                                <a href="#" class="text-white font-bold">ceo@safebuild.ca</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-10 text-center">
+                    <p class="text-white/40 text-sm italic">© <script>document.write(new Date().getFullYear())</script> SafeBuild Canada. All rights reserved. । Developed By
+                        BusinessPrelite Team</p>
+                </div>
+            </div>
+        </footer>
+
+        <button
+            class="scroll-top fixed bottom-10 right-10 w-12 h-12 bg-sb-red text-white flex items-center justify-center rounded-sm shadow-2xl hover:bg-black transition-colors z-[1000]">
+            <i class="fa fa-angle-up"></i>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/navbar.js"></script>
+    <script>
+        // Simple search toggle for demo
+        document.getElementById('search-toggle').addEventListener('click', () => {
+            alert('Search functionality would be implemented here.');
+        });
+    </script>
+</body>
+
+</html>
