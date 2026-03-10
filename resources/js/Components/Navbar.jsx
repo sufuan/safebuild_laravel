@@ -98,7 +98,7 @@ export default function Navbar() {
                                 <Link href="/" className="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">Home</Link>
                             </li>
                             <li>
-                                <Link href="/about-us.html" className="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">About us</Link>
+                                <Link href="/about-us" className="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">About us</Link>
                             </li>
                             <li className="relative group">
                                 <Link href="/our-services.html" className="flex items-center gap-1 px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">
@@ -145,7 +145,7 @@ export default function Navbar() {
                                 </ul>
                             </li>
                             <li>
-                                <Link href="/contact-us.html" className="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">Contact Us</Link>
+                                <Link href="/contact-us" className="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">Contact Us</Link>
                             </li>
                         </ul>
                     </div>
@@ -173,7 +173,7 @@ export default function Navbar() {
                     <div id="mobile-menu" className="md:hidden bg-sb-red border-t border-white/20 px-4 pb-4">
                         <ul className="space-y-0">
                             <li><Link href="/" className="block py-3 text-white text-sm font-bold uppercase border-b border-white/10">Home</Link></li>
-                            <li><Link href="/about-us.html" className="block py-3 text-white text-sm font-bold uppercase border-b border-white/10">About us</Link></li>
+                            <li><Link href="/about-us" className="block py-3 text-white text-sm font-bold uppercase border-b border-white/10">About us</Link></li>
                             <li className="border-b border-white/10">
                                 <button
                                     onClick={() => setServicesSubmenuOpen(!servicesSubmenuOpen)}
@@ -228,7 +228,7 @@ export default function Navbar() {
                                     </ul>
                                 )}
                             </li>
-                            <li><Link href="/contact-us.html" className="block py-3 text-white text-sm font-bold uppercase">Contact Us</Link></li>
+                            <li><Link href="/contact-us" className="block py-3 text-white text-sm font-bold uppercase">Contact Us</Link></li>
                         </ul>
                     </div>
                 )}
