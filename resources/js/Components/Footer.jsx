@@ -1,6 +1,15 @@
 import React from 'react';
 import { Link } from '@inertiajs/react';
 
+const instaImages = [
+    'project-v1-5-1-1.jpg',
+    'project-v1-4-1-1.jpg',
+    'project-v1-3-1-1.jpg',
+    'project-v1-2-1-1.jpg',
+    'project-v1-1-2.jpg',
+    'project-v1-5-1-1.jpg',
+];
+
 export default function Footer() {
     return (
         <>
@@ -15,10 +24,11 @@ export default function Footer() {
             </section>
 
             {/* ── FOOTER ────────────────────────────────────────────────── */}
-            <footer className="bg-[#11161e] pt-[90px] pb-[50px]">
+            <footer className="bg-[#11161e] pt-[90px] pb-[50px] font-roboto">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col lg:flex-row flex-wrap">
-                        {/* Column 1 */}
+
+                        {/* Column 1: Logo & Social (37%) */}
                         <div className="w-full lg:w-[37%] pr-4 mb-8 lg:mb-0">
                             <div className="mt-[20px] mb-[20px]">
                                 <Link href="/" className="block">
@@ -29,78 +39,144 @@ export default function Footer() {
                                     />
                                 </Link>
                             </div>
-                            <div>
-                                <ul className="flex">
-                                    <li className="mr-[15px]">
-                                        <a href="#" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] leading-[35px] text-center hover:bg-[#e84900] hover:text-white transition-colors">
-                                            <svg className="w-4 h-4 inline-block" fill="currentColor" viewBox="0 0 512 512">
-                                                <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" />
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li className="mr-[15px]">
-                                        <a href="#" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] leading-[35px] text-center hover:bg-[#e84900] hover:text-white transition-colors">
-                                            <svg className="w-4 h-4 inline-block" fill="currentColor" viewBox="0 0 512 512">
-                                                <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    <li className="mr-[15px]">
-                                        <a href="#" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] leading-[35px] text-center hover:bg-[#e84900] hover:text-white transition-colors">
-                                            <svg className="w-4 h-4 inline-block" fill="currentColor" viewBox="0 0 448 512">
-                                                <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
-                                            </svg>
-                                        </a>
-                                    </li>
-                                </ul>
+                            <div className="text-[#cecece] text-[14px] leading-[28px] mb-[40px]"></div>
+                            <ul className="flex">
+                                <li className="mr-[15px]">
+                                    <a href="#" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] text-[14px] leading-[35px] text-center transition-all duration-200 hover:bg-[#e84900] hover:text-white">
+                                        <i className="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li className="mr-[15px]">
+                                    <a href="#" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] text-[14px] leading-[35px] text-center transition-all duration-200 hover:bg-[#e84900] hover:text-white">
+                                        <i className="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li className="mr-[15px]">
+                                    <a href="#" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] text-[14px] leading-[35px] text-center transition-all duration-200 hover:bg-[#e84900] hover:text-white">
+                                        <i className="fab fa-linkedin-in"></i>
+                                    </a>
+                                </li>
+                                <li className="mr-[15px]">
+                                    <a href="#" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] text-[14px] leading-[35px] text-center transition-all duration-200 hover:bg-[#e84900] hover:text-white">
+                                        <i className="fab fa-pinterest-p"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Column 2: About Us (15%) */}
+                        <div className="w-full lg:w-[15%] mb-8 lg:mb-0">
+                            <div className="mb-[29px] -mt-[4px]">
+                                <h3 className="text-white text-[18px] font-bold uppercase leading-[1.2em]">About Us</h3>
+                            </div>
+                            <ul className="space-y-[16px]">
+                                <li>
+                                    <Link href="/our-projects" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>Our Project
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/about-us" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>About us
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/our-services" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>Our Services
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/contact-us" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>Contact
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Column 3: Support (15%) */}
+                        <div className="w-full lg:w-[15%] mb-8 lg:mb-0">
+                            <div className="mb-[29px] -mt-[4px]">
+                                <h3 className="text-white text-[18px] font-bold uppercase leading-[1.2em]">Support</h3>
+                            </div>
+                            <ul className="space-y-[16px]">
+                                <li>
+                                    <Link href="/our-services" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>View All Services
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/property-services-design" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>Services Details
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/our-projects" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>Our Project
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/our-projects" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>Project Details
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Column 4: Quick Links (15%) */}
+                        <div className="w-full lg:w-[15%] mb-8 lg:mb-0">
+                            <div className="mb-[29px] -mt-[4px]">
+                                <h3 className="text-white text-[18px] font-bold uppercase leading-[1.2em]">Quick Links</h3>
+                            </div>
+                            <ul className="space-y-[16px]">
+                                <li>
+                                    <Link href="/our-team" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>Team Details
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/testimonials" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>Testimonials
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/faq" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>Faq
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/blog" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>View All News
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Column 5: Instagram (18%) */}
+                        <div className="w-full lg:w-[18%]">
+                            <div className="mb-[29px] -mt-[4px]">
+                                <h3 className="text-white text-[18px] font-bold uppercase leading-[1.2em]">Instagram</h3>
+                            </div>
+                            <div className="flex flex-wrap -mx-[2px]">
+                                {instaImages.map((img, i) => (
+                                    <div key={i} className="m-[2px] w-[82px] h-[76px] relative group overflow-hidden">
+                                        <img
+                                            src={`/assets/${img}`}
+                                            alt="Insta"
+                                            className="w-full h-full object-cover rounded-[3px]"
+                                        />
+                                        <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center scale-0 group-hover:scale-100">
+                                            <a href="#" className="text-white">
+                                                <i className="fa fa-search-plus"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                        {/* Column 2 */}
-                        <div className="w-full lg:w-[15%] mb-8 lg:mb-0">
-                            <h3 className="text-white text-[18px] font-bold uppercase mb-[29px]">About Us</h3>
-                            <ul className="space-y-[16px]">
-                                <li>
-                                    <Link href="/our-project.html" className="text-[#cecece] text-[14px] hover:text-white transition-colors">
-                                        <span className="pr-[8px]">›</span>Our Project
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/about-us.html" className="text-[#cecece] text-[14px] hover:text-white transition-colors">
-                                        <span className="pr-[8px]">›</span>About us
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                        {/* Column 3 */}
-                        <div className="w-full lg:w-[15%] mb-8 lg:mb-0">
-                            <h3 className="text-white text-[18px] font-bold uppercase mb-[29px]">Support</h3>
-                            <ul className="space-y-[16px]">
-                                <li>
-                                    <Link href="/our-services.html" className="text-[#cecece] text-[14px] hover:text-white transition-colors">
-                                        <span className="pr-[8px]">›</span>Our Services
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/contact-us.html" className="text-[#cecece] text-[14px] hover:text-white transition-colors">
-                                        <span className="pr-[8px]">›</span>Contact
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
+
                     </div>
                 </div>
             </footer>
-
-            {/* Copyright */}
-            <div className="bg-[#0e131a] py-[27px]">
-                <div className="container mx-auto px-4 text-center">
-                    <p className="text-[#777777] text-[14px] font-medium">
-                        © {new Date().getFullYear()}{' '}
-                        <Link href="/" className="text-white font-bold hover:text-sb-red transition-colors">SafeBuild Canada.</Link>{' '}
-                        All rights reserved.
-                    </p>
-                </div>
-            </div>
         </>
     );
 }

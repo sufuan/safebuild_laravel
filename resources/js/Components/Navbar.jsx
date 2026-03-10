@@ -108,13 +108,12 @@ export default function Navbar() {
                                     </svg>
                                 </Link>
                                 <ul className="invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 absolute top-full left-0 min-w-[260px] bg-white rounded-md shadow-lg py-2 z-50">
-                                    <li><Link href="/our-services.html" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Our Services</Link></li>
-                                    <li><Link href="/property-services-design.html" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Property Services &amp; Design</Link></li>
-                                    <li><Link href="/renovation-and-remodeling-services.html" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Renovation And Remodeling Services</Link></li>
-                                    <li><Link href="/architectural-design-services.html" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Architectural Design Services</Link></li>
-                                    <li><Link href="/excavation-and-site-preparation-services.html" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Owner's Representation</Link></li>
-                                    <li><Link href="/factory-manufacture.html" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Factory Manufacture</Link></li>
-                                    <li><Link href="/custom-carpentry-and-cabinetry-services.html" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Custom Carpentry And Cabinetry Services</Link></li>
+                                    <li><Link href="/our-services" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Our Services</Link></li>
+                                    <li><Link href="/property-services-design" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Property Services &amp; Design</Link></li>
+                                    <li><Link href="/renovation-remodeling" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Renovation &amp; Remodeling</Link></li>
+                                    <li><Link href="/architectural-design" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Architectural Design</Link></li>
+                                    <li><Link href="/excavation-site-prep" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Excavation &amp; Site Prep</Link></li>
+                                    <li><Link href="/custom-carpentry" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Custom Carpentry &amp; Cabinetry</Link></li>
                                 </ul>
                             </li>
                             <li className="relative group">
@@ -176,8 +175,12 @@ export default function Navbar() {
                                 </button>
                                 {servicesSubmenuOpen && (
                                     <ul className="pl-4 pb-2 space-y-1">
-                                        <li><Link href="/our-services.html" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">Our Services</Link></li>
-                                        <li><Link href="/property-services-design.html" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">Property Services &amp; Design</Link></li>
+                                        <li><Link href="/our-services" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">Our Services</Link></li>
+                                        <li><Link href="/property-services-design" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">Property Services &amp; Design</Link></li>
+                                        <li><Link href="/renovation-remodeling" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">Renovation &amp; Remodeling</Link></li>
+                                        <li><Link href="/architectural-design" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">Architectural Design</Link></li>
+                                        <li><Link href="/excavation-site-prep" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">Excavation &amp; Site Prep</Link></li>
+                                        <li><Link href="/custom-carpentry" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">Custom Carpentry &amp; Cabinetry</Link></li>
                                     </ul>
                                 )}
                             </li>

@@ -42,6 +42,30 @@ Route::get('/faq', function () {
     return Inertia::render('Faq');
 });
 
+Route::get('/our-services', function () {
+    return Inertia::render('OurServices');
+});
+
+Route::get('/property-services-design', function () {
+    return Inertia::render('PropertyServicesDesign');
+});
+
+Route::get('/renovation-remodeling', function () {
+    return Inertia::render('RenovationRemodeling');
+});
+
+Route::get('/architectural-design', function () {
+    return Inertia::render('ArchitecturalDesign');
+});
+
+Route::get('/excavation-site-prep', function () {
+    return Inertia::render('ExcavationSitePrep');
+});
+
+Route::get('/custom-carpentry', function () {
+    return Inertia::render('CustomCarpentry');
+});
+
 
 
 
