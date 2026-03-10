@@ -22,6 +22,28 @@ Route::get('/contact-us', function () {
     return Inertia::render('ContactUs');
 });
 
+Route::get('/blog', function () {
+    return Inertia::render('Blog');
+});
+
+Route::get('/our-projects', function () {
+    return Inertia::render('OurProjectsPage');
+});
+
+Route::get('/our-team', function () {
+    return Inertia::render('OurTeam');
+});
+
+Route::get('/testimonials', function () {
+    return Inertia::render('TestimonialsPage');
+});
+
+Route::get('/faq', function () {
+    return Inertia::render('Faq');
+});
+
+
+
 
 
 Route::get('/dashboard', function () {
