@@ -134,6 +134,9 @@ export default function Navbar() {
                                 <Link href="/blog" className="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">Blog</Link>
                             </li>
                             <li>
+                                <Link href="/careers" className="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">Careers</Link>
+                            </li>
+                            <li>
                                 <Link href="/contact-us" className="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">Contact Us</Link>
                             </li>
                         </ul>
@@ -204,6 +207,7 @@ export default function Navbar() {
                                 )}
                             </li>
                             <li><Link href="/blog" className="block py-3 text-white text-sm font-bold uppercase border-b border-white/10">Blog</Link></li>
+                            <li><Link href="/careers" className="block py-3 text-white text-sm font-bold uppercase border-b border-white/10">Careers</Link></li>
                             <li><Link href="/contact-us" className="block py-3 text-white text-sm font-bold uppercase">Contact Us</Link></li>
                         </ul>
                     </div>

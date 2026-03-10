@@ -26,6 +26,10 @@ Route::get('/blog', function () {
     return Inertia::render('Blog');
 });
 
+Route::get('/careers', function () {
+    return Inertia::render('Careers');
+});
+
 Route::get('/our-projects', function () {
     return Inertia::render('OurProjectsPage');
 });

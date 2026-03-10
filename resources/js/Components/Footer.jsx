@@ -144,6 +144,11 @@ export default function Footer() {
                                     </Link>
                                 </li>
                                 <li>
+                                    <Link href="/careers" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
+                                        <i className="fa fa-angle-right pr-[8px]"></i>Careers
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link href="/blog" className="text-[#cecece] text-[14px] font-normal leading-[22px] transition-all duration-500 hover:text-white block">
                                         <i className="fa fa-angle-right pr-[8px]"></i>View All News
                                     </Link>
