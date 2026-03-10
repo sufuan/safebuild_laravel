@@ -4,64 +4,69 @@ import { Link } from '@inertiajs/react';
 
 const services = [
     {
+        icon: 'fas fa-hard-hat',
+        title: 'Comprehensive Property Services',
+        desc: 'SafeBuild Canada delivers a complete suite of construction, restoration, and property enhancement services tailored for high-end residential, commercial, and industrial clients across Victoria and Vancouver Island. Every service we provide is rooted in safety, craftsmanship, and long-term value.',
+    },
+    {
         icon: 'flaticon-architect',
-        title: 'Renovation And Remodeling',
-        desc: 'Reimagine your property with bespoke renovations and remodeling solutions. From luxury kitchens and bathrooms to complete property transformations, our team combines innovative design with impeccable craftsmanship.',
+        title: 'Renovation & Remodeling',
+        desc: 'Transform your space with customized renovation solutions designed to elevate comfort, functionality, and aesthetic appeal. From luxurious kitchens and bathrooms to full home and commercial remodels, our team blends innovative design with exceptional workmanship.',
     },
     {
         icon: 'flaticon-manufacture',
         title: 'Architectural Design',
-        desc: 'Our architectural services merge creativity with technical expertise, delivering custom designs that align with your vision and meet the highest structural standards.',
+        desc: 'Our architectural team combines creativity with structural expertise to deliver personalized designs that reflect your vision while meeting the highest standards of performance, efficiency, and durability.',
     },
     {
         icon: 'flaticon-chemical',
-        title: 'Excavation And Site Preparation',
-        desc: 'We provide professional excavation services, including site grading, trenching, and land clearing, ensuring your project starts on a solid foundation.',
+        title: 'Excavation & Site Preparation',
+        desc: 'We provide precise, professional excavation, grading, trenching, and land preparation services—ensuring every project begins on a stable and well-planned foundation.',
     },
     {
         icon: 'flaticon-factory-1',
         title: 'Demolition Services',
-        desc: 'Our demolition experts handle projects of all sizes, from selective interior demolition to complete structural removal. We prioritize safety, efficiency, and thorough site preparation.',
+        desc: 'SafeBuild offers safe and efficient demolition solutions, ranging from selective interior removals to full structural takedowns. Our team prioritizes safety, debris control, and clean site preparation for your next phase of development.',
     },
     {
         icon: 'flaticon-car-parts',
-        title: 'Custom Carpentry And Cabinetry',
-        desc: 'Experience tailored craftsmanship with our custom carpentry and cabinetry solutions. Whether you need built-in shelving, intricate wood finishes, or custom furniture.',
+        title: 'Custom Carpentry & Cabinetry',
+        desc: 'Experience refined craftsmanship through our custom carpentry and cabinetry services. Whether creating built-ins, detailed millwork, or premium wood finishes, we deliver durable, elegant, and functional results.',
     },
     {
         icon: 'flaticon-garage-owner',
         title: 'Metal Fabrication',
-        desc: 'With our in-house metal fabrication capabilities, we create custom steel and metalwork solutions, including structural supports, railings, and architectural accents.',
+        desc: 'With in-house fabrication capabilities, we design and produce high-quality structural steel components, railings, brackets, and architectural metal features that enhance both strength and visual appeal.',
     },
     {
-        icon: 'flaticon-chemical-1',
-        title: 'Restoration And Abatement Services',
-        desc: 'Our restoration services address damage caused by fire, water, mold, or asbestos. We use advanced techniques and certified processes to restore safety and functionality.',
+        icon: 'fas fa-fire-extinguisher',
+        title: 'Restoration & Abatement',
+        desc: 'We restore properties affected by fire, water, mold, or environmental hazards using certified restoration techniques. Our goal is to return your property to a safe, functional, and aesthetically renewed condition.',
     },
     {
-        icon: 'flaticon-energy',
-        title: 'Rock Blasting And Removal',
-        desc: 'SafeBuild Canada offers precision rock blasting and removal services, expertly managing challenging terrain to meet your construction needs with maximum safety.',
+        icon: 'fas fa-mountain',
+        title: 'Rock Blasting & Removal',
+        desc: 'For challenging terrain across Vancouver Island, SafeBuild provides precision rock blasting and removal services—supporting safe development even in the most complex site conditions.',
     },
     {
         icon: 'flaticon-architect',
         title: 'Roofing Services',
-        desc: 'From installation to ongoing maintenance, our roofing services are designed to protect your property while enhancing its appearance and value for decades to come.',
+        desc: 'From new installations to ongoing maintenance and repairs, our roofing services are designed to protect your property and enhance its long-term value with durable, energy-efficient solutions.',
     },
     {
         icon: 'flaticon-factory',
-        title: 'Energy Efficiency Solutions',
-        desc: 'Optimize your property with energy-efficient installations, including high-performance windows, doors, and HVAC upgrades focused on sustainability.',
+        title: 'Energy Efficiency & Sustainability',
+        desc: 'We offer modern upgrades designed to improve performance and reduce energy consumption, including high-efficiency windows, doors, insulation, and HVAC improvements—supporting sustainable living on the Island.',
     },
     {
         icon: 'flaticon-manufacture',
-        title: 'Interior And Exterior Finishes',
-        desc: 'Our painting, masonry, and flooring services deliver timeless finishes that elevate the look and feel of your property with professional aesthetic results.',
+        title: 'Interior & Exterior Finishes',
+        desc: 'SafeBuild provides exceptional finishing services including painting, masonry, tile work, and flooring. Our detail-driven approach ensures beautiful, long-lasting results inside and out.',
     },
     {
         icon: 'flaticon-chemical',
-        title: 'Comprehensive Cleaning',
-        desc: 'From pre- and post-construction cleaning to regular property maintenance, we ensure your property is always in impeccable condition and ready for use.',
+        title: 'Comprehensive Cleaning & Maintenance',
+        desc: 'From pre-construction preparation to post-construction cleaning and scheduled property maintenance, our team keeps your space safe, clean, and consistently well-maintained.',
     },
 ];
 
@@ -97,8 +102,9 @@ export default function OurServices() {
                         Designed for Excellence
                     </h2>
                     <p className="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto">
-                        SafeBuild Canada offers an extensive array of construction, restoration, and maintenance services
-                        tailored to meet the unique needs of high-end residential, commercial, and industrial properties.
+                        SafeBuild Canada delivers a complete suite of construction, restoration, and property enhancement
+                        services tailored for high-end residential, commercial, and industrial clients across Victoria and
+                        Vancouver Island. Every service we provide is rooted in safety, craftsmanship, and long-term value.
                     </p>
                 </div>
             </section>

@@ -58,13 +58,13 @@ export default function AboutUs() {
             <section className="py-16 md:py-24 bg-white">
                 <div className="max-w-7xl mx-auto px-6 text-center">
                     <p className="text-sb-dark text-lg md:text-xl leading-relaxed max-w-4xl mx-auto font-medium">
-                        At <span className="text-sb-red font-bold">SafeBuild Canada</span>, we pride ourselves on delivering
-                        superior
-                        construction and property restoration services tailored to meet the highest standards of
-                        quality and craftsmanship. Serving residential, commercial, and industrial clients
-                        across the <span className="font-bold">Greater Victoria area</span>, we specialize in creating and
-                        maintaining properties
-                        that inspire confidence and stand the test of time.
+                        At <span className="text-sb-red font-bold">SafeBuild</span>, we combine over two decades of
+                        experience with a commitment to safe, reliable, and community-focused construction across{' '}
+                        <span className="font-bold">Vancouver Island</span>. From concept to completion, we deliver
+                        precise, high-quality results while embracing innovation, collaboration, and respect for the
+                        region's diverse communities and Indigenous heritage. Our team is dedicated to building trusted
+                        relationships, shaping stronger neighborhoods, and ensuring that every project reflects
+                        excellence, integrity, and long-lasting value.
                     </p>
                 </div>
             </section>

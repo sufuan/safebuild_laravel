@@ -4,24 +4,24 @@ import Footer from '@/Components/Footer';
 import React, { useState } from 'react';
 
 const projects = [
-    { id: 1,  img: 'assets/project-v1-1-2.jpg',         category: 'architecture', title: 'Architectural Design & Planning' },
-    { id: 2,  img: 'assets/project-v1-2-2.jpg',         category: 'renovation',   title: 'Full Home Renovation' },
-    { id: 3,  img: 'assets/project-v1-3-1-1.jpg',       category: 'excavation',   title: 'Site Excavation & Grading' },
-    { id: 4,  img: 'assets/project-v1-4-1-1.jpg',       category: 'carpentry',    title: 'Custom Carpentry & Cabinetry' },
-    { id: 5,  img: 'assets/project-v1-5-1-1.jpg',       category: 'renovation',   title: 'Commercial Renovation' },
-    { id: 6,  img: 'assets/project-v1-2-1-1.jpg',       category: 'architecture', title: 'Structural Engineering' },
-    { id: 7,  img: 'assets/pexels-tima-miroshnichenko-6196225.webp', category: 'excavation', title: 'Foundation & Trenching' },
-    { id: 8,  img: 'assets/marek-studzinski-zQBjgS4PGpg-unsplash-1.webp', category: 'carpentry', title: 'Millwork & Interior Wood Finishing' },
-    { id: 9,  img: 'assets/vecteezy_ai-generated-explore-the-role-of-scada-systems-in-industrial_40888741.webp', category: 'renovation', title: 'Industrial Renovation' },
-    { id: 10, img: 'assets/blog-v1-1-1.jpg',            category: 'architecture', title: 'Residential Architecture' },
-    { id: 11, img: 'assets/blog-v1-2-1.jpg',            category: 'carpentry',    title: 'Deck & Outdoor Carpentry' },
-    { id: 12, img: 'assets/blog-v1-3-1.jpg',            category: 'excavation',   title: 'Rock Blasting & Removal' },
-    { id: 13, img: 'assets/pexels-toni-30123884-1.webp',category: 'renovation',   title: 'Restoration & Abatement' },
+    { id: 1, img: 'assets/project-v1-1-2.jpg', category: 'architecture', title: 'Architectural Design & Planning' },
+    { id: 2, img: 'assets/project-v1-2-2.jpg', category: 'renovation', title: 'Full Home Renovation' },
+    { id: 3, img: 'assets/project-v1-3-1-1.jpg', category: 'excavation', title: 'Site Excavation & Grading' },
+    { id: 4, img: 'assets/project-v1-4-1-1.jpg', category: 'carpentry', title: 'Custom Carpentry & Cabinetry' },
+    { id: 5, img: 'assets/project-v1-5-1-1.jpg', category: 'renovation', title: 'Commercial Renovation' },
+    { id: 6, img: 'assets/project-v1-2-1-1.jpg', category: 'architecture', title: 'Structural Engineering' },
+    { id: 7, img: 'assets/pexels-tima-miroshnichenko-6196225.webp', category: 'excavation', title: 'Foundation & Trenching' },
+    { id: 8, img: 'assets/marek-studzinski-zQBjgS4PGpg-unsplash-1.webp', category: 'carpentry', title: 'Millwork & Interior Wood Finishing' },
+    { id: 9, img: 'assets/vecteezy_ai-generated-explore-the-role-of-scada-systems-in-industrial_40888741.webp', category: 'renovation', title: 'Industrial Renovation' },
+    { id: 10, img: 'assets/blog-v1-1-1.jpg', category: 'architecture', title: 'Residential Architecture' },
+    { id: 11, img: 'assets/blog-v1-2-1.jpg', category: 'carpentry', title: 'Deck & Outdoor Carpentry' },
+    { id: 12, img: 'assets/blog-v1-3-1.jpg', category: 'excavation', title: 'Rock Blasting & Removal' },
+    { id: 13, img: 'assets/pexels-toni-30123884-1.webp', category: 'renovation', title: 'Restoration & Abatement' },
     { id: 14, img: 'assets/pexels-tima-miroshnichenko-6474475.webp', category: 'architecture', title: 'Energy Efficient Design' },
     { id: 15, img: 'assets/mina-rad-K9T9hdf4PmI-unsplash.webp', category: 'carpentry', title: 'Built-in Shelving & Storage' },
     { id: 16, img: 'assets/emmanuel-ikwuegbu-KHO_jvns5Xc-unsplash.webp', category: 'excavation', title: 'Land Clearing & Preparation' },
-    { id: 17, img: 'assets/steptodown.com399351.webp',  category: 'renovation',   title: 'Property Restoration Project' },
-    { id: 18, img: 'assets/steptodown.com481843-1.webp',category: 'architecture', title: 'Heritage Building Conversion' },
+    { id: 17, img: 'assets/steptodown.com399351.webp', category: 'renovation', title: 'Property Restoration Project' },
+    { id: 18, img: 'assets/steptodown.com481843-1.webp', category: 'architecture', title: 'Heritage Building Conversion' },
 ];
 
 const filters = ['all', 'renovation', 'architecture', 'excavation', 'carpentry'];
@@ -109,14 +109,7 @@ export default function OurProjectsPage() {
                     </div>
                 </section>
 
-                {/* ── CTA STRIP ─────────────────────────────────────────── */}
-                <section className="bg-sb-red py-4 text-center">
-                    <div className="container mx-auto px-4">
-                        <h2 className="text-white font-bold text-sm font-roboto uppercase tracking-wide">
-                            We would love to hear from you! Let us know your construction management needs and learn more about how we can help you achieve your goals.
-                        </h2>
-                    </div>
-                </section>
+
 
                 <Footer />
             </div>
