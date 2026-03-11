@@ -1,10 +1,32 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import BrandLogos from '@/Components/BrandLogos';
 import React from 'react';
+import { Toaster, toast } from 'sonner';
 
 export default function ContactUs() {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post(route('contact.store'), {
+            onSuccess: () => {
+                reset();
+                toast.success('Your message has been sent successfully!');
+            },
+            onError: () => {
+                toast.error('There was an error sending your message. Please check the fields.');
+            }
+        });
+    };
+
     return (
         <>
             <Head title="Contact Us – SafeBuild Canada" />
@@ -38,25 +60,72 @@ export default function ContactUs() {
                                 <p className="text-gray-600 mb-12">We'd love to hear from you! Send us your requirements &amp; get a
                                     quote. We will get back to you soon<span className="text-sb-red">*</span></p>
 
-                                <form action="#" method="POST" className="space-y-6">
+                                <form onSubmit={handleSubmit} className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <input type="text" placeholder="Your Name*"
-                                            className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" />
-                                        <input type="email" placeholder="Email*"
-                                            className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" />
+                                        <div className="space-y-1">
+                                            <input 
+                                                type="text" 
+                                                placeholder="Your Name*"
+                                                value={data.name}
+                                                onChange={e => setData('name', e.target.value)}
+                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" 
+                                                required
+                                            />
+                                            {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
+                                        </div>
+                                        <div className="space-y-1">
+                                            <input 
+                                                type="email" 
+                                                placeholder="Email*"
+                                                value={data.email}
+                                                onChange={e => setData('email', e.target.value)}
+                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" 
+                                                required
+                                            />
+                                            {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
+                                        </div>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <input type="text" placeholder="Phone*"
-                                            className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" />
-                                        <input type="text" placeholder="Subject"
-                                            className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" />
+                                        <div className="space-y-1">
+                                            <input 
+                                                type="text" 
+                                                placeholder="Phone*"
+                                                value={data.phone}
+                                                onChange={e => setData('phone', e.target.value)}
+                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" 
+                                                required
+                                            />
+                                            {errors.phone && <p className="text-xs text-red-500">{errors.phone}</p>}
+                                        </div>
+                                        <div className="space-y-1">
+                                            <input 
+                                                type="text" 
+                                                placeholder="Subject"
+                                                value={data.subject}
+                                                onChange={e => setData('subject', e.target.value)}
+                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" 
+                                            />
+                                            {errors.subject && <p className="text-xs text-red-500">{errors.subject}</p>}
+                                        </div>
                                     </div>
-                                    <textarea rows="6" placeholder="message"
-                                        className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none resize-none"></textarea>
+                                    <div className="space-y-1">
+                                        <textarea 
+                                            rows="6" 
+                                            placeholder="message"
+                                            value={data.message}
+                                            onChange={e => setData('message', e.target.value)}
+                                            className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none resize-none"
+                                            required
+                                        ></textarea>
+                                        {errors.message && <p className="text-xs text-red-500">{errors.message}</p>}
+                                    </div>
 
-                                    <button type="submit"
-                                        className="bg-sb-dark text-white px-10 py-5 font-bold uppercase flex items-center gap-3 hover:bg-sb-red transition-all duration-300">
-                                        SEND MESSAGE
+                                    <button 
+                                        type="submit"
+                                        disabled={processing}
+                                        className="bg-sb-dark text-white px-10 py-5 font-bold uppercase flex items-center gap-3 hover:bg-sb-red transition-all duration-300 disabled:opacity-50"
+                                    >
+                                        {processing ? 'SENDING...' : 'SEND MESSAGE'}
                                         <i className="fas fa-long-arrow-alt-right"></i>
                                     </button>
                                 </form>
@@ -148,6 +217,7 @@ export default function ContactUs() {
                 <BrandLogos />
 
                 <Footer />
+                <Toaster position="top-right" richColors />
             </div>
         </>
     );

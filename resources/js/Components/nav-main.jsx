@@ -7,6 +7,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { Badge } from "@/components/ui/badge"
 import { Link } from "@inertiajs/react"
 
 export function NavMain({
@@ -21,10 +22,17 @@ export function NavMain({
             <SidebarMenuButton 
               isActive={item.isActive} 
               tooltip={item.title}
-              render={<Link href={item.url} />}
+              asChild
             >
-              {item.icon}
-              <span>{item.title}</span>
+              <Link href={item.url} className="flex items-center w-full gap-2">
+                {item.icon}
+                <span>{item.title}</span>
+                {item.badge && (
+                  <Badge variant="destructive" className="ml-auto flex h-5 w-5 shrink-0 items-center justify-center rounded-full p-0 text-[10px] font-bold">
+                    {item.badge}
+                  </Badge>
+                )}
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}

@@ -22,7 +22,7 @@ import {
 export function AppSidebar({
   ...props
 }) {
-  const { auth } = usePage().props
+  const { auth, counts } = usePage().props
 
   const data = {
     user: {
@@ -54,18 +54,21 @@ export function AppSidebar({
         url: "/admin/careers",
         icon: <BriefcaseIcon />,
         isActive: route().current('admin.careers*'),
+        badge: counts?.applications > 0 ? counts.applications : null,
       },
       {
         title: "Contact Messages",
         url: "/admin/contact-messages",
         icon: <MessageSquareIcon />,
         isActive: route().current('admin.messages*'),
+        badge: counts?.messages > 0 ? counts.messages : null,
       },
       {
         title: "Quote Requests",
         url: "/admin/quote-requests",
         icon: <BadgeDollarSignIcon />,
         isActive: route().current('admin.quotes*'),
+        badge: counts?.quotes > 0 ? counts.quotes : null,
       },
       {
         title: "Business Settings",

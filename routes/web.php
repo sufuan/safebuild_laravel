@@ -2,6 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ContentController;
+use App\Http\Controllers\Admin\ContentCRUDController;
+use App\Http\Controllers\Admin\CareersController;
+use App\Http\Controllers\Admin\CareersCRUDController;
+use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\QuoteRequestController;
+use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\BlogController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -35,15 +44,26 @@ Route::get('/about-us', function () {
 
 Route::get('/contact-us', function () {
     return Inertia::render('ContactUs');
-});
+})->name('contact.index');
+
+Route::post('/contact-us', [ContactMessageController::class, 'store'])->name('contact.store');
+Route::post('/quote-requests', [QuoteRequestController::class, 'store'])->name('quotes.store');
 
 Route::get('/blog', function () {
     return Inertia::render('Blog');
 });
 
+use App\Models\CareerPerk;
+use App\Models\OpenPosition;
+
 Route::get('/careers', function () {
-    return Inertia::render('Careers');
+    return Inertia::render('Careers', [
+        'perks' => CareerPerk::orderBy('order')->get(),
+        'positions' => OpenPosition::latest()->get(),
+    ]);
 });
+
+Route::post('/careers/apply', [CareersCRUDController::class, 'storeApplication'])->name('careers.apply');
 
 Route::get('/our-projects', function () {
     return Inertia::render('OurProjectsPage');
@@ -88,15 +108,6 @@ Route::get('/custom-carpentry', function () {
 
 
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ContentController;
-use App\Http\Controllers\Admin\ContentCRUDController;
-use App\Http\Controllers\Admin\CareersController;
-use App\Http\Controllers\Admin\CareersCRUDController;
-use App\Http\Controllers\Admin\ContactMessageController;
-use App\Http\Controllers\Admin\QuoteRequestController;
-use App\Http\Controllers\Admin\SettingsController;
-use App\Http\Controllers\Admin\BlogController;
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -152,15 +163,20 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     
     // Job Applications CRUD
     Route::delete('/careers/applications/{application}', [CareersCRUDController::class, 'deleteApplication'])->name('careers.applications.delete');
+    Route::patch('/careers/applications/{application}/reviewed', [CareersCRUDController::class, 'markApplicationAsReviewed'])->name('careers.applications.reviewed');
 
     // Contact Messages
     Route::get('/contact-messages', [ContactMessageController::class, 'index'])->name('messages.index');
     Route::patch('/contact-messages/{message}/read', [ContactMessageController::class, 'markAsRead'])->name('messages.read');
+    Route::patch('/contact-messages/{message}/toggle', [ContactMessageController::class, 'toggleRead'])->name('messages.toggle');
+    Route::post('/contact-messages/read-all', [ContactMessageController::class, 'markAllAsRead'])->name('messages.readAll');
     Route::delete('/contact-messages/{message}', [ContactMessageController::class, 'destroy'])->name('messages.delete');
 
     // Quote Requests
     Route::get('/quote-requests', [QuoteRequestController::class, 'index'])->name('quotes.index');
     Route::patch('/quote-requests/{requestModel}/read', [QuoteRequestController::class, 'markAsRead'])->name('quotes.read');
+    Route::patch('/quote-requests/{requestModel}/toggle', [QuoteRequestController::class, 'toggleRead'])->name('quotes.toggle');
+    Route::post('/quote-requests/read-all', [QuoteRequestController::class, 'markAllAsRead'])->name('quotes.readAll');
     Route::delete('/quote-requests/{requestModel}', [QuoteRequestController::class, 'destroy'])->name('quotes.delete');
 
     // Business Settings

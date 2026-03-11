@@ -4,6 +4,9 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use App\Models\JobApplication;
+use App\Models\ContactMessage;
+use App\Models\QuoteRequest;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -33,6 +36,11 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+            ],
+            'counts' => [
+                'applications' => JobApplication::where('status', 'pending')->count(),
+                'messages' => ContactMessage::where('is_read', false)->count(),
+                'quotes' => QuoteRequest::where('is_read', false)->count(),
             ],
         ];
     }

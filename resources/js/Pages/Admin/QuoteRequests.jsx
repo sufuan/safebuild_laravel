@@ -21,6 +21,25 @@ export default function QuoteRequests({ requests }) {
         }
     };
 
+    const handleToggleRead = (id) => {
+        patch(route('admin.quotes.toggle', id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                if (selectedRequest && selectedRequest.id === id) {
+                    setSelectedRequest({ ...selectedRequest, is_read: !selectedRequest.is_read });
+                }
+            }
+        });
+    };
+
+    const handleMarkAllAsRead = () => {
+        if(confirm('Mark all quote requests as read?')) {
+            post(route('admin.quotes.readAll'), {
+                preserveScroll: true
+            });
+        }
+    };
+
     const handleDelete = (id) => {
         if(confirm('Are you sure you want to delete this quote request?')) {
             destroy(route('admin.quotes.delete', id), {
@@ -58,6 +77,16 @@ export default function QuoteRequests({ requests }) {
                             <h3 className="text-xl font-bold flex items-center gap-2 text-sb-dark">
                                 Inbox ({requests.filter(r => !r.is_read).length} unread)
                             </h3>
+                            {requests.some(r => !r.is_read) && (
+                                <Button 
+                                    variant="ghost" 
+                                    size="sm" 
+                                    onClick={handleMarkAllAsRead}
+                                    className="text-xs font-bold text-sb-red hover:text-sb-red hover:bg-red-50 rounded-full"
+                                >
+                                    Mark all as read
+                                </Button>
+                            )}
                         </div>
                         
                         <div className="space-y-3 flex-1 overflow-y-auto pr-2 custom-scrollbar">
@@ -145,9 +174,9 @@ export default function QuoteRequests({ requests }) {
                                     </div>
                                 </div>
 
-                                <div>
+                                <div className="flex-1">
                                     <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Project Details</h4>
-                                    <div className="prose max-w-none text-gray-700 leading-relaxed bg-gray-50/50 p-8 rounded-2xl border border-gray-100 h-full whitespace-pre-wrap">
+                                    <div className="prose max-w-none text-gray-700 leading-relaxed bg-gray-50/50 p-8 rounded-2xl border border-gray-100 h-full min-h-[300px] whitespace-pre-wrap">
                                         {selectedRequest.project_details}
                                     </div>
                                 </div>
@@ -159,9 +188,26 @@ export default function QuoteRequests({ requests }) {
                                         </div>
                                         <span className="font-semibold text-gray-900">{selectedRequest.name}</span>
                                     </div>
-                                    <span className="flex items-center text-green-600 font-medium bg-green-50 px-3 py-1 rounded-full border border-green-100">
-                                        <CheckCircle2 className="w-4 h-4 mr-2" /> Marked as Read
-                                    </span>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => handleToggleRead(selectedRequest.id)}
+                                        className={`rounded-full border shadow-sm transition-all ${
+                                            selectedRequest.is_read 
+                                            ? 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100' 
+                                            : 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'
+                                        }`}
+                                    >
+                                        {selectedRequest.is_read ? (
+                                            <>
+                                                <CheckCircle2 className="w-4 h-4 mr-2" /> Marked as Read
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Circle className="w-4 h-4 mr-2" /> Mark as Read
+                                            </>
+                                        )}
+                                    </Button>
                                 </div>
                             </div>
                         ) : (

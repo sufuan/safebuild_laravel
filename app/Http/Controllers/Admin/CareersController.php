@@ -16,7 +16,7 @@ class CareersController extends Controller
         return Inertia::render('Admin/Careers', [
             'perks' => CareerPerk::orderBy('order')->get(),
             'positions' => OpenPosition::all(),
-            'applications' => JobApplication::latest()->get(),
+            'applications' => JobApplication::with('openPosition')->latest()->get(),
         ]);
     }
 }

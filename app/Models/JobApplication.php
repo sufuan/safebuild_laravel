@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class JobApplication extends Model
 {
     protected $guarded = [];
+
+    public function openPosition()
+    {
+        return $this->belongsTo(OpenPosition::class);
+    }
 }

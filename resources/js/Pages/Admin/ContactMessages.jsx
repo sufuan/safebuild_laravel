@@ -15,9 +15,29 @@ export default function ContactMessages({ messages }) {
             patch(route('admin.messages.read', message.id), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    // Locally update the state to reflect read status instantly
                     message.is_read = true;
                 }
+            });
+        }
+    };
+
+    const handleToggleRead = (id) => {
+        patch(route('admin.messages.toggle', id), {
+            preserveScroll: true,
+            onSuccess: (page) => {
+                // The messages prop will be updated automatically by Inertia
+                // but we need to update selectedMessage if it's the one being toggled
+                if (selectedMessage && selectedMessage.id === id) {
+                    setSelectedMessage({ ...selectedMessage, is_read: !selectedMessage.is_read });
+                }
+            }
+        });
+    };
+
+    const handleMarkAllAsRead = () => {
+        if(confirm('Mark all messages as read?')) {
+            post(route('admin.messages.readAll'), {
+                preserveScroll: true
             });
         }
     };
@@ -59,6 +79,16 @@ export default function ContactMessages({ messages }) {
                             <h3 className="text-xl font-bold flex items-center gap-2 text-sb-dark">
                                 Inbox ({messages.filter(m => !m.is_read).length} unread)
                             </h3>
+                            {messages.some(m => !m.is_read) && (
+                                <Button 
+                                    variant="ghost" 
+                                    size="sm" 
+                                    onClick={handleMarkAllAsRead}
+                                    className="text-xs font-bold text-sb-red hover:text-sb-red hover:bg-red-50 rounded-full"
+                                >
+                                    Mark all as read
+                                </Button>
+                            )}
                         </div>
                         
                         <div className="space-y-3 flex-1 overflow-y-auto pr-2 custom-scrollbar">
@@ -142,9 +172,9 @@ export default function ContactMessages({ messages }) {
                                     </div>
                                 </div>
 
-                                <div>
+                                <div className="flex-1">
                                     <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Message Content</h4>
-                                    <div className="prose max-w-none text-gray-700 leading-relaxed bg-gray-50/50 p-8 rounded-2xl border border-gray-100 h-full whitespace-pre-wrap">
+                                    <div className="prose max-w-none text-gray-700 leading-relaxed bg-gray-50/50 p-8 rounded-2xl border border-gray-100 h-full min-h-[300px] whitespace-pre-wrap">
                                         {selectedMessage.message}
                                     </div>
                                 </div>
@@ -156,9 +186,26 @@ export default function ContactMessages({ messages }) {
                                         </div>
                                         <span className="font-semibold text-gray-900">{selectedMessage.name}</span>
                                     </div>
-                                    <span className="flex items-center text-green-600 font-medium bg-green-50 px-3 py-1 rounded-full border border-green-100">
-                                        <CheckCircle2 className="w-4 h-4 mr-2" /> Marked as Read
-                                    </span>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => handleToggleRead(selectedMessage.id)}
+                                        className={`rounded-full border shadow-sm transition-all ${
+                                            selectedMessage.is_read 
+                                            ? 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100' 
+                                            : 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100'
+                                        }`}
+                                    >
+                                        {selectedMessage.is_read ? (
+                                            <>
+                                                <CheckCircle2 className="w-4 h-4 mr-2" /> Marked as Read
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Circle className="w-4 h-4 mr-2" /> Mark as Read
+                                            </>
+                                        )}
+                                    </Button>
                                 </div>
                             </div>
                         ) : (

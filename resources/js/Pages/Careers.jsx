@@ -1,9 +1,33 @@
-import React from 'react';
-import { Head, Link } from '@inertiajs/react';
+import React, { useState } from 'react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
+import { Toaster, toast } from 'sonner';
+import { useEffect } from 'react';
 
-export default function Careers() {
+export default function Careers({ perks, positions }) {
+    const { data, setData, post, processing, reset, errors, recentlySuccessful } = useForm({
+        name: '',
+        email: '',
+        phone: '',
+        open_position_id: '',
+        resume_path: null,
+        cover_letter: '',
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post(route('careers.apply'), {
+            onSuccess: () => {
+                reset();
+                toast.success('Your application has been submitted successfully!');
+            },
+            onError: () => {
+                toast.error('There was an error submitting your application. Please check the fields and try again.');
+            }
+        });
+    };
+
     return (
         <div className="boxed_wrapper">
             <Head title="Careers – SafeBuild Canada" />
@@ -38,37 +62,20 @@ export default function Careers() {
                     <h2 className="text-sb-dark text-4xl font-poppins font-bold uppercase mb-16">
                         Why Work With Us
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {/* Perk 1 */}
-                        <div className="bg-white p-10 rounded-sm shadow-sm hover:shadow-lg transition-shadow duration-300 text-center group border border-gray-100">
-                            <div className="w-20 h-20 mx-auto bg-sb-red/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-sb-red transition-colors duration-300">
-                                <i className="fas fa-hard-hat text-3xl text-sb-red group-hover:text-white transition-colors duration-300"></i>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {perks && perks.length > 0 ? perks.map((perk) => (
+                            <div key={perk.id} className="bg-white p-10 rounded-sm shadow-sm hover:shadow-lg transition-shadow duration-300 text-center group border border-gray-100">
+                                <div className="w-20 h-20 mx-auto bg-sb-red/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-sb-red transition-colors duration-300 overflow-hidden">
+                                    <img src={perk.icon_class || '/assets/perk.jpg'} alt={perk.title} className="w-10 h-10 object-contain group-hover:brightness-0 group-hover:invert transition-all duration-300" />
+                                </div>
+                                <h3 className="text-2xl font-bold text-sb-dark mb-4">{perk.title}</h3>
+                                <p className="text-gray-500 leading-relaxed">
+                                    {perk.description}
+                                </p>
                             </div>
-                            <h3 className="text-2xl font-bold text-sb-dark mb-4">Safety First</h3>
-                            <p className="text-gray-500 leading-relaxed">
-                                Our top priority is ensuring every team member goes home safe. We maintain rigorous safety standards and protocols on every site.
-                            </p>
-                        </div>
-                        {/* Perk 2 */}
-                        <div className="bg-white p-10 rounded-sm shadow-sm hover:shadow-lg transition-shadow duration-300 text-center group border border-gray-100">
-                            <div className="w-20 h-20 mx-auto bg-sb-orange/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-sb-orange transition-colors duration-300">
-                                <i className="fas fa-chart-line text-3xl text-sb-orange group-hover:text-white transition-colors duration-300"></i>
-                            </div>
-                            <h3 className="text-2xl font-bold text-sb-dark mb-4">Career Growth</h3>
-                            <p className="text-gray-500 leading-relaxed">
-                                We invest in our people with ongoing training, mentorship, and clear pathways to advance your skills and career.
-                            </p>
-                        </div>
-                        {/* Perk 3 */}
-                        <div className="bg-white p-10 rounded-sm shadow-sm hover:shadow-lg transition-shadow duration-300 text-center group border border-gray-100">
-                            <div className="w-20 h-20 mx-auto bg-sb-navy/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-sb-navy transition-colors duration-300">
-                                <i className="fas fa-users text-3xl text-sb-navy group-hover:text-white transition-colors duration-300"></i>
-                            </div>
-                            <h3 className="text-2xl font-bold text-sb-dark mb-4">Strong Team Culture</h3>
-                            <p className="text-gray-500 leading-relaxed">
-                                We are a family of builders who support each other, collaborating closely to deliver exceptional results and celebrate our successes.
-                            </p>
-                        </div>
+                        )) : (
+                            <div className="col-span-full py-12 text-gray-400 italic">No perks listed yet.</div>
+                        )}
                     </div>
                 </div>
             </section>
@@ -84,62 +91,42 @@ export default function Careers() {
                     </div>
 
                     <div className="space-y-6">
-                        {/* Job 1 */}
-                        <div className="border border-gray-200 rounded-sm p-8 flex flex-col md:flex-row items-start md:items-center justify-between hover:border-sb-red transition-colors duration-300">
-                            <div>
-                                <h3 className="text-2xl font-bold text-sb-dark mb-2">Site Supervisor</h3>
-                                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 font-medium">
-                                    <span className="flex items-center gap-1"><i className="fas fa-map-marker-alt text-sb-red"></i> Victoria, BC</span>
-                                    <span className="flex items-center gap-1"><i className="fas fa-clock text-sb-red"></i> Full-Time</span>
-                                    <span className="flex items-center gap-1"><i className="fas fa-briefcase text-sb-red"></i> Construction Management</span>
+                        {positions && positions.length > 0 ? positions.map((job) => (
+                            <div key={job.id} className="border border-gray-200 rounded-sm p-8 flex flex-col md:flex-row items-start md:items-center justify-between hover:border-sb-red transition-colors duration-300 shadow-sm hover:shadow-md transition-all">
+                                <div>
+                                    <h3 className="text-2xl font-bold text-sb-dark mb-2">{job.title}</h3>
+                                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 font-medium">
+                                        <span className="flex items-center gap-1"><i className="fas fa-map-marker-alt text-sb-red"></i> {job.location}</span>
+                                        <span className="flex items-center gap-1"><i className="fas fa-clock text-sb-red"></i> {job.type}</span>
+                                        <span className="flex items-center gap-1"><i className="fas fa-briefcase text-sb-red"></i> {job.experience}</span>
+                                    </div>
+                                </div>
+                                <div className="mt-6 md:mt-0">
+                                    <button 
+                                        onClick={() => {
+                                            const applySection = document.getElementById('apply');
+                                            if (applySection) {
+                                                applySection.scrollIntoView({ behavior: 'smooth' });
+                                                setData('open_position_id', job.id);
+                                            }
+                                        }}
+                                        className="inline-block bg-sb-dark text-white font-bold uppercase tracking-widest px-8 py-3 hover:bg-sb-red transition-colors duration-300"
+                                    >
+                                        Apply Now
+                                    </button>
                                 </div>
                             </div>
-                            <div className="mt-6 md:mt-0">
-                                <a href="#apply" className="inline-block bg-sb-dark text-white font-bold uppercase tracking-widest px-8 py-3 hover:bg-sb-red transition-colors duration-300">
-                                    Apply Now
-                                </a>
+                        )) : (
+                            <div className="text-center py-12 text-gray-400 border border-dashed border-gray-200 rounded-xl">
+                                We don't have any specific openings right now, but feel free to send a general application below!
                             </div>
-                        </div>
-
-                        {/* Job 2 */}
-                        <div className="border border-gray-200 rounded-sm p-8 flex flex-col md:flex-row items-start md:items-center justify-between hover:border-sb-red transition-colors duration-300">
-                            <div>
-                                <h3 className="text-2xl font-bold text-sb-dark mb-2">Journeyman Carpenter</h3>
-                                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 font-medium">
-                                    <span className="flex items-center gap-1"><i className="fas fa-map-marker-alt text-sb-red"></i> Vancouver Island</span>
-                                    <span className="flex items-center gap-1"><i className="fas fa-clock text-sb-red"></i> Full-Time</span>
-                                    <span className="flex items-center gap-1"><i className="fas fa-hammer text-sb-red"></i> Trades</span>
-                                </div>
-                            </div>
-                            <div className="mt-6 md:mt-0">
-                                <a href="#apply" className="inline-block bg-sb-dark text-white font-bold uppercase tracking-widest px-8 py-3 hover:bg-sb-red transition-colors duration-300">
-                                    Apply Now
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* Job 3 */}
-                        <div className="border border-gray-200 rounded-sm p-8 flex flex-col md:flex-row items-start md:items-center justify-between hover:border-sb-red transition-colors duration-300">
-                            <div>
-                                <h3 className="text-2xl font-bold text-sb-dark mb-2">Project Manager</h3>
-                                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 font-medium">
-                                    <span className="flex items-center gap-1"><i className="fas fa-map-marker-alt text-sb-red"></i> Victoria, BC</span>
-                                    <span className="flex items-center gap-1"><i className="fas fa-clock text-sb-red"></i> Full-Time</span>
-                                    <span className="flex items-center gap-1"><i className="fas fa-tasks text-sb-red"></i> Management</span>
-                                </div>
-                            </div>
-                            <div className="mt-6 md:mt-0">
-                                <a href="#apply" className="inline-block bg-sb-dark text-white font-bold uppercase tracking-widest px-8 py-3 hover:bg-sb-red transition-colors duration-300">
-                                    Apply Now
-                                </a>
-                            </div>
-                        </div>
+                        )}
                     </div>
                 </div>
             </section>
 
             {/* ── APPLICATION FORM SECTION ──────────────────────────────── */}
-            <section id="apply" className="py-24 bg-gray-50">
+            <section id="apply" className="py-24 bg-gray-50 scroll-mt-20">
                 <div className="max-w-7xl mx-auto px-4 md:px-8">
                     <div className="flex flex-col lg:flex-row gap-16">
                         
@@ -180,48 +167,103 @@ export default function Careers() {
 
                         {/* Right: Application Form */}
                         <div className="lg:w-2/3 bg-white p-10 md:p-12 shadow-xl border-t-4 border-sb-red">
-                            <form action="#" method="POST" className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Full Name *</label>
-                                        <input type="text" className="w-full bg-gray-50 border border-gray-200 px-5 py-4 focus:outline-none focus:border-sb-red transition-colors" placeholder="John Doe" required />
+                            {recentlySuccessful ? (
+                                <div className="bg-green-50 border border-green-200 text-green-800 p-8 rounded-xl text-center">
+                                    <h3 className="text-2xl font-bold mb-2">Application Sent!</h3>
+                                    <p>Thank you for your interest in joining SafeBuild. Our HR team will review your application and get back to you shortly.</p>
+                                    <button onClick={() => reset()} className="mt-6 text-sb-red font-bold hover:underline">Submit another application</button>
+                                </div>
+                            ) : (
+                                <form onSubmit={handleSubmit} className="space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Full Name *</label>
+                                            <input 
+                                                type="text" 
+                                                className="w-full bg-gray-50 border border-gray-200 px-5 py-4 focus:outline-none focus:border-sb-red transition-colors" 
+                                                placeholder="John Doe" 
+                                                value={data.name}
+                                                onChange={e => setData('name', e.target.value)}
+                                                required 
+                                            />
+                                            {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Email Address *</label>
+                                            <input 
+                                                type="email" 
+                                                className="w-full bg-gray-50 border border-gray-200 px-5 py-4 focus:outline-none focus:border-sb-red transition-colors" 
+                                                placeholder="johndoe@email.com" 
+                                                value={data.email}
+                                                onChange={e => setData('email', e.target.value)}
+                                                required 
+                                            />
+                                            {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Phone Number *</label>
+                                            <input 
+                                                type="tel" 
+                                                className="w-full bg-gray-50 border border-gray-200 px-5 py-4 focus:outline-none focus:border-sb-red transition-colors" 
+                                                placeholder="(250) 555-0123" 
+                                                value={data.phone}
+                                                onChange={e => setData('phone', e.target.value)}
+                                                required 
+                                            />
+                                            {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Position Applying For *</label>
+                                            <select 
+                                                className="w-full bg-gray-50 border border-gray-200 px-5 py-4 focus:outline-none focus:border-sb-red transition-colors appearance-none" 
+                                                value={data.open_position_id}
+                                                onChange={e => setData('open_position_id', e.target.value)}
+                                                required
+                                            >
+                                                <option value="">Select a Position...</option>
+                                                {positions && positions.map(job => (
+                                                    <option key={job.id} value={job.id}>{job.title}</option>
+                                                ))}
+                                            </select>
+                                            {errors.open_position_id && <p className="text-xs text-red-500 mt-1">{errors.open_position_id}</p>}
+                                        </div>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Email Address *</label>
-                                        <input type="email" className="w-full bg-gray-50 border border-gray-200 px-5 py-4 focus:outline-none focus:border-sb-red transition-colors" placeholder="johndoe@email.com" required />
+                                        <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Upload Resume / CV *</label>
+                                        <input 
+                                            type="file" 
+                                            accept=".pdf,.doc,.docx" 
+                                            className="w-full bg-gray-50 border border-gray-200 px-5 py-3 focus:outline-none focus:border-sb-red transition-colors file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-sb-red file:text-white hover:file:bg-sb-dark file:cursor-pointer file:transition-colors" 
+                                            onChange={e => setData('resume_path', e.target.files[0])}
+                                            required 
+                                        />
+                                        <p className="text-xs text-gray-500 mt-2">Accepted formats: PDF, DOC, DOCX. Max size: 5MB.</p>
+                                        {errors.resume_path && <p className="text-xs text-red-500 mt-1">{errors.resume_path}</p>}
                                     </div>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Phone Number *</label>
-                                        <input type="tel" className="w-full bg-gray-50 border border-gray-200 px-5 py-4 focus:outline-none focus:border-sb-red transition-colors" placeholder="(250) 555-0123" required />
+                                        <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Cover Letter / Message</label>
+                                        <textarea 
+                                            rows="5" 
+                                            className="w-full bg-gray-50 border border-gray-200 px-5 py-4 focus:outline-none focus:border-sb-red transition-colors" 
+                                            placeholder="Tell us why you would be a great fit for SafeBuild..."
+                                            value={data.cover_letter}
+                                            onChange={e => setData('cover_letter', e.target.value)}
+                                        ></textarea>
+                                        {errors.cover_letter && <p className="text-xs text-red-500 mt-1">{errors.cover_letter}</p>}
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Position Applying For *</label>
-                                        <select className="w-full bg-gray-50 border border-gray-200 px-5 py-4 focus:outline-none focus:border-sb-red transition-colors appearance-none" required>
-                                            <option value="">Select a Position...</option>
-                                            <option value="Site Supervisor">Site Supervisor</option>
-                                            <option value="Journeyman Carpenter">Journeyman Carpenter</option>
-                                            <option value="Project Manager">Project Manager</option>
-                                            <option value="General Application">General Application</option>
-                                        </select>
+                                        <button 
+                                            type="submit" 
+                                            disabled={processing}
+                                            className="w-full bg-sb-red text-white font-bold uppercase tracking-widest py-5 hover:bg-sb-dark transition-all duration-300 disabled:opacity-50"
+                                        >
+                                            {processing ? 'Submitting...' : 'Submit Application'}
+                                        </button>
                                     </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Upload Resume / CV *</label>
-                                    <input type="file" accept=".pdf,.doc,.docx" className="w-full bg-gray-50 border border-gray-200 px-5 py-3 focus:outline-none focus:border-sb-red transition-colors file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-sb-red file:text-white hover:file:bg-sb-dark file:cursor-pointer file:transition-colors" required />
-                                    <p className="text-xs text-gray-500 mt-2">Accepted formats: PDF, DOC, DOCX. Max size: 5MB.</p>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-sb-dark uppercase tracking-wider mb-2">Cover Letter / Message</label>
-                                    <textarea rows="5" className="w-full bg-gray-50 border border-gray-200 px-5 py-4 focus:outline-none focus:border-sb-red transition-colors" placeholder="Tell us why you would be a great fit for SafeBuild..."></textarea>
-                                </div>
-                                <div>
-                                    <button type="submit" className="w-full bg-sb-red text-white font-bold uppercase tracking-widest py-5 hover:bg-sb-dark transition-all duration-300">
-                                        Submit Application
-                                    </button>
-                                </div>
-                            </form>
+                                </form>
+                            )}
                         </div>
 
                     </div>
@@ -229,6 +271,7 @@ export default function Careers() {
             </section>
 
             <Footer />
+            <Toaster position="top-right" richColors />
         </div>
     );
 }

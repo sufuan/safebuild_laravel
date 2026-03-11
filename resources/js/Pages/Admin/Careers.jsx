@@ -27,7 +27,14 @@ export default function Careers({ perks, positions, applications }) {
                     <TabsList className="grid w-full lg:w-[600px] grid-cols-3 mb-8 h-12 p-1 bg-white border shadow-sm rounded-xl">
                         <TabsTrigger value="perks" className="rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white transition-all text-md font-medium"><Star className="w-4 h-4 mr-2" /> Perks</TabsTrigger>
                         <TabsTrigger value="positions" className="rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white transition-all text-md font-medium"><BriefcaseBusiness className="w-4 h-4 mr-2" /> Positions</TabsTrigger>
-                        <TabsTrigger value="applications" className="rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white transition-all text-md font-medium"><FileText className="w-4 h-4 mr-2" /> Applications</TabsTrigger>
+                        <TabsTrigger value="applications" className="rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white transition-all text-md font-medium relative">
+                            <FileText className="w-4 h-4 mr-2" /> Applications
+                            {applications.filter(a => a.status === 'pending').length > 0 && (
+                                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-sb-red text-[10px] font-bold text-white border-2 border-white shadow-sm animate-in zoom-in duration-300">
+                                    {applications.filter(a => a.status === 'pending').length}
+                                </span>
+                            )}
+                        </TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="perks" className="mt-0 outline-none">
@@ -51,19 +58,37 @@ export default function Careers({ perks, positions, applications }) {
 function SplitPane({ section, data }) {
     const isPerk = section === 'perks';
     const [editingItem, setEditingItem] = useState(null);
+    const [showForm, setShowForm] = useState(false);
 
     const { data: formData, setData, post, put, delete: destroy, reset, processing, errors } = useForm(
         isPerk 
-        ? { title: '', description: '', icon_class: '', order: '' }
+        ? { title: '', description: '', order: '' }
         : { title: '', location: '', type: '', experience: '' }
     );
 
     const handleEdit = (item) => {
         setEditingItem(item);
-        setData(item);
+        setData({
+            ...item,
+            // Ensure no nulls for controlled inputs
+            title: item.title || '',
+            description: item.description || '',
+            order: item.order || '',
+            location: item.location || '',
+            type: item.type || '',
+            experience: item.experience || '',
+        });
+        setShowForm(true);
     };
 
     const handleAddNew = () => {
+        setEditingItem(null);
+        reset();
+        setShowForm(true);
+    };
+
+    const handleCancel = () => {
+        setShowForm(false);
         setEditingItem(null);
         reset();
     };
@@ -73,7 +98,7 @@ function SplitPane({ section, data }) {
             destroy(route(`admin.careers.${section}.delete`, id), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    if (editingItem && editingItem.id === id) handleAddNew();
+                    if (editingItem && editingItem.id === id) handleCancel();
                 }
             });
         }
@@ -84,12 +109,12 @@ function SplitPane({ section, data }) {
         if (editingItem) {
             put(route(`admin.careers.${section}.update`, editingItem.id), {
                 preserveScroll: true,
-                onSuccess: () => handleAddNew(),
+                onSuccess: () => handleCancel(),
             });
         } else {
             post(route(`admin.careers.${section}.store`), {
                 preserveScroll: true,
-                onSuccess: () => handleAddNew(),
+                onSuccess: () => handleCancel(),
             });
         }
     };
@@ -97,15 +122,17 @@ function SplitPane({ section, data }) {
     return (
         <div className="flex flex-col xl:flex-row gap-8 items-start">
             {/* Left Side: List */}
-            <div className="w-full xl:w-2/3 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col min-h-[600px]">
+            <div className={`w-full transition-all duration-500 ${showForm ? 'xl:w-2/3' : 'xl:w-full'} bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col min-h-[600px]`}>
                 <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
                     <h3 className="text-xl font-bold flex items-center gap-2">
                         <LayoutList className="w-5 h-5 text-sb-red" />
                         {isPerk ? 'All Career Perks' : 'Open Positions'}
                     </h3>
-                    <Button onClick={handleAddNew} className="bg-sb-red hover:bg-sb-dark text-white rounded-full px-6 transition-all duration-300 shadow-md hover:shadow-lg">
-                        <PlusCircle className="mr-2 h-4 w-4" /> Add New
-                    </Button>
+                    {!showForm && (
+                        <Button onClick={handleAddNew} className="bg-sb-red hover:bg-sb-dark text-white rounded-full px-6 transition-all duration-300 shadow-md hover:shadow-lg">
+                            <PlusCircle className="mr-2 h-4 w-4" /> Add New
+                        </Button>
+                    )}
                 </div>
                 
                 <div className="space-y-4 flex-1 overflow-y-auto pr-2 custom-scrollbar">
@@ -115,185 +142,182 @@ function SplitPane({ section, data }) {
                             <p>No {isPerk ? 'perks' : 'positions'} found. Create one to get started.</p>
                         </div>
                     ) : (
-                        data.map((item) => (
-                            <div 
-                                key={item.id} 
-                                onClick={() => handleEdit(item)}
-                                className={`group flex flex-col sm:flex-row justify-between items-start sm:items-center p-5 rounded-2xl border transition-all duration-300 cursor-pointer hover:shadow-md ${
-                                    editingItem?.id === item.id 
-                                    ? 'border-sb-red bg-red-50/50 shadow-sm' 
-                                    : 'border-gray-100 bg-white hover:border-gray-300'
-                                }`}
-                            >
-                                <div className="flex items-start gap-4 mb-4 sm:mb-0">
-                                    {isPerk && (
-                                        <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-sb-red shrink-0 group-hover:bg-white group-hover:shadow-sm transition-colors">
-                                            <i className={`${item.icon_class} text-xl`}></i>
+                        <div className={`grid gap-4 ${showForm ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+                            {data.map((item) => (
+                                <div 
+                                    key={item.id} 
+                                    onClick={() => handleEdit(item)}
+                                    className={`group flex flex-col justify-between p-5 rounded-2xl border transition-all duration-300 cursor-pointer hover:shadow-md ${
+                                        editingItem?.id === item.id 
+                                        ? 'border-sb-red bg-red-50/50 shadow-sm' 
+                                        : 'border-gray-100 bg-white hover:border-gray-300'
+                                    }`}
+                                >
+                                    <div className="flex items-start gap-4 mb-4">
+                                        {isPerk && (
+                                            <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:shadow-sm transition-colors overflow-hidden">
+                                                <img src="/assets/perk.jpg" alt="Perk Icon" className="w-8 h-8 object-contain" />
+                                            </div>
+                                        )}
+                                        <div className="flex flex-col flex-1">
+                                            <h4 className="font-bold text-sb-dark text-lg group-hover:text-sb-red transition-colors">{item.title}</h4>
+                                            <p className="text-sm text-gray-500 line-clamp-2 mt-1">
+                                                {isPerk ? item.description : `${item.location} • ${item.type}`}
+                                            </p>
+                                            {!isPerk && <span className="text-xs font-bold text-sb-red mt-2 uppercase tracking-wider">{item.experience}</span>}
                                         </div>
-                                    )}
-                                    <div className="flex flex-col">
-                                        <h4 className="font-bold text-sb-dark text-lg group-hover:text-sb-red transition-colors">{item.title}</h4>
-                                        <p className="text-sm text-gray-500 line-clamp-1 mt-1">
-                                            {isPerk ? item.description : `${item.location} • ${item.type} • ${item.experience}`}
-                                        </p>
+                                    </div>
+                                    
+                                    <div className="flex gap-2 w-full justify-end shrink-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                                        <Button size="icon" variant="ghost" className="h-9 w-9 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-full" onClick={(e) => { e.stopPropagation(); handleEdit(item); }}>
+                                            <Edit2 className="h-4 w-4" />
+                                        </Button>
+                                        <Button size="icon" variant="ghost" className="h-9 w-9 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-full" onClick={(e) => { e.stopPropagation(); handleDelete(item.id); }}>
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
                                     </div>
                                 </div>
-                                
-                                <div className="flex gap-2 w-full sm:w-auto justify-end shrink-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                                    <Button size="icon" variant="ghost" className="h-9 w-9 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-full" onClick={(e) => { e.stopPropagation(); handleEdit(item); }}>
-                                        <Edit2 className="h-4 w-4" />
-                                    </Button>
-                                    <Button size="icon" variant="ghost" className="h-9 w-9 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-full" onClick={(e) => { e.stopPropagation(); handleDelete(item.id); }}>
-                                        <Trash2 className="h-4 w-4" />
-                                    </Button>
-                                </div>
-                            </div>
-                        ))
+                            ))}
+                        </div>
                     )}
                 </div>
             </div>
 
-            {/* Right Side: Form */}
-            <div className="w-full xl:w-1/3 bg-white p-8 rounded-3xl shadow-xl border border-gray-100 sticky top-6">
-                <div className="mb-8">
-                    <span className="inline-block py-1 px-3 rounded-full bg-gray-100 text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">
-                        {editingItem ? 'Edit Mode' : 'Create Mode'}
-                    </span>
-                    <h3 className="text-2xl font-black text-sb-dark">
-                        {editingItem ? `Edit ${isPerk ? 'Perk' : 'Position'}` : `New ${isPerk ? 'Perk' : 'Position'}`}
-                    </h3>
-                    <p className="text-sm text-gray-400 mt-2">
-                        {editingItem ? 'Update the details below to modify the item.' : 'Fill in the details to create a new item.'}
-                    </p>
-                </div>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Common Field */}
-                    <div className="space-y-2">
-                        <Label htmlFor="title" className="font-bold text-gray-700">Title <span className="text-red-500">*</span></Label>
-                        <Input 
-                            id="title" 
-                            name="title" 
-                            value={formData.title} 
-                            onChange={e => setData('title', e.target.value)} 
-                            className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl"
-                            placeholder={isPerk ? "e.g., Health Insurance" : "e.g., Senior Architect"}
-                            required
-                        />
-                        {errors.title && <p className="text-sm text-red-500">{errors.title}</p>}
+            {/* Right Side: Form (Conditional) */}
+            {showForm && (
+                <div className="w-full xl:w-1/3 bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-gray-100 sticky top-6 animate-in slide-in-from-right duration-300 overflow-hidden">
+                    <div className="mb-8">
+                        <span className="inline-block py-1 px-3 rounded-full bg-gray-100 text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">
+                            {editingItem ? 'Edit Mode' : 'Create Mode'}
+                        </span>
+                        <h3 className="text-2xl font-black text-sb-dark line-clamp-1">
+                            {editingItem ? `Edit ${isPerk ? 'Perk' : 'Position'}` : `New ${isPerk ? 'Perk' : 'Position'}`}
+                        </h3>
                     </div>
 
-                    {isPerk ? (
-                        <>
-                            <div className="space-y-2">
-                                <Label htmlFor="icon_class" className="font-bold text-gray-700">Icon Class (FontAwesome/Flaticon) <span className="text-red-500">*</span></Label>
-                                <Input 
-                                    id="icon_class" 
-                                    name="icon_class" 
-                                    value={formData.icon_class} 
-                                    onChange={e => setData('icon_class', e.target.value)} 
-                                    className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl"
-                                    placeholder="e.g., fas fa-heart"
-                                    required
-                                />
-                                {errors.icon_class && <p className="text-sm text-red-500">{errors.icon_class}</p>}
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="description" className="font-bold text-gray-700">Description <span className="text-red-500">*</span></Label>
-                                <Textarea 
-                                    id="description" 
-                                    name="description" 
-                                    value={formData.description} 
-                                    onChange={e => setData('description', e.target.value)} 
-                                    className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red min-h-[120px] rounded-xl resize-none"
-                                    placeholder="Describe this perk..."
-                                    required
-                                />
-                                {errors.description && <p className="text-sm text-red-500">{errors.description}</p>}
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="order" className="font-bold text-gray-700">Display Order</Label>
-                                <Input 
-                                    type="number"
-                                    id="order" 
-                                    name="order" 
-                                    value={formData.order} 
-                                    onChange={e => setData('order', e.target.value)} 
-                                    className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl"
-                                />
-                                {errors.order && <p className="text-sm text-red-500">{errors.order}</p>}
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <div className="space-y-2">
-                                <Label htmlFor="location" className="font-bold text-gray-700">Location <span className="text-red-500">*</span></Label>
-                                <Input 
-                                    id="location" 
-                                    name="location" 
-                                    value={formData.location} 
-                                    onChange={e => setData('location', e.target.value)} 
-                                    className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl"
-                                    placeholder="e.g., Victoria, BC"
-                                    required
-                                />
-                                {errors.location && <p className="text-sm text-red-500">{errors.location}</p>}
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="type" className="font-bold text-gray-700">Job Type <span className="text-red-500">*</span></Label>
-                                    <Input 
-                                        id="type" 
-                                        name="type" 
-                                        value={formData.type} 
-                                        onChange={e => setData('type', e.target.value)} 
-                                        className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl"
-                                        placeholder="e.g., Full-Time"
-                                        required
-                                    />
-                                    {errors.type && <p className="text-sm text-red-500">{errors.type}</p>}
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="experience" className="font-bold text-gray-700">Category / Exp. <span className="text-red-500">*</span></Label>
-                                    <Input 
-                                        id="experience" 
-                                        name="experience" 
-                                        value={formData.experience} 
-                                        onChange={e => setData('experience', e.target.value)} 
-                                        className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl"
-                                        placeholder="e.g., Trades"
-                                        required
-                                    />
-                                    {errors.experience && <p className="text-sm text-red-500">{errors.experience}</p>}
-                                </div>
-                            </div>
-                        </>
-                    )}
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-2">
+                            <Label htmlFor="title" className="font-bold text-gray-700">Title <span className="text-red-500">*</span></Label>
+                            <Input 
+                                id="title" 
+                                name="title" 
+                                value={formData.title} 
+                                onChange={e => setData('title', e.target.value)} 
+                                className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl"
+                                placeholder={isPerk ? "e.g., Health Insurance" : "e.g., Senior Architect"}
+                                required
+                            />
+                            {errors.title && <p className="text-sm text-red-500">{errors.title}</p>}
+                        </div>
 
-                    <div className="pt-6 flex gap-4">
-                        <Button type="submit" disabled={processing} className="w-full h-14 bg-sb-dark hover:bg-black text-white rounded-xl text-lg font-bold transition-all shadow-lg hover:shadow-xl">
-                            {editingItem ? 'Save Changes' : 'Create Item'}
-                        </Button>
-                        {editingItem && (
-                            <Button type="button" variant="outline" onClick={handleAddNew} className="h-14 px-6 rounded-xl border-gray-200 text-gray-600 hover:bg-gray-50">
+                        {isPerk ? (
+                            <>
+                                <div className="space-y-2">
+                                    <Label htmlFor="description" className="font-bold text-gray-700">Description <span className="text-red-500">*</span></Label>
+                                    <Textarea 
+                                        id="description" 
+                                        name="description" 
+                                        value={formData.description} 
+                                        onChange={e => setData('description', e.target.value)} 
+                                        className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red min-h-[120px] rounded-xl resize-none"
+                                        placeholder="Describe this perk..."
+                                        required
+                                    />
+                                    {errors.description && <p className="text-sm text-red-500">{errors.description}</p>}
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="order" className="font-bold text-gray-700">Display Order</Label>
+                                    <Input 
+                                        type="number"
+                                        id="order" 
+                                        name="order" 
+                                        value={formData.order} 
+                                        onChange={e => setData('order', e.target.value)} 
+                                        className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl"
+                                    />
+                                    {errors.order && <p className="text-sm text-red-500">{errors.order}</p>}
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className="space-y-2">
+                                    <Label htmlFor="location" className="font-bold text-gray-700">Location <span className="text-red-500">*</span></Label>
+                                    <Input 
+                                        id="location" 
+                                        name="location" 
+                                        value={formData.location} 
+                                        onChange={e => setData('location', e.target.value)} 
+                                        className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl"
+                                        placeholder="e.g., Victoria, BC"
+                                        required
+                                    />
+                                    {errors.location && <p className="text-sm text-red-500">{errors.location}</p>}
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <Label htmlFor="type" className="font-bold text-gray-700">Job Type <span className="text-red-500">*</span></Label>
+                                        <Input 
+                                            id="type" 
+                                            name="type" 
+                                            value={formData.type} 
+                                            onChange={e => setData('type', e.target.value)} 
+                                            className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl"
+                                            placeholder="e.g., Full-Time"
+                                            required
+                                        />
+                                        {errors.type && <p className="text-sm text-red-500">{errors.type}</p>}
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="experience" className="font-bold text-gray-700">Category / Exp. <span className="text-red-500">*</span></Label>
+                                        <Input 
+                                            id="experience" 
+                                            name="experience" 
+                                            value={formData.experience} 
+                                            onChange={e => setData('experience', e.target.value)} 
+                                            className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl"
+                                            placeholder="e.g., Trades"
+                                            required
+                                        />
+                                        {errors.experience && <p className="text-sm text-red-500">{errors.experience}</p>}
+                                    </div>
+                                </div>
+                            </>
+                        )}
+
+                        <div className="pt-6 flex flex-col gap-3">
+                            <Button type="submit" disabled={processing} className="w-full h-14 bg-sb-dark hover:bg-black text-white rounded-xl text-lg font-bold transition-all shadow-lg hover:shadow-xl">
+                                {editingItem ? 'Save Changes' : 'Create Item'}
+                            </Button>
+                            <Button type="button" variant="outline" onClick={handleCancel} className="w-full h-14 px-6 rounded-xl border-gray-200 text-gray-600 hover:bg-gray-50 mt-1">
                                 Cancel
                             </Button>
-                        )}
-                    </div>
-                </form>
-            </div>
+                        </div>
+                    </form>
+                </div>
+            )}
         </div>
     );
 }
 
 // Applications Pane (View & Delete Only)
 function ApplicationsPane({ data }) {
-    const { delete: destroy } = useForm();
+    const { delete: destroy, patch } = useForm();
 
     const handleDelete = (id) => {
         if(confirm('Are you sure you want to delete this job application?')) {
             destroy(route('admin.careers.applications.delete', id), {
                 preserveScroll: true
+            });
+        }
+    };
+
+    const handleMarkAsReviewed = (app) => {
+        if (app.status === 'pending') {
+            patch(route('admin.careers.applications.reviewed', app.id), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    app.status = 'reviewed';
+                }
             });
         }
     };
@@ -315,7 +339,16 @@ function ApplicationsPane({ data }) {
                     </div>
                 ) : (
                     data.map(app => (
-                        <div key={app.id} className="bg-gray-50/50 border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+                        <div 
+                            key={app.id} 
+                            onClick={() => handleMarkAsReviewed(app)}
+                            className={`group relative bg-gray-50/50 border rounded-2xl p-6 hover:shadow-lg transition-all duration-300 flex flex-col justify-between cursor-pointer ${
+                                app.status === 'pending' ? 'border-blue-100 bg-blue-50/10' : 'border-gray-200'
+                            }`}
+                        >
+                            {app.status === 'pending' && (
+                                <div className="absolute top-4 right-14 w-3 h-3 bg-blue-500 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                            )}
                             <div>
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
@@ -323,7 +356,12 @@ function ApplicationsPane({ data }) {
                                         <a href={`mailto:${app.email}`} className="text-sb-red hover:underline text-sm font-medium">{app.email}</a>
                                         {app.phone && <p className="text-sm text-gray-500 mt-1">{app.phone}</p>}
                                     </div>
-                                    <Button size="icon" variant="ghost" className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full shrink-0" onClick={() => handleDelete(app.id)}>
+                                    <Button 
+                                        size="icon" 
+                                        variant="ghost" 
+                                        className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full shrink-0" 
+                                        onClick={(e) => { e.stopPropagation(); handleDelete(app.id); }}
+                                    >
                                         <Trash2 className="h-4 w-4" />
                                     </Button>
                                 </div>
@@ -338,7 +376,13 @@ function ApplicationsPane({ data }) {
                             </div>
                             {app.resume_path && (
                                 <div className="mt-6 pt-4 border-t border-gray-200">
-                                    <a href={`/${app.resume_path}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full py-3 bg-sb-dark text-white rounded-xl hover:bg-black transition-colors font-medium text-sm">
+                                    <a 
+                                        href={`/${app.resume_path}`} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        onClick={() => handleMarkAsReviewed(app)}
+                                        className="flex items-center justify-center w-full py-3 bg-sb-dark text-white rounded-xl hover:bg-black transition-colors font-medium text-sm"
+                                    >
                                         <FileText className="w-4 h-4 mr-2" /> View Resume
                                     </a>
                                 </div>
