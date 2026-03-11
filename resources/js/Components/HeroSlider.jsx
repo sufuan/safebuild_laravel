@@ -1,61 +1,34 @@
 import React from 'react';
 
-export default function HeroSlider() {
+export default function HeroSlider({ slides = [] }) {
     return (
         <section id="hero-slider" className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden bg-black">
-            {/* Slide 1 */}
-            <div className="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
-                <div className="absolute inset-0 bg-black/40 z-10"></div>
-                <img src="assets/steptodown.com618418.webp" alt="SafeBuild Canada Hero"
-                    className="w-full h-full object-cover" />
-                <div className="absolute inset-0 flex items-center justify-center z-20 text-center px-4">
-                    <div
-                        className="max-w-4xl transform translate-y-10 transition-all duration-700 opacity-0 slide-content">
-                        <span className="text-sb-orange uppercase tracking-[.3em] font-bold text-lg mb-4 block">Welcome
-                            to</span>
-                        <h1
-                            className="text-white text-5xl md:text-7xl font-poppins font-bold uppercase leading-tight mb-8">
-                            SafeBuild Canada
-                        </h1>
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                            <a href="#about"
-                                className="bg-sb-red hover:bg-[#c42d0b] text-white px-8 py-4 rounded-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-2">
-                                About Us <i className="flaticon-right-arrow-1 text-xs"></i>
-                            </a>
-                            <a href="#contact"
-                                className="bg-white hover:bg-gray-100 text-sb-dark px-8 py-4 rounded-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-2">
-                                Contact Us <i className="flaticon-right-arrow-1 text-xs"></i>
-                            </a>
+            {slides && slides.map((slide, index) => (
+                <div key={slide.id} className={`hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0 ${index === 0 ? 'active-slide' : ''}`}>
+                    <div className="absolute inset-0 bg-black/40 z-10"></div>
+                    <img src={`/${slide.image_path}`} alt={slide.title} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 flex items-center justify-center z-20 text-center px-4">
+                        <div className="max-w-4xl transform translate-y-10 transition-all duration-700 opacity-0 slide-content">
+                            {slide.subtitle && (
+                                <span className="text-sb-orange uppercase tracking-[.3em] font-bold text-lg mb-4 block">
+                                    {slide.subtitle}
+                                </span>
+                            )}
+                            <h1 className="text-white text-4xl md:text-6xl lg:text-7xl font-poppins font-bold uppercase leading-tight mb-8">
+                                {slide.title}
+                            </h1>
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <a href="#about" className="bg-sb-red hover:bg-[#c42d0b] text-white px-8 py-4 rounded-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-2">
+                                    {slide.button_text || 'About Us'} <i className="flaticon-right-arrow-1 text-xs"></i>
+                                </a>
+                                <a href="#contact" className="bg-white hover:bg-gray-100 text-sb-dark px-8 py-4 rounded-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-2">
+                                    Contact Us <i className="flaticon-right-arrow-1 text-xs"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            {/* Slide 2 */}
-            <div className="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0">
-                <div className="absolute inset-0 bg-black/50 z-10"></div>
-                <img src="assets/steptodown.com399351.webp" alt="Construction Excellence"
-                    className="w-full h-full object-cover" />
-                <div className="absolute inset-0 flex items-center justify-center z-20 text-center px-4">
-                    <div
-                        className="max-w-4xl transform translate-y-10 transition-all duration-700 opacity-0 slide-content">
-                        <h1
-                            className="text-white text-4xl md:text-6xl font-poppins font-bold uppercase leading-tight mb-8">
-                            Excellence in Construction <br /> &amp; Property Restoration
-                        </h1>
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                            <a href="#about"
-                                className="bg-sb-red hover:bg-[#c42d0b] text-white px-8 py-4 rounded-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-2">
-                                About Us <i className="flaticon-right-arrow-1 text-xs"></i>
-                            </a>
-                            <a href="#contact"
-                                className="bg-white hover:bg-gray-100 text-sb-dark px-8 py-4 rounded-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-2">
-                                Contact Us <i className="flaticon-right-arrow-1 text-xs"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            ))}
 
             {/* Slider Controls */}
             <button id="prevSlide"
