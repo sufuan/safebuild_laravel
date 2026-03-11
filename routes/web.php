@@ -22,7 +22,7 @@ Route::get('/', function () {
         'heroSlides' => HeroSlide::where('is_active', true)->orderBy('order')->get(),
         'services' => Service::where('is_active', true)->orderBy('order')->take(4)->get(),
         'projects' => Project::latest()->take(5)->get(),
-        'testimonials' => Testimonial::latest()->take(3)->get(),
+        'testimonials' => Testimonial::where('is_active', true)->latest()->get(),
         'teamMembers' => TeamMember::orderBy('order')->take(4)->get(),
         'brandLogos' => BrandLogo::orderBy('order')->get(),
         'blogPosts' => BlogPost::latest()->take(3)->get(),
@@ -96,6 +96,7 @@ use App\Http\Controllers\Admin\CareersCRUDController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\QuoteRequestController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\BlogController;
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -108,7 +109,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     // Services CRUD
     Route::post('/content/services', [ContentCRUDController::class, 'storeService'])->name('content.services.store');
-    Route::put('/content/services/{service}', [ContentCRUDController::class, 'updateService'])->name('content.services.update');
+    Route::post('/content/services/{service}', [ContentCRUDController::class, 'updateService'])->name('content.services.update');
     Route::delete('/content/services/{service}', [ContentCRUDController::class, 'deleteService'])->name('content.services.delete');
 
     // Projects CRUD
@@ -130,10 +131,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::post('/content/logos', [ContentCRUDController::class, 'storeLogo'])->name('content.logos.store');
     Route::delete('/content/logos/{logo}', [ContentCRUDController::class, 'deleteLogo'])->name('content.logos.delete');
 
-    // Blog CRUD
-    Route::post('/content/blog', [ContentCRUDController::class, 'storeBlog'])->name('content.blog.store');
-    Route::post('/content/blog/{blog}', [ContentCRUDController::class, 'updateBlog'])->name('content.blog.update');
-    Route::delete('/content/blog/{blog}', [ContentCRUDController::class, 'deleteBlog'])->name('content.blog.delete');
+    // Blog
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::post('/blog', [BlogController::class, 'store'])->name('blog.store');
+    Route::post('/blog/{blog}', [BlogController::class, 'update'])->name('blog.update');
+    Route::delete('/blog/{blog}', [BlogController::class, 'destroy'])->name('blog.delete');
 
     // Careers
     Route::get('/careers', [CareersController::class, 'index'])->name('careers.index');

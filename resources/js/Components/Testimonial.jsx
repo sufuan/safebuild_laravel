@@ -34,9 +34,13 @@ export default function Testimonial({ testimonials = [] }) {
                                             </div>
                                         </div>
                                         <div className="flex-shrink-0">
-                                            <div className="w-56 h-56 md:w-80 md:h-80 rounded-full overflow-hidden border-[15px] border-white shadow-2xl">
-                                                <img src={`/${testimonial.image_path}`} alt={testimonial.name}
-                                                    className="w-full h-full object-cover" />
+                                            <div className="w-56 h-56 md:w-80 md:h-80 rounded-full overflow-hidden border-[15px] border-white shadow-2xl bg-gray-100 flex items-center justify-center">
+                                                {testimonial.image_path ? (
+                                                    <img src={`/${testimonial.image_path}`} alt={testimonial.name}
+                                                        className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <img src="/assets/male-avatar-placeholder.png" alt={testimonial.name} className="w-full h-full object-cover" />
+                                                )}
                                             </div>
                                         </div>
                                     </div>

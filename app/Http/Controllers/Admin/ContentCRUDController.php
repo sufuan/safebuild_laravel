@@ -50,7 +50,7 @@ class ContentCRUDController extends Controller
             'button_text' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ]);
-        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
+        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $hero->update($data);
         return back()->with('success', 'Hero slide updated.');
     }
@@ -75,7 +75,7 @@ class ContentCRUDController extends Controller
     }
     public function updateProject(Request $request, Project $project) {
         $data = $request->validate(['title' => 'required|string', 'category' => 'required|string', 'image_path' => 'nullable|image']);
-        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
+        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $project->update($data); return back()->with('success', 'Project updated.');
     }
     public function deleteProject(Project $project) { $project->delete(); return back()->with('success', 'Project deleted.'); }
@@ -88,7 +88,7 @@ class ContentCRUDController extends Controller
     }
     public function updateTestimonial(Request $request, Testimonial $testimonial) {
         $data = $request->validate(['name' => 'required|string', 'role' => 'nullable|string', 'quote' => 'required|string', 'image_path' => 'nullable|image']);
-        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
+        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $testimonial->update($data); return back()->with('success', 'Testimonial updated.');
     }
     public function deleteTestimonial(Testimonial $testimonial) { $testimonial->delete(); return back()->with('success', 'Testimonial deleted.'); }
@@ -101,7 +101,7 @@ class ContentCRUDController extends Controller
     }
     public function updateTeam(Request $request, TeamMember $team) {
         $data = $request->validate(['name' => 'required|string', 'role' => 'required|string', 'image_path' => 'nullable|image']);
-        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
+        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $team->update($data); return back()->with('success', 'Member updated.');
     }
     public function deleteTeam(TeamMember $team) { $team->delete(); return back()->with('success', 'Member deleted.'); }
@@ -122,7 +122,7 @@ class ContentCRUDController extends Controller
     }
     public function updateBlog(Request $request, BlogPost $blog) {
         $data = $request->validate(['title' => 'required|string', 'excerpt' => 'required|string', 'date' => 'required|string', 'image_path' => 'nullable|image']);
-        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
+        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $blog->update($data); return back()->with('success', 'Post updated.');
     }
     public function deleteBlog(BlogPost $blog) { $blog->delete(); return back()->with('success', 'Post deleted.'); }

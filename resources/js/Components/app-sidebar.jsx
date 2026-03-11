@@ -44,6 +44,12 @@ export function AppSidebar({
         isActive: route().current('admin.content*'),
       },
       {
+        title: "Blog Posts",
+        url: "/admin/blog",
+        icon: <FileTextIcon />,
+        isActive: route().current('admin.blog*'),
+      },
+      {
         title: "Careers",
         url: "/admin/careers",
         icon: <BriefcaseIcon />,
