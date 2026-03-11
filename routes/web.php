@@ -91,6 +91,11 @@ Route::get('/custom-carpentry', function () {
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\ContentCRUDController;
+use App\Http\Controllers\Admin\CareersController;
+use App\Http\Controllers\Admin\CareersCRUDController;
+use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\QuoteRequestController;
+use App\Http\Controllers\Admin\SettingsController;
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -129,6 +134,36 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::post('/content/blog', [ContentCRUDController::class, 'storeBlog'])->name('content.blog.store');
     Route::post('/content/blog/{blog}', [ContentCRUDController::class, 'updateBlog'])->name('content.blog.update');
     Route::delete('/content/blog/{blog}', [ContentCRUDController::class, 'deleteBlog'])->name('content.blog.delete');
+
+    // Careers
+    Route::get('/careers', [CareersController::class, 'index'])->name('careers.index');
+    
+    // Career Perks CRUD
+    Route::post('/careers/perks', [CareersCRUDController::class, 'storePerk'])->name('careers.perks.store');
+    Route::put('/careers/perks/{perk}', [CareersCRUDController::class, 'updatePerk'])->name('careers.perks.update');
+    Route::delete('/careers/perks/{perk}', [CareersCRUDController::class, 'deletePerk'])->name('careers.perks.delete');
+
+    // Open Positions CRUD
+    Route::post('/careers/positions', [CareersCRUDController::class, 'storePosition'])->name('careers.positions.store');
+    Route::put('/careers/positions/{position}', [CareersCRUDController::class, 'updatePosition'])->name('careers.positions.update');
+    Route::delete('/careers/positions/{position}', [CareersCRUDController::class, 'deletePosition'])->name('careers.positions.delete');
+    
+    // Job Applications CRUD
+    Route::delete('/careers/applications/{application}', [CareersCRUDController::class, 'deleteApplication'])->name('careers.applications.delete');
+
+    // Contact Messages
+    Route::get('/contact-messages', [ContactMessageController::class, 'index'])->name('messages.index');
+    Route::patch('/contact-messages/{message}/read', [ContactMessageController::class, 'markAsRead'])->name('messages.read');
+    Route::delete('/contact-messages/{message}', [ContactMessageController::class, 'destroy'])->name('messages.delete');
+
+    // Quote Requests
+    Route::get('/quote-requests', [QuoteRequestController::class, 'index'])->name('quotes.index');
+    Route::patch('/quote-requests/{requestModel}/read', [QuoteRequestController::class, 'markAsRead'])->name('quotes.read');
+    Route::delete('/quote-requests/{requestModel}', [QuoteRequestController::class, 'destroy'])->name('quotes.delete');
+
+    // Business Settings
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
 });
 
 Route::middleware('auth')->group(function () {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function OurProjects() {
+export default function OurProjects({ projects = [] }) {
     return (
         <section id="projects" className="py-24 bg-gray-50 overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
