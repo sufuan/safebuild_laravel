@@ -1,6 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { usePage } from '@inertiajs/react';
+import { getAssetUrl } from '@/lib/utils';
+
+const Counter = ({ target, suffix = '', duration = 1500 }) => {
+    const [count, setCount] = useState(0);
+    const countRef = useRef(0);
+    const elementRef = useRef(null);
+    const [hasAnimated, setHasAnimated] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !hasAnimated) {
+                setHasAnimated(true);
+                let start = 0;
+                const end = parseInt(target) || 0;
+                const totalDur = duration;
+                const startTime = performance.now();
+
+                const animate = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / totalDur, 1);
+                    
+                    // Ease out cubic
+                    const easedProgress = 1 - Math.pow(1 - progress, 3);
+                    const currentCount = Math.floor(easedProgress * end);
+                    
+                    setCount(currentCount);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        setCount(end);
+                    }
+                };
+
+                requestAnimationFrame(animate);
+            }
+        }, { threshold: 0.1 });
+
+        if (elementRef.current) {
+            observer.observe(elementRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, [target, hasAnimated, duration]);
+
+    return (
+        <span ref={elementRef} className="inline-block min-w-[2.2ch] tabular-nums text-left">
+            {count}{suffix}
+        </span>
+    );
+};
 
 export default function WhyChooseUs() {
+    const { siteSettings = {} } = usePage().props;
+
     return (
         <section id="why-choose-us" className="py-24 bg-white overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
@@ -14,33 +68,32 @@ export default function WhyChooseUs() {
                         </div>
                         <h2
                             className="text-sb-dark text-4xl md:text-5xl font-poppins font-bold uppercase leading-tight mb-8">
-                            Elevate Your Property <br /> To Its <span className="text-sb-red">Full Potential</span>
+                            {siteSettings.why_title || "Elevate Your Property To Its Full Potential"}
                         </h2>
                         <p className="text-gray-600 text-lg mb-10 leading-relaxed">
-                            Let us bring your vision to life while maintaining the integrity and functionality of
-                            your property. We manage every detail with excellence from design to execution.
+                            {siteSettings.why_description || "Let us bring your vision to life while maintaining the integrity and functionality of your property. We manage every detail with excellence from design to execution."}
                         </p>
 
                         <div className="space-y-6">
                             <div className="flex gap-4">
                                 <div className="mt-1 text-sb-red"><i className="flaticon-right-arrow-1"></i></div>
                                 <div>
-                                    <h4 className="text-sb-dark font-bold text-lg uppercase">Proven Expertise</h4>
-                                    <p className="text-gray-600">A trusted leader in construction and restoration across BC.</p>
+                                    <h4 className="text-sb-dark font-bold text-lg uppercase">{siteSettings.why_acc_1_title || "Proven Expertise"}</h4>
+                                    <p className="text-gray-600">{siteSettings.why_acc_1_text || "A trusted leader in construction and restoration across BC."}</p>
                                 </div>
                             </div>
                             <div className="flex gap-4">
                                 <div className="mt-1 text-sb-red"><i className="flaticon-right-arrow-1"></i></div>
                                 <div>
-                                    <h4 className="text-sb-dark font-bold text-lg uppercase">Industry Accreditation</h4>
-                                    <p className="text-gray-600">Fully insured, BBB-accredited, and proud members of BOMA.</p>
+                                    <h4 className="text-sb-dark font-bold text-lg uppercase">{siteSettings.why_acc_2_title || "Industry Accreditation"}</h4>
+                                    <p className="text-gray-600">{siteSettings.why_acc_2_text || "Fully insured, BBB-accredited, and proud members of BOMA."}</p>
                                 </div>
                             </div>
                             <div className="flex gap-4">
                                 <div className="mt-1 text-sb-red"><i className="flaticon-right-arrow-1"></i></div>
                                 <div>
-                                    <h4 className="text-sb-dark font-bold text-lg uppercase">Commitment to Quality</h4>
-                                    <p className="text-gray-600">Driven by precision, efficiency, and a focus on lasting value.</p>
+                                    <h4 className="text-sb-dark font-bold text-lg uppercase">{siteSettings.why_acc_3_title || "Commitment to Quality"}</h4>
+                                    <p className="text-gray-600">{siteSettings.why_acc_3_text || "Driven by precision, efficiency, and a focus on lasting value."}</p>
                                 </div>
                             </div>
                         </div>
@@ -57,29 +110,41 @@ export default function WhyChooseUs() {
                     <div className="lg:w-1/2 relative">
                         {/* Image */}
                         <div className="relative rounded-sm overflow-hidden shadow-2xl">
-                            <img src="assets/steptodown.com191724.webp" alt="Safebuild Professional"
+                            <img src={getAssetUrl(siteSettings.why_image, 'assets/steptodown.com191724.webp')} alt="Safebuild Professional"
                                 className="w-full h-auto" />
                             {/* Overlay Stats */}
                             <div
                                 className="absolute bottom-0 right-0 bg-sb-red p-10 md:p-14 text-white max-w-xs md:max-w-md transform translate-x-4 translate-y-4">
                                 <div className="space-y-8">
                                     <div className="flex items-center gap-6 border-b border-white/20 pb-6">
-                                        <span className="text-5xl font-bold counter-value" data-target="20"
-                                            data-suffix="+">0</span>
+                                        <span className="text-5xl font-bold">
+                                            <Counter 
+                                                target={(siteSettings.about_experience_years || "20").replace(/[^0-9]/g, '')}
+                                                suffix={(siteSettings.about_experience_years || "20+").includes('+') ? '+' : ''}
+                                            />
+                                        </span>
                                         <span
                                             className="uppercase tracking-widest font-bold text-sm leading-tight">Years
                                             <br /> Experience</span>
                                     </div>
                                     <div className="flex items-center gap-6 border-b border-white/20 pb-6">
-                                        <span className="text-5xl font-bold counter-value" data-target="400"
-                                            data-suffix="+">0</span>
+                                        <span className="text-5xl font-bold">
+                                            <Counter 
+                                                target={(siteSettings.about_projects_count || "400").replace(/[^0-9]/g, '')}
+                                                suffix={(siteSettings.about_projects_count || "400+").includes('+') ? '+' : ''}
+                                            />
+                                        </span>
                                         <span
                                             className="uppercase tracking-widest font-bold text-sm leading-tight">Projects
                                             <br /> Completed</span>
                                     </div>
                                     <div className="flex items-center gap-6">
-                                        <span className="text-5xl font-bold counter-value" data-target="50"
-                                            data-suffix="+">0</span>
+                                        <span className="text-5xl font-bold">
+                                            <Counter 
+                                                target={(siteSettings.about_pros_count || "50").replace(/[^0-9]/g, '')}
+                                                suffix={(siteSettings.about_pros_count || "50+").includes('+') ? '+' : ''}
+                                            />
+                                        </span>
                                         <span
                                             className="uppercase tracking-widest font-bold text-sm leading-tight">Skilled
                                             <br /> Professionals</span>

@@ -14,7 +14,7 @@ import Newsletter from '@/Components/Newsletter';
 import LatestNews from '@/Components/LatestNews';
 import BrandLogos from '@/Components/BrandLogos';
 
-export default function Welcome({ 
+export default function Welcome({
 	auth, laravelVersion, phpVersion,
 	heroSlides, services, projects, testimonials, teamMembers, brandLogos, blogPosts
 }) {
@@ -34,7 +34,6 @@ export default function Welcome({
 		const loadAllScripts = async () => {
 			try {
 				await loadScript('/assets/slider.js');
-				await loadScript('/assets/counters.js');
 				await loadScript('/assets/projects.js');
 				await loadScript('/assets/testimonials.js');
 			} catch (error) {

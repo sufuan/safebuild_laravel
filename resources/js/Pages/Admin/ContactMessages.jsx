@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm } from '@inertiajs/react';
+import { toast } from 'sonner';
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Mail, Phone, Calendar, Trash2, CheckCircle2, Circle } from 'lucide-react';
 import dayjs from 'dayjs';
@@ -16,6 +17,7 @@ export default function ContactMessages({ messages }) {
                 preserveScroll: true,
                 onSuccess: () => {
                     message.is_read = true;
+                    toast.success('Message marked as read.');
                 }
             });
         }
@@ -25,11 +27,10 @@ export default function ContactMessages({ messages }) {
         patch(route('admin.messages.toggle', id), {
             preserveScroll: true,
             onSuccess: (page) => {
-                // The messages prop will be updated automatically by Inertia
-                // but we need to update selectedMessage if it's the one being toggled
                 if (selectedMessage && selectedMessage.id === id) {
                     setSelectedMessage({ ...selectedMessage, is_read: !selectedMessage.is_read });
                 }
+                toast.success('Message status updated.');
             }
         });
     };
@@ -37,7 +38,9 @@ export default function ContactMessages({ messages }) {
     const handleMarkAllAsRead = () => {
         if(confirm('Mark all messages as read?')) {
             post(route('admin.messages.readAll'), {
-                preserveScroll: true
+                preserveScroll: true,
+                onSuccess: () => toast.success('All messages marked as read.'),
+                onError: () => toast.error('Failed to mark messages as read.')
             });
         }
     };
@@ -50,7 +53,9 @@ export default function ContactMessages({ messages }) {
                     if (selectedMessage && selectedMessage.id === id) {
                         setSelectedMessage(null);
                     }
-                }
+                    toast.success('Message deleted.');
+                },
+                onError: () => toast.error('Failed to delete message.')
             });
         }
     };

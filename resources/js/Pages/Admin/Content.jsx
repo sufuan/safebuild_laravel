@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Head, useForm } from '@inertiajs/react';
+import { toast } from 'sonner';
+import { Head, useForm, usePage } from '@inertiajs/react';
+import { getAssetUrl } from '@/lib/utils';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -18,6 +20,234 @@ const AVAILABLE_ICONS = [
     'flaticon-measure', 'flaticon-crane', 'flaticon-welder',
     'flaticon-paint-roller', 'flaticon-hook', 'flaticon-house'
 ];
+
+function AboutSectionEditor() {
+    const { siteSettings } = usePage().props;
+    const { data, setData, post, processing } = useForm({
+        settings: [
+            { key: 'about_title', value: siteSettings.about_title || '' },
+            { key: 'about_subtitle', value: siteSettings.about_subtitle || '' },
+            { key: 'about_description', value: siteSettings.about_description || '' },
+            { key: 'about_experience_years', value: siteSettings.about_experience_years || '' },
+            { key: 'about_projects_count', value: siteSettings.about_projects_count || '' },
+            { key: 'about_pros_count', value: siteSettings.about_pros_count || '' },
+            { key: 'about_intro_text', value: siteSettings.about_intro_text || '' },
+            { key: 'about_image', value: null },
+        ]
+    });
+
+    const [aboutImagePreview, setAboutImagePreview] = useState(siteSettings.about_image ? getAssetUrl(siteSettings.about_image) : null);
+
+    const handleAboutImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const newSettings = [...data.settings];
+            newSettings[7].value = file;
+            setData('settings', newSettings);
+            setAboutImagePreview(URL.createObjectURL(file));
+        }
+    };
+
+    const updateSetting = (key, value) => {
+        const newSettings = data.settings.map(s => s.key === key ? { ...s, value } : s);
+        setData('settings', newSettings);
+    };
+
+    const getVal = (key) => data.settings.find(s => s.key === key)?.value || '';
+
+    const submit = (e) => {
+        e.preventDefault();
+        post(route('admin.settings.update'), { 
+            preserveScroll: true,
+            onSuccess: () => toast.success('About section updated successfully!'),
+            onError: () => toast.error('Failed to update About section.')
+        });
+    };
+
+    return (
+        <Card className="border-0 shadow-sm rounded-3xl overflow-hidden">
+            <CardHeader className="bg-white border-b border-gray-100 px-8 py-6">
+                <CardTitle className="text-2xl font-black text-sb-dark">About Us Section Content</CardTitle>
+            </CardHeader>
+            <CardContent className="p-8">
+                <form onSubmit={submit} className="space-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-6">
+                            <div className="space-y-3">
+                                <Label className="text-sm font-bold text-gray-700">Section Title</Label>
+                                <Input value={getVal('about_title')} onChange={e => updateSetting('about_title', e.target.value)} className="h-12" />
+                            </div>
+                            <div className="space-y-3">
+                                <Label className="text-sm font-bold text-gray-700">Section Subtitle</Label>
+                                <Input value={getVal('about_subtitle')} onChange={e => updateSetting('about_subtitle', e.target.value)} className="h-12" />
+                            </div>
+                            <div className="space-y-3">
+                                <Label className="text-sm font-bold text-gray-700">Description</Label>
+                                <Textarea value={getVal('about_description')} onChange={e => updateSetting('about_description', e.target.value)} rows={4} />
+                            </div>
+                            <div className="grid grid-cols-3 gap-4">
+                                <div className="space-y-2">
+                                    <Label className="text-xs font-bold uppercase tracking-wider text-gray-500">Years Exp.</Label>
+                                    <Input value={getVal('about_experience_years')} onChange={e => updateSetting('about_experience_years', e.target.value)} placeholder="20+" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-xs font-bold uppercase tracking-wider text-gray-500">Projects</Label>
+                                    <Input value={getVal('about_projects_count')} onChange={e => updateSetting('about_projects_count', e.target.value)} placeholder="400+" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-xs font-bold uppercase tracking-wider text-gray-500">Pros Count</Label>
+                                    <Input value={getVal('about_pros_count')} onChange={e => updateSetting('about_pros_count', e.target.value)} placeholder="50+" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="space-y-6">
+                            <div className="space-y-3">
+                                <Label className="text-sm font-bold text-gray-700">Section Image</Label>
+                                <div 
+                                    className="border-2 border-dashed border-gray-300 rounded-2xl p-4 h-64 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 cursor-pointer relative group overflow-hidden"
+                                    onClick={() => document.getElementById('about-img-upload').click()}
+                                >
+                                    {aboutImagePreview ? (
+                                        <img src={aboutImagePreview} alt="About Us" className="h-full w-full object-cover rounded-xl" />
+                                    ) : (
+                                        <ImageIcon className="h-12 w-12 text-gray-300" />
+                                    )}
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full text-sm">Change Image</span>
+                                    </div>
+                                    <input id="about-img-upload" type="file" className="hidden" accept="image/*" onChange={handleAboutImageChange} />
+                                </div>
+                            </div>
+                            <div className="space-y-3">
+                                <Label className="text-sm font-bold text-gray-700">Intro / Bottom Text</Label>
+                                <Textarea value={getVal('about_intro_text')} onChange={e => updateSetting('about_intro_text', e.target.value)} rows={5} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex justify-end pt-4 border-t border-gray-100">
+                        <Button type="submit" disabled={processing} className="bg-sb-red hover:bg-sb-dark text-white font-bold h-12 px-8 rounded-xl">
+                            {processing ? 'Saving...' : 'Save About Section'}
+                        </Button>
+                    </div>
+                </form>
+            </CardContent>
+        </Card>
+    );
+}
+
+function WhyUsSectionEditor() {
+    const { siteSettings } = usePage().props;
+    const { data, setData, post, processing } = useForm({
+        settings: [
+            { key: 'why_title', value: siteSettings.why_title || '' },
+            { key: 'why_description', value: siteSettings.why_description || '' },
+            { key: 'why_acc_1_title', value: siteSettings.why_acc_1_title || '' },
+            { key: 'why_acc_1_text', value: siteSettings.why_acc_1_text || '' },
+            { key: 'why_acc_2_title', value: siteSettings.why_acc_2_title || '' },
+            { key: 'why_acc_2_text', value: siteSettings.why_acc_2_text || '' },
+            { key: 'why_acc_3_title', value: siteSettings.why_acc_3_title || '' },
+            { key: 'why_acc_3_text', value: siteSettings.why_acc_3_text || '' },
+            { key: 'why_image', value: null },
+        ]
+    });
+
+    const [whyImagePreview, setWhyImagePreview] = useState(siteSettings.why_image ? getAssetUrl(siteSettings.why_image) : null);
+
+    const handleWhyImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const newSettings = [...data.settings];
+            newSettings[8].value = file;
+            setData('settings', newSettings);
+            setWhyImagePreview(URL.createObjectURL(file));
+        }
+    };
+
+    const updateSetting = (key, value) => {
+        const newSettings = data.settings.map(s => s.key === key ? { ...s, value } : s);
+        setData('settings', newSettings);
+    };
+
+    const getVal = (key) => data.settings.find(s => s.key === key)?.value || '';
+
+    const submit = (e) => {
+        e.preventDefault();
+        post(route('admin.settings.update'), { 
+            preserveScroll: true,
+            onSuccess: () => toast.success('Why Choose Us section updated successfully!'),
+            onError: () => toast.error('Failed to update Why Choose Us section.')
+        });
+    };
+
+    return (
+        <Card className="border-0 shadow-sm rounded-3xl overflow-hidden">
+            <CardHeader className="bg-white border-b border-gray-100 px-8 py-6">
+                <CardTitle className="text-2xl font-black text-sb-dark">Why Choose Us Section Content</CardTitle>
+            </CardHeader>
+            <CardContent className="p-8">
+                <form onSubmit={submit} className="space-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-6">
+                            <div className="space-y-3">
+                                <Label className="text-sm font-bold text-gray-700">Main Title</Label>
+                                <Input value={getVal('why_title')} onChange={e => updateSetting('why_title', e.target.value)} className="h-12" />
+                            </div>
+                            <div className="space-y-3">
+                                <Label className="text-sm font-bold text-gray-700">Main Description</Label>
+                                <Textarea value={getVal('why_description')} onChange={e => updateSetting('why_description', e.target.value)} rows={3} />
+                            </div>
+                            
+                            {/* Accreditations */}
+                            <div className="space-y-4 pt-4 border-t border-gray-100">
+                                <Label className="text-sm font-bold uppercase tracking-widest text-sb-red">Accreditation #1</Label>
+                                <div className="grid gap-4">
+                                    <Input value={getVal('why_acc_1_title')} onChange={e => updateSetting('why_acc_1_title', e.target.value)} placeholder="Title" />
+                                    <Input value={getVal('why_acc_1_text')} onChange={e => updateSetting('why_acc_1_text', e.target.value)} placeholder="Description" />
+                                </div>
+                            </div>
+                            <div className="space-y-4 pt-4 border-t border-gray-100">
+                                <Label className="text-sm font-bold uppercase tracking-widest text-sb-red">Accreditation #2</Label>
+                                <div className="grid gap-4">
+                                    <Input value={getVal('why_acc_2_title')} onChange={e => updateSetting('why_acc_2_title', e.target.value)} placeholder="Title" />
+                                    <Input value={getVal('why_acc_2_text')} onChange={e => updateSetting('why_acc_2_text', e.target.value)} placeholder="Description" />
+                                </div>
+                            </div>
+                            <div className="space-y-4 pt-4 border-t border-gray-100">
+                                <Label className="text-sm font-bold uppercase tracking-widest text-sb-red">Accreditation #3</Label>
+                                <div className="grid gap-4">
+                                    <Input value={getVal('why_acc_3_title')} onChange={e => updateSetting('why_acc_3_title', e.target.value)} placeholder="Title" />
+                                    <Input value={getVal('why_acc_3_text')} onChange={e => updateSetting('why_acc_3_text', e.target.value)} placeholder="Description" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="space-y-6">
+                            <Label className="text-sm font-bold text-gray-700">Section Image</Label>
+                            <div 
+                                className="border-2 border-dashed border-gray-300 rounded-2xl p-4 h-96 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 cursor-pointer relative group overflow-hidden"
+                                onClick={() => document.getElementById('why-img-upload').click()}
+                            >
+                                {whyImagePreview ? (
+                                    <img src={whyImagePreview} alt="Why Us" className="h-full w-full object-cover rounded-xl" />
+                                ) : (
+                                    <ImageIcon className="h-12 w-12 text-gray-300" />
+                                )}
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full text-sm">Change Image</span>
+                                </div>
+                                <input id="why-img-upload" type="file" className="hidden" accept="image/*" onChange={handleWhyImageChange} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex justify-end pt-4 border-t border-gray-100">
+                        <Button type="submit" disabled={processing} className="bg-sb-red hover:bg-sb-dark text-white font-bold h-12 px-8 rounded-xl">
+                            {processing ? 'Saving...' : 'Save Why Us Section'}
+                        </Button>
+                    </div>
+                </form>
+            </CardContent>
+        </Card>
+    );
+}
 
 export default function Content({ heroSlides, services, projects, testimonials, teamMembers, brandLogos }) {
     // --- State & Forms ---
@@ -57,7 +287,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
             image_path: null, // Don't pre-fill file input
         });
 
-        setImagePreview(item.image_path ? `/${item.image_path}` : null);
+        setImagePreview(item.image_path ? getAssetUrl(item.image_path) : null);
         setIsDialogOpen(true);
     };
 
@@ -68,7 +298,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
             setImagePreview(URL.createObjectURL(file));
         } else {
             setData('image_path', null);
-            setImagePreview(editingItem && editingItem.image_path ? `/${editingItem.image_path}` : null);
+            setImagePreview(editingItem && editingItem.image_path ? getAssetUrl(editingItem.image_path) : null);
         }
     };
 
@@ -97,12 +327,20 @@ export default function Content({ heroSlides, services, projects, testimonials, 
         if (editingItem) {
             post(route(`admin.${prefix}.update`, editingItem.id), {
                 preserveScroll: true,
-                onSuccess: () => setIsDialogOpen(false),
+                onSuccess: () => {
+                    setIsDialogOpen(false);
+                    toast.success('Content updated successfully!');
+                },
+                onError: () => toast.error('Failed to update content.')
             });
         } else {
             post(route(`admin.${prefix}.store`), {
                 preserveScroll: true,
-                onSuccess: () => setIsDialogOpen(false),
+                onSuccess: () => {
+                    setIsDialogOpen(false);
+                    toast.success('Content created successfully!');
+                },
+                onError: () => toast.error('Failed to create content.')
             });
         }
     };
@@ -119,14 +357,21 @@ export default function Content({ heroSlides, services, projects, testimonials, 
             </div>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="mb-8 grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 h-auto p-1 bg-white border border-gray-100 shadow-sm rounded-xl">
+                <TabsList className="mb-8 grid w-full grid-cols-2 lg:grid-cols-8 h-auto p-1 bg-white border border-gray-100 shadow-sm rounded-xl overflow-x-auto">
                     <TabsTrigger value="hero" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Hero Slides</TabsTrigger>
+                    <TabsTrigger value="about" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all whitespace-nowrap">About Section</TabsTrigger>
                     <TabsTrigger value="services" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Services</TabsTrigger>
+                    <TabsTrigger value="why" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Why Us</TabsTrigger>
                     <TabsTrigger value="projects" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Projects</TabsTrigger>
                     <TabsTrigger value="testimonials" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Testimonials</TabsTrigger>
                     <TabsTrigger value="team" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Team</TabsTrigger>
-                    <TabsTrigger value="logos" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Brand Logos</TabsTrigger>
+                    <TabsTrigger value="logos" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all whitespace-nowrap">Brand Logos</TabsTrigger>
                 </TabsList>
+
+                {/* --- About Section Tab --- */}
+                <TabsContent value="about" className="mt-0">
+                    <AboutSectionEditor />
+                </TabsContent>
 
                 {/* --- Hero Slides Tab --- */}
                 <TabsContent value="hero" className="mt-0">
@@ -171,6 +416,11 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                             </Table>
                         </CardContent>
                     </Card>
+                </TabsContent>
+
+                {/* --- Why Choose Us Tab --- */}
+                <TabsContent value="why" className="mt-0">
+                    <WhyUsSectionEditor />
                 </TabsContent>
 
                 {/* --- Services Tab --- */}
@@ -356,7 +606,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-6">
                                 {brandLogos.map((logo) => (
                                     <div key={logo.id} className="flex flex-col items-center justify-center border border-gray-200 p-6 rounded-2xl bg-white relative group shadow-sm hover:shadow-md transition-all hover:border-sb-red/30 cursor-pointer">
-                                         <img src={`/${logo.image_path}`} alt="Brand Logo" className="h-12 w-auto object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
+                                         <img src={getAssetUrl(logo.image_path)} alt="Brand Logo" className="h-12 w-auto object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" />
                                          <Button variant="destructive" size="icon" className="absolute -top-3 -right-3 h-8 w-8 opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100 shadow-md rounded-full bg-sb-red" onClick={() => handleDelete('content.logos.delete', logo.id)}>
                                             <Trash2 className="h-4 w-4" />
                                          </Button>

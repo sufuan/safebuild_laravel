@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm } from '@inertiajs/react';
+import { toast } from 'sonner';
 import { Button } from "@/components/ui/button";
 import { BadgeDollarSign, Mail, Phone, Calendar, Trash2, CheckCircle2, Wrench, Building2 } from 'lucide-react';
 import dayjs from 'dayjs';
@@ -16,6 +17,7 @@ export default function QuoteRequests({ requests }) {
                 preserveScroll: true,
                 onSuccess: () => {
                     req.is_read = true;
+                    toast.success('Quote request marked as read.');
                 }
             });
         }
@@ -28,6 +30,7 @@ export default function QuoteRequests({ requests }) {
                 if (selectedRequest && selectedRequest.id === id) {
                     setSelectedRequest({ ...selectedRequest, is_read: !selectedRequest.is_read });
                 }
+                toast.success('Quote request status updated.');
             }
         });
     };
@@ -35,7 +38,9 @@ export default function QuoteRequests({ requests }) {
     const handleMarkAllAsRead = () => {
         if(confirm('Mark all quote requests as read?')) {
             post(route('admin.quotes.readAll'), {
-                preserveScroll: true
+                preserveScroll: true,
+                onSuccess: () => toast.success('All quote requests marked as read.'),
+                onError: () => toast.error('Failed to mark quote requests as read.')
             });
         }
     };
@@ -48,7 +53,9 @@ export default function QuoteRequests({ requests }) {
                     if (selectedRequest && selectedRequest.id === id) {
                         setSelectedRequest(null);
                     }
-                }
+                    toast.success('Quote request deleted.');
+                },
+                onError: () => toast.error('Failed to delete quote request.')
             });
         }
     };

@@ -41,7 +41,30 @@ class AdminSeeder extends Seeder
             ['key' => 'contact_phone', 'value' => '+1 (250) 886-0059', 'type' => 'string'],
             ['key' => 'careers_email', 'value' => 'careers@safebuild.ca', 'type' => 'string'],
             ['key' => 'facebook_url', 'value' => 'https://www.facebook.com/safebuild.ca', 'type' => 'string'],
+            ['key' => 'twitter_url', 'value' => 'https://twitter.com/safebuild', 'type' => 'string'],
+            ['key' => 'linkedin_url', 'value' => 'https://linkedin.com/company/safebuild', 'type' => 'string'],
             ['key' => 'footer_about', 'value' => 'SafeBuild Canada is a premier general contractor offering comprehensive building services across Vancouver Island.', 'type' => 'text'],
+            
+            // About Us Section (Home)
+            ['key' => 'about_title', 'value' => 'OUR 20 YEARS WORKING & BUILDING EXPERIENCE.', 'type' => 'string'],
+            ['key' => 'about_subtitle', 'value' => 'We are working Since 2014 in Globally. Construction and Development', 'type' => 'string'],
+            ['key' => 'about_description', 'value' => 'From comprehensive renovations and architectural design to property maintenance and restoration, our team ensures every project reflects unparalleled professionalism and precision.', 'type' => 'text'],
+            ['key' => 'about_experience_years', 'value' => '20+', 'type' => 'string'],
+            ['key' => 'about_projects_count', 'value' => '400+', 'type' => 'string'],
+            ['key' => 'about_pros_count', 'value' => '50+', 'type' => 'string'],
+            ['key' => 'about_image', 'value' => 'assets/steptodown.com688306.webp', 'type' => 'string'],
+            ['key' => 'about_intro_text', 'value' => 'At SafeBuild, we combine over two decades of experience with a commitment to safe, reliable, and community-focused construction across Vancouver Island. From concept to completion, we deliver precise, high-quality results while embracing innovation, collaboration, and respect for the region\'s diverse communities and Indigenous heritage.', 'type' => 'text'],
+
+            // Why Choose Us Section
+            ['key' => 'why_title', 'value' => 'Elevate Your Property To Its Full Potential', 'type' => 'string'],
+            ['key' => 'why_description', 'value' => 'Let us bring your vision to life while maintaining the integrity and functionality of your property. We manage every detail with excellence from design to execution.', 'type' => 'text'],
+            ['key' => 'why_image', 'value' => 'assets/steptodown.com191724.webp', 'type' => 'string'],
+            ['key' => 'why_acc_1_title', 'value' => 'Proven Expertise', 'type' => 'string'],
+            ['key' => 'why_acc_1_text', 'value' => 'A trusted leader in construction and restoration across BC.', 'type' => 'string'],
+            ['key' => 'why_acc_2_title', 'value' => 'Industry Accreditation', 'type' => 'string'],
+            ['key' => 'why_acc_2_text', 'value' => 'Fully insured, BBB-accredited, and proud members of BOMA.', 'type' => 'string'],
+            ['key' => 'why_acc_3_title', 'value' => 'Commitment to Quality', 'type' => 'string'],
+            ['key' => 'why_acc_3_text', 'value' => 'Driven by precision, efficiency, and a focus on lasting value.', 'type' => 'string'],
         ];
 
         foreach ($settings as $setting) {

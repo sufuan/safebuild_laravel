@@ -18,19 +18,31 @@ class SettingsController extends Controller
 
     public function update(Request $request)
     {
-        $validated = $request->validate([
-            'settings' => 'required|array',
-            'settings.*.key' => 'required|string',
-            'settings.*.value' => 'nullable|string',
-        ]);
+        $settings = $request->input('settings', []);
+        
+        foreach ($settings as $index => $settingData) {
+            $key = $settingData['key'];
+            $value = $settingData['value'] ?? null;
 
-        foreach ($validated['settings'] as $settingData) {
+            // Handle file upload if present
+            if ($request->hasFile("settings.{$index}.value")) {
+                $file = $request->file("settings.{$index}.value");
+                $path = $file->store('assets/settings', 'public');
+                $value = $path;
+            }
+
+            // If it's an image setting and we didn't upload a new one, 
+            // and the value is null/empty/non-string, don't update it to avoid breaking paths
+            if (str_ends_with($key, '_image') && !$request->hasFile("settings.{$index}.value") && empty($settingData['value'])) {
+                continue;
+            }
+
             SiteSetting::updateOrCreate(
-                ['key' => $settingData['key']],
-                ['value' => $settingData['value']]
+                ['key' => $key],
+                ['value' => $value]
             );
         }
 
-        return back()->with('success', 'Business settings updated successfully.');
+        return back()->with('success', 'Settings updated successfully.');
     }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm } from '@inertiajs/react';
+import { toast } from 'sonner';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -42,7 +43,9 @@ export default function BusinessSettings({ settings }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route('admin.settings.update'), {
-            preserveScroll: true
+            preserveScroll: true,
+            onSuccess: () => toast.success('Business settings updated successfully!'),
+            onError: () => toast.error('Failed to update business settings.')
         });
     };
 
