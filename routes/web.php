@@ -50,8 +50,24 @@ Route::post('/contact-us', [ContactMessageController::class, 'store'])->name('co
 Route::post('/quote-requests', [QuoteRequestController::class, 'store'])->name('quotes.store');
 
 Route::get('/blog', function () {
-    return Inertia::render('Blog');
-});
+    return Inertia::render('Blog', [
+        'posts' => BlogPost::where('is_active', true)->latest()->paginate(9)
+    ]);
+})->name('blog.index');
+
+Route::get('/blog/{blog}', function (BlogPost $blog) {
+    if (!$blog->is_active && !auth()->check()) {
+        abort(404);
+    }
+    return Inertia::render('BlogDetail', [
+        'post' => $blog,
+        'recentPosts' => BlogPost::where('is_active', true)
+            ->where('id', '!=', $blog->id)
+            ->latest()
+            ->take(3)
+            ->get()
+    ]);
+})->name('blog.show');
 
 use App\Models\CareerPerk;
 use App\Models\OpenPosition;
