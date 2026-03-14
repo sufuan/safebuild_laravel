@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import BrandLogos from '@/Components/BrandLogos';
@@ -6,6 +6,7 @@ import OurProjects from '@/Components/OurProjects';
 import React from 'react';
 
 export default function AboutUsPage() {
+    const { siteSettings } = usePage().props;
     return (
         <>
             <Head title="About Us – SafeBuild Canada" />
@@ -311,8 +312,8 @@ export default function AboutUsPage() {
                                 <span className="text-white font-bold uppercase tracking-widest text-xs block mb-1 opacity-80">
                                     Our 24/7 Phone Services
                                 </span>
-                                <a href="tel:+12508860059" className="text-white text-3xl font-bold hover:text-sb-orange transition-colors">
-                                    +1 (250) 886-0059
+                                <a href={`tel:${(siteSettings.contact_phone || '+12508860059').replace(/[^0-9+]/g, '')}`} className="text-white text-3xl font-bold hover:text-sb-orange transition-colors">
+                                    {siteSettings.contact_phone || '+1 (250) 886-0059'}
                                 </a>
                             </div>
                         </div>

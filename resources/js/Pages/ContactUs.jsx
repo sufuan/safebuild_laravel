@@ -1,4 +1,4 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import BrandLogos from '@/Components/BrandLogos';
@@ -6,6 +6,7 @@ import React from 'react';
 import { Toaster, toast } from 'sonner';
 
 export default function ContactUs() {
+    const { siteSettings } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -173,30 +174,27 @@ export default function ContactUs() {
                             {/* Email */}
                             <div className="flex flex-col">
                                 <h4 className="text-sb-dark font-bold uppercase tracking-widest text-sm mb-6">E-MAIL</h4>
-                                <a href="mailto:ceo@safebuild.ca"
-                                    className="text-gray-500 hover:text-sb-red transition-colors font-medium">ceo@safebuild.ca</a>
+                                <a href={`mailto:${siteSettings.contact_email || 'ceo@safebuild.ca'}`}
+                                    className="text-gray-500 hover:text-sb-red transition-colors font-medium">{siteSettings.contact_email || 'ceo@safebuild.ca'}</a>
                             </div>
                             {/* Telephone */}
                             <div className="flex flex-col">
                                 <h4 className="text-sb-dark font-bold uppercase tracking-widest text-sm mb-6">TELEPHONE</h4>
-                                <a href="tel:+12508860059"
-                                    className="text-gray-500 hover:text-sb-red transition-colors font-medium">(+1 (250) 886-0059)</a>
+                                <a href={`tel:${(siteSettings.contact_phone || '+12508860059').replace(/[^0-9+]/g, '')}`}
+                                    className="text-gray-500 hover:text-sb-red transition-colors font-medium">{siteSettings.contact_phone || '(+1 (250) 886-0059)'}</a>
                             </div>
                             {/* Social */}
                             <div className="flex flex-col">
                                 <h4 className="text-sb-dark font-bold uppercase tracking-widest text-sm mb-6">SOCIAL</h4>
                                 <div className="flex items-center gap-4">
-                                    <a href="#" className="text-gray-400 hover:text-sb-red transition-colors text-lg">
+                                    <a href={siteSettings.facebook_url || "#"} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-sb-red transition-colors text-lg">
                                         <i className="fab fa-facebook-f"></i>
                                     </a>
-                                    <a href="#" className="text-gray-400 hover:text-sb-red transition-colors text-lg">
+                                    <a href={siteSettings.twitter_url || "#"} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-sb-red transition-colors text-lg">
                                         <i className="fab fa-twitter"></i>
                                     </a>
-                                    <a href="#" className="text-gray-400 hover:text-sb-red transition-colors text-lg">
+                                    <a href={siteSettings.linkedin_url || "#"} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-sb-red transition-colors text-lg">
                                         <i className="fab fa-linkedin-in"></i>
-                                    </a>
-                                    <a href="#" className="text-gray-400 hover:text-sb-red transition-colors text-lg">
-                                        <i className="fab fa-instagram"></i>
                                     </a>
                                 </div>
                             </div>

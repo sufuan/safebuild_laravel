@@ -21,6 +21,8 @@ export default function BusinessSettings({ settings }) {
             { key: 'contact_phone', value: getSetting('contact_phone') },
             { key: 'careers_email', value: getSetting('careers_email') },
             { key: 'facebook_url', value: getSetting('facebook_url') },
+            { key: 'twitter_url', value: getSetting('twitter_url') },
+            { key: 'linkedin_url', value: getSetting('linkedin_url') },
             { key: 'footer_about', value: getSetting('footer_about') }
         ]
     });
@@ -150,6 +152,26 @@ export default function BusinessSettings({ settings }) {
                                     type="url"
                                     value={getValue('facebook_url')} 
                                     onChange={e => handleChange('facebook_url', e.target.value)} 
+                                    className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-14 rounded-xl"
+                                />
+                            </div>
+                            <div className="space-y-3">
+                                <Label htmlFor="twitter_url" className="font-bold text-gray-700">Twitter (X) URL</Label>
+                                <Input 
+                                    id="twitter_url" 
+                                    type="url"
+                                    value={getValue('twitter_url')} 
+                                    onChange={e => handleChange('twitter_url', e.target.value)} 
+                                    className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-14 rounded-xl"
+                                />
+                            </div>
+                            <div className="space-y-3">
+                                <Label htmlFor="linkedin_url" className="font-bold text-gray-700">LinkedIn Profile URL</Label>
+                                <Input 
+                                    id="linkedin_url" 
+                                    type="url"
+                                    value={getValue('linkedin_url')} 
+                                    onChange={e => handleChange('linkedin_url', e.target.value)} 
                                     className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-14 rounded-xl"
                                 />
                             </div>

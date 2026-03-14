@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import { Toaster, toast } from 'sonner';
 import { useEffect } from 'react';
 
 export default function Careers({ perks, positions }) {
+    const { siteSettings } = usePage().props;
     const { data, setData, post, processing, reset, errors, recentlySuccessful } = useForm({
         name: '',
         email: '',
@@ -149,7 +150,7 @@ export default function Careers({ perks, positions }) {
                                     </div>
                                     <div>
                                         <span className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Email Us</span>
-                                        <a href="mailto:careers@safebuild.ca" className="text-lg font-bold text-sb-dark hover:text-sb-red transition-colors">careers@safebuild.ca</a>
+                                        <a href={`mailto:${siteSettings.careers_email || 'careers@safebuild.ca'}`} className="text-lg font-bold text-sb-dark hover:text-sb-red transition-colors">{siteSettings.careers_email || 'careers@safebuild.ca'}</a>
                                     </div>
                                 </div>
 
@@ -159,7 +160,7 @@ export default function Careers({ perks, positions }) {
                                     </div>
                                     <div>
                                         <span className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Call Us</span>
-                                        <a href="tel:+12508860059" className="text-lg font-bold text-sb-dark hover:text-sb-red transition-colors">+1 (250) 886-0059</a>
+                                        <a href={`tel:${(siteSettings.contact_phone || '+12508860059').replace(/[^0-9+]/g, '')}`} className="text-lg font-bold text-sb-dark hover:text-sb-red transition-colors">{siteSettings.contact_phone || '+1 (250) 886-0059'}</a>
                                     </div>
                                 </div>
                             </div>

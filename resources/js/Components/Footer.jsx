@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 
 const instaImages = [
     'project-v1-5-1-1.jpg',
@@ -11,6 +11,8 @@ const instaImages = [
 ];
 
 export default function Footer() {
+    const { siteSettings } = usePage().props;
+
     return (
         <>
             {/* ── CALL TO ACTION ────────────────────────────────────────── */}
@@ -39,26 +41,23 @@ export default function Footer() {
                                     />
                                 </Link>
                             </div>
-                            <div className="text-[#cecece] text-[14px] leading-[28px] mb-[40px]"></div>
+                            <div className="text-[#cecece] text-[14px] leading-[28px] mb-[40px]">
+                                {siteSettings.footer_about || "SafeBuild is a premier construction management company dedicated to delivering high-quality residential and commercial projects with safety and precision."}
+                            </div>
                             <ul className="flex">
                                 <li className="mr-[15px]">
-                                    <a href="#" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] text-[14px] leading-[35px] text-center transition-all duration-200 hover:bg-[#e84900] hover:text-white">
+                                    <a href={siteSettings.facebook_url || "#"} target="_blank" rel="noopener noreferrer" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] text-[20px] leading-[35px] text-center transition-all duration-200 hover:bg-[#e84900] hover:text-white">
                                         <i className="fab fa-facebook-f"></i>
                                     </a>
                                 </li>
                                 <li className="mr-[15px]">
-                                    <a href="#" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] text-[14px] leading-[35px] text-center transition-all duration-200 hover:bg-[#e84900] hover:text-white">
+                                    <a href={siteSettings.twitter_url || "#"} target="_blank" rel="noopener noreferrer" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] text-[20px] leading-[35px] text-center transition-all duration-200 hover:bg-[#e84900] hover:text-white">
                                         <i className="fab fa-twitter"></i>
                                     </a>
                                 </li>
                                 <li className="mr-[15px]">
-                                    <a href="#" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] text-[14px] leading-[35px] text-center transition-all duration-200 hover:bg-[#e84900] hover:text-white">
+                                    <a href={siteSettings.linkedin_url || "#"} target="_blank" rel="noopener noreferrer" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] text-[20px] leading-[35px] text-center transition-all duration-200 hover:bg-[#e84900] hover:text-white">
                                         <i className="fab fa-linkedin-in"></i>
-                                    </a>
-                                </li>
-                                <li className="mr-[15px]">
-                                    <a href="#" className="block w-[35px] h-[35px] bg-[#fbfbfd] rounded-full text-[#11161e] text-[14px] leading-[35px] text-center transition-all duration-200 hover:bg-[#e84900] hover:text-white">
-                                        <i className="fab fa-pinterest-p"></i>
                                     </a>
                                 </li>
                             </ul>

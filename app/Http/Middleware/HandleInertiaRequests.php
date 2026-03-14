@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
                 'messages' => ContactMessage::where('is_read', false)->count(),
                 'quotes' => QuoteRequest::where('is_read', false)->count(),
             ],
+            'siteSettings' => \App\Models\SiteSetting::all()->pluck('value', 'key')->toArray(),
         ];
     }
 }
