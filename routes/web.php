@@ -98,7 +98,9 @@ Route::get('/faq', function () {
 });
 
 Route::get('/our-services', function () {
-    return Inertia::render('OurServices');
+    return Inertia::render('OurServices', [
+        'services' => Service::where('is_active', true)->orderBy('order')->get()
+    ]);
 });
 
 Route::get('/property-services-design', function () {

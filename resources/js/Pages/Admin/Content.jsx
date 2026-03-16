@@ -249,9 +249,110 @@ function WhyUsSectionEditor() {
     );
 }
 
+function ServicesPageEditor() {
+    const { siteSettings } = usePage().props;
+    const [preview, setPreview] = useState(siteSettings.services_hero_image ? getAssetUrl(siteSettings.services_hero_image) : null);
+    
+    const { data, setData, post, processing } = useForm({
+        settings: [
+            { key: 'services_hero_image', value: siteSettings.services_hero_image || '', type: 'image' },
+            { key: 'services_hero_title', value: siteSettings.services_hero_title || '' },
+            { key: 'services_subtitle', value: siteSettings.services_subtitle || '' },
+            { key: 'services_intro_title', value: siteSettings.services_intro_title || '' },
+            { key: 'services_intro_description', value: siteSettings.services_intro_description || '' },
+        ]
+    });
+
+    const updateSetting = (key, value) => {
+        const newSettings = data.settings.map(s => s.key === key ? { ...s, value } : s);
+        setData('settings', newSettings);
+    };
+
+    const getVal = (key) => data.settings.find(s => s.key === key)?.value || '';
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            updateSetting('services_hero_image', file);
+            setPreview(URL.createObjectURL(file));
+        }
+    };
+
+    const submit = (e) => {
+        e.preventDefault();
+        post(route('admin.settings.update'), { 
+            preserveScroll: true,
+            onSuccess: () => toast.success('Services page content updated!'),
+            onError: () => toast.error('Failed to update services content.')
+        });
+    };
+
+    return (
+        <Card className="border-0 shadow-sm rounded-3xl overflow-hidden">
+            <CardHeader className="bg-white border-b border-gray-100 px-8 py-6">
+                <CardTitle className="text-2xl font-black text-sb-dark">Services Page Settings</CardTitle>
+            </CardHeader>
+            <CardContent className="p-8">
+                <form onSubmit={submit} className="space-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div className="space-y-6">
+                            <div className="space-y-3">
+                                <Label className="text-sm font-bold text-gray-700">Hero Main Title</Label>
+                                <Input value={getVal('services_hero_title')} onChange={e => updateSetting('services_hero_title', e.target.value)} className="h-12 border-gray-200" />
+                            </div>
+                            <div className="space-y-3">
+                                <Label className="text-sm font-bold text-gray-700">Hero Subtitle (Orange Text)</Label>
+                                <Input value={getVal('services_subtitle')} onChange={e => updateSetting('services_subtitle', e.target.value)} className="h-12 border-gray-200" />
+                            </div>
+                            <div className="space-y-3">
+                                <Label className="text-sm font-bold text-gray-700">Main Intro Title</Label>
+                                <Input value={getVal('services_intro_title')} onChange={e => updateSetting('services_intro_title', e.target.value)} className="h-12 border-gray-200" />
+                            </div>
+                            <div className="space-y-3">
+                                <Label className="text-sm font-bold text-gray-700">Intro Description</Label>
+                                <Textarea value={getVal('services_intro_description')} onChange={e => updateSetting('services_intro_description', e.target.value)} rows={5} className="border-gray-200 resize-none" />
+                            </div>
+                        </div>
+
+                        <div className="space-y-3">
+                            <Label className="text-sm font-bold text-gray-700">Hero Background Image</Label>
+                            <div 
+                                className="border-2 border-dashed border-gray-300 rounded-2xl p-4 h-[300px] flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 cursor-pointer relative transition-all group overflow-hidden"
+                                onClick={() => document.getElementById('services-hero-upload').click()}
+                            >
+                                {preview ? (
+                                    <div className="relative w-full h-full">
+                                        <img src={preview} alt="Hero Preview" className="w-full h-full object-cover rounded-xl" />
+                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl">
+                                            <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full">Change Image</span>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="text-center">
+                                        <ImageIcon className="h-10 w-10 text-gray-300 mx-auto mb-2" />
+                                        <p className="text-sm text-gray-500 font-medium">Click to upload banner</p>
+                                    </div>
+                                )}
+                                <input id="services-hero-upload" type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-end pt-6 border-t border-gray-100">
+                        <Button type="submit" disabled={processing} className="bg-sb-red hover:bg-sb-dark text-white font-bold h-12 px-10 rounded-xl shadow-lg shadow-red-200 hover:shadow-xl transition-all">
+                            {processing ? 'Saving...' : 'Save Services Content'}
+                        </Button>
+                    </div>
+                </form>
+            </CardContent>
+        </Card>
+    );
+}
+
+
 export default function Content({ heroSlides, services, projects, testimonials, teamMembers, brandLogos }) {
     // --- State & Forms ---
-    const [activeTab, setActiveTab] = useState('hero');
+    const [activeTab, setActiveTab] = useState(new URLSearchParams(window.location.search).get('tab') || 'hero');
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingItem, setEditingItem] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
@@ -360,7 +461,8 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                 <TabsList className="mb-8 grid w-full grid-cols-2 lg:grid-cols-8 h-auto p-1 bg-white border border-gray-100 shadow-sm rounded-xl overflow-x-auto">
                     <TabsTrigger value="hero" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Hero Slides</TabsTrigger>
                     <TabsTrigger value="about" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all whitespace-nowrap">About Section</TabsTrigger>
-                    <TabsTrigger value="services" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Services</TabsTrigger>
+                    <TabsTrigger value="services" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all whitespace-nowrap">Services List</TabsTrigger>
+                    <TabsTrigger value="services_intro" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all whitespace-nowrap">Services Intro</TabsTrigger>
                     <TabsTrigger value="why" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Why Us</TabsTrigger>
                     <TabsTrigger value="projects" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Projects</TabsTrigger>
                     <TabsTrigger value="testimonials" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Testimonials</TabsTrigger>
@@ -423,6 +525,11 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                     <WhyUsSectionEditor />
                 </TabsContent>
 
+                {/* --- Services Intro Tab --- */}
+                <TabsContent value="services_intro" className="mt-0">
+                    <ServicesPageEditor />
+                </TabsContent>
+
                 {/* --- Services Tab --- */}
                 <TabsContent value="services" className="mt-0">
                     <Card className="border-0 shadow-sm rounded-3xl overflow-hidden">
@@ -442,10 +549,13 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                 <TableBody>
                                     {services.map((service) => (
                                         <TableRow key={service.id} className="hover:bg-gray-50/30 transition-colors">
-                                            <TableCell className="px-8 py-4">
-                                                <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center border border-red-100">
+                                            <TableCell className="px-8 py-4 flex items-center gap-4">
+                                                <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center border border-red-100 flex-shrink-0">
                                                     <i className={`${service.icon_class} text-2xl text-sb-red`}></i>
                                                 </div>
+                                                {service.image_path && (
+                                                    <img src={getAssetUrl(service.image_path)} alt={service.title} className="w-14 h-14 object-cover rounded-md border" />
+                                                )}
                                             </TableCell>
                                             <TableCell className="font-bold text-sb-dark text-lg whitespace-nowrap">{service.title}</TableCell>
                                             <TableCell className="text-gray-500 max-w-md truncate">{service.description}</TableCell>
@@ -722,11 +832,11 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                             {/* Right Column (Image Upload & Specialized Picks) */}
                             <div className="space-y-6">
                                 {/* Common Image Upload for Tabs that need it */}
-                                {['hero', 'projects', 'testimonials', 'team', 'logos'].includes(activeTab) && (
+                                {['hero', 'services', 'projects', 'testimonials', 'team', 'logos'].includes(activeTab) && (
                                     <div className="space-y-3 h-full flex flex-col">
                                         <Label className="text-sm font-bold text-gray-700">
                                             {activeTab === 'logos' ? 'Brand Logo Image' : 'Featured Image'} 
-                                            {(!editingItem && activeTab !== 'testimonials') && <span className="text-sb-red ml-1">*</span>}
+                                            {(!editingItem && !['testimonials', 'services'].includes(activeTab)) && <span className="text-sb-red ml-1">*</span>}
                                         </Label>
                                         <div 
                                             className="border-2 border-dashed border-gray-300 rounded-2xl p-6 flex-1 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 hover:border-sb-red/50 transition-all cursor-pointer relative group overflow-hidden min-h-[300px]"

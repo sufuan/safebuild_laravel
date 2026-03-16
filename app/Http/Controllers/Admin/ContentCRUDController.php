@@ -58,12 +58,28 @@ class ContentCRUDController extends Controller
 
     // --- Services ---
     public function storeService(Request $request) {
-        $data = $request->validate(['title' => 'required|string', 'description' => 'required|string', 'icon_class' => 'required|string', 'is_active' => 'boolean']);
-        Service::create($data); return back()->with('success', 'Service created.');
+        $data = $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'icon_class' => 'required|string',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'is_active' => 'boolean'
+        ]);
+        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
+        Service::create($data); 
+        return back()->with('success', 'Service created.');
     }
     public function updateService(Request $request, Service $service) {
-        $data = $request->validate(['title' => 'required|string', 'description' => 'required|string', 'icon_class' => 'required|string', 'is_active' => 'boolean']);
-        $service->update($data); return back()->with('success', 'Service updated.');
+        $data = $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'icon_class' => 'required|string',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'is_active' => 'boolean'
+        ]);
+        if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
+        $service->update($data); 
+        return back()->with('success', 'Service updated.');
     }
     public function deleteService(Service $service) { $service->delete(); return back()->with('success', 'Service deleted.'); }
 
