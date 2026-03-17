@@ -108,53 +108,81 @@ export default function WhyChooseUs() {
 
                     {/* Right: Stats Box & Image */}
                     <div className="lg:w-1/2 relative">
-                        {/* Image */}
-                        <div className="relative rounded-sm overflow-hidden shadow-2xl">
-                            <img src={getAssetUrl(siteSettings.why_image, 'assets/steptodown.com191724.webp')} alt="Safebuild Professional"
-                                className="w-full h-auto" />
-                            {/* Overlay Stats */}
-                            <div
-                                className="absolute bottom-0 right-0 bg-sb-red p-10 md:p-14 text-white max-w-xs md:max-w-md transform translate-x-4 translate-y-4">
-                                <div className="space-y-8">
-                                    <div className="flex items-center gap-6 border-b border-white/20 pb-6">
-                                        <span className="text-5xl font-bold">
-                                            <Counter 
-                                                target={(siteSettings.about_experience_years || "20").replace(/[^0-9]/g, '')}
-                                                suffix={(siteSettings.about_experience_years || "20+").includes('+') ? '+' : ''}
-                                            />
-                                        </span>
-                                        <span
-                                            className="uppercase tracking-widest font-bold text-sm leading-tight">Years
-                                            <br /> Experience</span>
-                                    </div>
-                                    <div className="flex items-center gap-6 border-b border-white/20 pb-6">
-                                        <span className="text-5xl font-bold">
-                                            <Counter 
-                                                target={(siteSettings.about_projects_count || "400").replace(/[^0-9]/g, '')}
-                                                suffix={(siteSettings.about_projects_count || "400+").includes('+') ? '+' : ''}
-                                            />
-                                        </span>
-                                        <span
-                                            className="uppercase tracking-widest font-bold text-sm leading-tight">Projects
-                                            <br /> Completed</span>
-                                    </div>
-                                    <div className="flex items-center gap-6">
-                                        <span className="text-5xl font-bold">
-                                            <Counter 
-                                                target={(siteSettings.about_pros_count || "50").replace(/[^0-9]/g, '')}
-                                                suffix={(siteSettings.about_pros_count || "50+").includes('+') ? '+' : ''}
-                                            />
-                                        </span>
-                                        <span
-                                            className="uppercase tracking-widest font-bold text-sm leading-tight">Skilled
-                                            <br /> Professionals</span>
-                                    </div>
+                        {/* Image — no overflow-hidden so the overlay isn't clipped */}
+                        <div className="relative rounded-sm shadow-2xl h-[240px] lg:h-[380px]">
+                            <img
+                                src={getAssetUrl(siteSettings.why_image, 'assets/steptodown.com191724.webp')}
+                                alt="Safebuild Professional"
+                                className="w-full h-full object-cover rounded-sm"
+                            />
+
+                            {/* Stats overlay: absolute on lg+, hidden on mobile (shown below instead) */}
+                            <div className="hidden lg:flex flex-col justify-around absolute inset-y-0 right-0 bg-sb-red px-10 xl:px-14 text-white w-[62%]">
+                                <div className="flex items-center gap-6 border-b border-white/20 pb-8">
+                                    <span className="text-6xl xl:text-7xl font-bold">
+                                        <Counter
+                                            target={(siteSettings.about_experience_years || "20").replace(/[^0-9]/g, '')}
+                                            suffix={(siteSettings.about_experience_years || "20+").includes('+') ? '+' : ''}
+                                        />
+                                    </span>
+                                    <span className="uppercase tracking-widest font-bold text-sm leading-tight">Years<br />Experience</span>
+                                </div>
+                                <div className="flex items-center gap-6 border-b border-white/20 pb-8 pt-4">
+                                    <span className="text-6xl xl:text-7xl font-bold">
+                                        <Counter
+                                            target={(siteSettings.about_projects_count || "400").replace(/[^0-9]/g, '')}
+                                            suffix={(siteSettings.about_projects_count || "400+").includes('+') ? '+' : ''}
+                                        />
+                                    </span>
+                                    <span className="uppercase tracking-widest font-bold text-sm leading-tight">Projects<br />Completed</span>
+                                </div>
+                                <div className="flex items-center gap-6 pt-4">
+                                    <span className="text-6xl xl:text-7xl font-bold">
+                                        <Counter
+                                            target={(siteSettings.about_pros_count || "55").replace(/[^0-9]/g, '')}
+                                            suffix={(siteSettings.about_pros_count || "55+").includes('+') ? '+' : ''}
+                                        />
+                                    </span>
+                                    <span className="uppercase tracking-widest font-bold text-sm leading-tight">Skilled<br />Professionals</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Stats block for mobile — shown below image */}
+                        <div className="lg:hidden bg-sb-red p-8 text-white mt-0">
+                            <div className="grid grid-cols-3 gap-4 text-center">
+                                <div className="border-r border-white/20 pr-4">
+                                    <span className="block text-4xl font-bold">
+                                        <Counter
+                                            target={(siteSettings.about_experience_years || "20").replace(/[^0-9]/g, '')}
+                                            suffix={(siteSettings.about_experience_years || "20+").includes('+') ? '+' : ''}
+                                        />
+                                    </span>
+                                    <span className="uppercase tracking-widest font-bold text-[10px] leading-tight mt-1 block">Years<br />Experience</span>
+                                </div>
+                                <div className="border-r border-white/20 pr-4">
+                                    <span className="block text-4xl font-bold">
+                                        <Counter
+                                            target={(siteSettings.about_projects_count || "400").replace(/[^0-9]/g, '')}
+                                            suffix={(siteSettings.about_projects_count || "400+").includes('+') ? '+' : ''}
+                                        />
+                                    </span>
+                                    <span className="uppercase tracking-widest font-bold text-[10px] leading-tight mt-1 block">Projects<br />Completed</span>
+                                </div>
+                                <div>
+                                    <span className="block text-4xl font-bold">
+                                        <Counter
+                                            target={(siteSettings.about_pros_count || "55").replace(/[^0-9]/g, '')}
+                                            suffix={(siteSettings.about_pros_count || "55+").includes('+') ? '+' : ''}
+                                        />
+                                    </span>
+                                    <span className="uppercase tracking-widest font-bold text-[10px] leading-tight mt-1 block">Skilled<br />Professionals</span>
                                 </div>
                             </div>
                         </div>
 
                         {/* Decorative Element */}
-                        <div className="absolute -top-6 -left-6 w-32 h-32 border-8 border-gray-100 -z-10"></div>
+                        <div className="hidden lg:block absolute -top-6 -left-6 w-32 h-32 border-8 border-gray-100 -z-10"></div>
                     </div>
                 </div>
             </div>

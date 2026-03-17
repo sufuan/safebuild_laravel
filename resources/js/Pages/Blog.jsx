@@ -87,11 +87,10 @@ export default function Blog({ posts }) {
                                         key={index}
                                         href={link.url}
                                         dangerouslySetInnerHTML={{ __html: link.label }}
-                                        className={`w-auto min-w-[48px] h-12 flex items-center justify-center px-4 font-bold transition-colors ${
-                                            link.active 
-                                                ? 'bg-sb-red text-white' 
+                                        className={`w-auto min-w-[48px] h-12 flex items-center justify-center px-4 font-bold transition-colors ${link.active
+                                                ? 'bg-sb-red text-white'
                                                 : 'bg-gray-100 text-sb-dark hover:bg-sb-red hover:text-white'
-                                        } ${!link.url ? 'opacity-50 cursor-not-allowed hidden' : ''}`}
+                                            } ${!link.url ? 'opacity-50 cursor-not-allowed hidden' : ''}`}
                                     />
                                 ))}
                             </div>
@@ -99,15 +98,7 @@ export default function Blog({ posts }) {
                     </div>
                 </section>
 
-                {/* ── CTA STRIP ─────────────────────────────────────────── */}
-                <section className="bg-sb-red py-4 text-center border-t border-white/10">
-                    <div className="container mx-auto px-4">
-                        <h2 className="text-white font-bold text-sm font-roboto m-0 uppercase tracking-wide">
-                            We would love to hear from you! Let us know your construction management needs and learn more about
-                            how we can help you achieve your goals.
-                        </h2>
-                    </div>
-                </section>
+
 
                 <Footer />
             </div>
