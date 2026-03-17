@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm } from '@inertiajs/react';
+import { toast } from 'sonner';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -57,6 +58,11 @@ export default function BlogPosts({ posts }) {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                toast.error('The file is too large. Please upload an image smaller than 5MB.');
+                e.target.value = '';
+                return;
+            }
             setData('image_path', file);
             setImagePreview(URL.createObjectURL(file));
         } else {
@@ -219,7 +225,7 @@ export default function BlogPosts({ posts }) {
                                                         <ImageIcon className="h-6 w-6 text-sb-red" />
                                                     </div>
                                                     <p className="font-bold text-gray-700 mb-1">Click to add cover image</p>
-                                                    <p className="text-sm text-gray-400">Recommended: 1200x800px (Max 3MB)</p>
+                                                    <p className="text-sm text-gray-400">Recommended: 1200x800px (Max 5MB)</p>
                                                 </div>
                                             )}
                                             <input id="blog-image-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />

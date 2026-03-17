@@ -41,6 +41,11 @@ function AboutSectionEditor() {
     const handleAboutImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                toast.error('The file is too large. Please upload an image smaller than 5MB.');
+                e.target.value = '';
+                return;
+            }
             const newSettings = [...data.settings];
             newSettings[7].value = file;
             setData('settings', newSettings);
@@ -114,7 +119,7 @@ function AboutSectionEditor() {
                                     )}
                                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center">
                                         <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full text-sm">Change Image</span>
-                                        <span className="text-white text-[10px] mt-2 font-medium">Max size: 3MB</span>
+                                        <span className="text-white text-[10px] mt-2 font-medium">Max size: 5MB</span>
                                     </div>
                                     <input id="about-img-upload" type="file" className="hidden" accept="image/*" onChange={handleAboutImageChange} />
                                 </div>
@@ -157,6 +162,11 @@ function WhyUsSectionEditor() {
     const handleWhyImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                toast.error('The file is too large. Please upload an image smaller than 5MB.');
+                e.target.value = '';
+                return;
+            }
             const newSettings = [...data.settings];
             newSettings[8].value = file;
             setData('settings', newSettings);
@@ -234,7 +244,7 @@ function WhyUsSectionEditor() {
                                 )}
                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center">
                                     <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full text-sm">Change Image</span>
-                                    <span className="text-white text-[10px] mt-2 font-medium">Max size: 3MB</span>
+                                    <span className="text-white text-[10px] mt-2 font-medium">Max size: 5MB</span>
                                 </div>
                                 <input id="why-img-upload" type="file" className="hidden" accept="image/*" onChange={handleWhyImageChange} />
                             </div>
@@ -275,6 +285,11 @@ function ServicesPageEditor() {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                toast.error('The file is too large. Please upload an image smaller than 5MB.');
+                e.target.value = '';
+                return;
+            }
             updateSetting('services_hero_image', file);
             setPreview(URL.createObjectURL(file));
         }
@@ -327,14 +342,14 @@ function ServicesPageEditor() {
                                         <img src={preview} alt="Hero Preview" className="w-full h-full object-cover rounded-xl" />
                                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center rounded-xl">
                                             <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full">Change Image</span>
-                                            <span className="text-white text-xs mt-2 font-medium">Max size: 3MB</span>
+                                            <span className="text-white text-xs mt-2 font-medium">Max size: 5MB</span>
                                         </div>
                                     </div>
                                 ) : (
                                     <div className="text-center">
                                         <ImageIcon className="h-10 w-10 text-gray-300 mx-auto mb-2" />
                                         <p className="text-sm text-gray-500 font-medium">Click to upload banner</p>
-                                        <p className="text-[10px] text-gray-400 mt-1">Recommended size: under 3MB</p>
+                                        <p className="text-[10px] text-gray-400 mt-1">Recommended size: under 5MB</p>
                                     </div>
                                 )}
                                 <input id="services-hero-upload" type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
@@ -399,6 +414,11 @@ export default function Content({ heroSlides, services, projects, testimonials, 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                toast.error('The file is too large. Please upload an image smaller than 5MB.');
+                e.target.value = '';
+                return;
+            }
             setData('image_path', file);
             setImagePreview(URL.createObjectURL(file));
         } else {
@@ -854,7 +874,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                                         <ImageIcon className="h-8 w-8 text-sb-red" />
                                                     </div>
                                                     <p className="font-bold text-gray-700 mb-1">Click to browse or drag image here</p>
-                                                    <p className="text-sm text-gray-400">Supports JPG, PNG, WEBP (Max 3MB)</p>
+                                                    <p className="text-sm text-gray-400">Supports JPG, PNG, WEBP (Max 5MB)</p>
                                                 </div>
                                             )}
                                             <input id="image-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />

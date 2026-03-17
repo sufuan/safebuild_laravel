@@ -34,10 +34,10 @@ class SettingsController extends Controller
                     ]);
                 }
 
-                // Check size (3MB = 3072KB)
-                if ($file->getSize() > 3072 * 1024) {
+                // Check size (5MB = 5120KB)
+                if ($file->getSize() > 5120 * 1024) {
                     throw \Illuminate\Validation\ValidationException::withMessages([
-                        "settings.{$index}.value" => 'The image is too large. Please ensure it is under 3MB.'
+                        "settings.{$index}.value" => 'The file is too large. Please upload an image smaller than 5MB.'
                     ]);
                 }
 

@@ -16,6 +16,18 @@ export default function Careers({ perks, positions }) {
         cover_letter: '',
     });
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                toast.error('The file is too large. Please upload a file smaller than 5MB.');
+                e.target.value = '';
+                return;
+            }
+            setData('resume_path', file);
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route('careers.apply'), {
@@ -237,10 +249,10 @@ export default function Careers({ perks, positions }) {
                                             type="file" 
                                             accept=".pdf,.doc,.docx" 
                                             className="w-full bg-gray-50 border border-gray-200 px-5 py-3 focus:outline-none focus:border-sb-red transition-colors file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-sb-red file:text-white hover:file:bg-sb-dark file:cursor-pointer file:transition-colors" 
-                                            onChange={e => setData('resume_path', e.target.files[0])}
+                                            onChange={handleFileChange}
                                             required 
                                         />
-                                        <p className="text-xs text-gray-500 mt-2">Accepted formats: PDF, DOC, DOCX. Max size: 3MB.</p>
+                                        <p className="text-xs text-gray-500 mt-2">Accepted formats: PDF, DOC, DOCX. Max size: 5MB.</p>
                                         {errors.resume_path && <p className="text-xs text-red-500 mt-1">{errors.resume_path}</p>}
                                     </div>
                                     <div>
