@@ -113,7 +113,7 @@ class CareersCRUDController extends Controller
                 $file->move($targetDir, $filename);
                 $validated['resume_path'] = 'uploads/resumes/' . $filename;
             } catch (\Exception $e) {
-                \Log::error("Failed to move resume: " . $e->getMessage());
+                Log::error("Failed to move resume: " . $e->getMessage());
                 throw \Illuminate\Validation\ValidationException::withMessages([
                     'resume_path' => 'Failed to move the uploaded resume. error: ' . $e->getMessage()
                 ]);

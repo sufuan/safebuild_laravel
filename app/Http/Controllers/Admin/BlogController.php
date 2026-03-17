@@ -92,6 +92,8 @@ class BlogController extends Controller
             'author' => 'nullable|string',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean',
+        ], [
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits. Please check your cPanel PHP settings.',
         ]);
 
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) {

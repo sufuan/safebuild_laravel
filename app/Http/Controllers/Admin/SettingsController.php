@@ -55,7 +55,7 @@ class SettingsController extends Controller
                     $file->move($targetDir, $filename);
                     $value = 'assets/settings/' . $filename;
                 } catch (\Exception $e) {
-                    \Log::error("Failed to move settings file: " . $e->getMessage());
+                    Log::error("Failed to move settings file: " . $e->getMessage());
                     throw \Illuminate\Validation\ValidationException::withMessages([
                         "settings.{$index}.value" => 'Failed to move the uploaded file. error: ' . $e->getMessage()
                     ]);

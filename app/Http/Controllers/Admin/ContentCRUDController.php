@@ -63,6 +63,8 @@ class ContentCRUDController extends Controller
             'subtitle' => 'nullable|string|max:255',
             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean',
+        ], [
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         HeroSlide::create($data);
@@ -74,6 +76,8 @@ class ContentCRUDController extends Controller
             'subtitle' => 'nullable|string|max:255',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean',
+        ], [
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please check your cPanel PHP settings.',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $hero->update($data);
@@ -89,6 +93,8 @@ class ContentCRUDController extends Controller
             'icon_class' => 'required|string',
             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean'
+        ], [
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits. Please check your cPanel PHP settings.',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         Service::create($data); 
@@ -101,6 +107,8 @@ class ContentCRUDController extends Controller
             'icon_class' => 'required|string',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean'
+        ], [
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits. Please check your cPanel PHP settings.',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $service->update($data); 
@@ -157,7 +165,9 @@ class ContentCRUDController extends Controller
 
     // --- Blog ---
     public function storeBlog(Request $request) {
-        $data = $request->validate(['title' => 'required|string', 'excerpt' => 'required|string', 'date' => 'required|string', 'image_path' => 'required|image']);
+        $data = $request->validate(['title' => 'required|string', 'excerpt' => 'required|string', 'date' => 'required|string', 'image_path' => 'required|image'], [
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits. Please check your cPanel PHP settings.',
+        ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         BlogPost::create($data); return back()->with('success', 'Post created.');
     }
