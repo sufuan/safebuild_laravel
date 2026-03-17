@@ -12,7 +12,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Fix for cPanel public_html structure
+        $this->app->bind('path.public', function() {
+            $publicPath = base_path('public');
+            if (file_exists(base_path('public_html'))) {
+                $publicPath = base_path('public_html');
+            }
+            return $publicPath;
+        });
     }
 
     /**

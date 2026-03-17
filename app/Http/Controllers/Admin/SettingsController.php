@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 use App\Models\SiteSetting;
 
 class SettingsController extends Controller
@@ -27,8 +28,38 @@ class SettingsController extends Controller
             // Handle file upload if present
             if ($request->hasFile("settings.{$index}.value")) {
                 $file = $request->file("settings.{$index}.value");
-                $path = $file->store('assets/settings', 'public');
-                $value = $path;
+                if (!$file->isValid()) {
+                    throw \Illuminate\Validation\ValidationException::withMessages([
+                        "settings.{$index}.value" => 'The uploaded file is not valid.'
+                    ]);
+                }
+
+                $filename = time() . '_' . $key . '.' . $file->getClientOriginalExtension();
+                $targetDir = public_path('assets/settings');
+                
+                if (!file_exists($targetDir)) {
+                    if (!mkdir($targetDir, 0755, true)) {
+                        throw \Illuminate\Validation\ValidationException::withMessages([
+                            "settings.{$index}.value" => "Could not create directory: assets/settings. Please check folder permissions (755)."
+                        ]);
+                    }
+                }
+
+                if (!is_writable($targetDir)) {
+                    throw \Illuminate\Validation\ValidationException::withMessages([
+                        "settings.{$index}.value" => "The directory assets/settings is not writable. Please check folder permissions (755)."
+                    ]);
+                }
+
+                try {
+                    $file->move($targetDir, $filename);
+                    $value = 'assets/settings/' . $filename;
+                } catch (\Exception $e) {
+                    \Log::error("Failed to move settings file: " . $e->getMessage());
+                    throw \Illuminate\Validation\ValidationException::withMessages([
+                        "settings.{$index}.value" => 'Failed to move the uploaded file. error: ' . $e->getMessage()
+                    ]);
+                }
             }
 
             // If it's an image setting and we didn't upload a new one, 

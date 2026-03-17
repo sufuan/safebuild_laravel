@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\CareerPerk;
 use App\Models\OpenPosition;
 use App\Models\JobApplication;
+use Illuminate\Support\Facades\Log;
 
 class CareersCRUDController extends Controller
 {
@@ -85,9 +86,38 @@ class CareersCRUDController extends Controller
 
         if ($request->hasFile('resume_path')) {
             $file = $request->file('resume_path');
+            if (!$file->isValid()) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'resume_path' => 'The uploaded file is not valid.'
+                ]);
+            }
+
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/resumes'), $filename);
-            $validated['resume_path'] = 'uploads/resumes/' . $filename;
+            $targetDir = public_path('uploads/resumes');
+            
+            if (!file_exists($targetDir)) {
+                if (!mkdir($targetDir, 0755, true)) {
+                    throw \Illuminate\Validation\ValidationException::withMessages([
+                        'resume_path' => 'Could not create directory for resumes. Please check folder permissions (755).'
+                    ]);
+                }
+            }
+
+            if (!is_writable($targetDir)) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'resume_path' => 'The resume upload directory is not writable. Please check folder permissions (755).'
+                ]);
+            }
+
+            try {
+                $file->move($targetDir, $filename);
+                $validated['resume_path'] = 'uploads/resumes/' . $filename;
+            } catch (\Exception $e) {
+                \Log::error("Failed to move resume: " . $e->getMessage());
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'resume_path' => 'Failed to move the uploaded resume. error: ' . $e->getMessage()
+                ]);
+            }
         }
 
         JobApplication::create($validated);

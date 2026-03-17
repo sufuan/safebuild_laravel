@@ -16,15 +16,42 @@ use App\Models\BlogPost;
 
 class ContentCRUDController extends Controller
 {
-    private function uploadImage(Request $request, $fieldName, $folderName)
+    private function uploadImage(Request $request, $fieldName, $folderName = 'assets')
     {
         if ($request->hasFile($fieldName)) {
             $file = $request->file($fieldName);
-            // We want to store it in public/assets to maintain compatibility with hardcoded seed data
-            // But standard storage is better. Let's use public disk and move it to assets folder.
+            if (!$file->isValid()) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    $fieldName => 'The uploaded file is not valid.'
+                ]);
+            }
+
             $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('assets'), $filename);
-            return 'assets/' . $filename;
+            $targetDir = public_path($folderName);
+            
+            if (!file_exists($targetDir)) {
+                if (!mkdir($targetDir, 0755, true)) {
+                    throw \Illuminate\Validation\ValidationException::withMessages([
+                        $fieldName => "Could not create directory: {$folderName}. Please check folder permissions (755)."
+                    ]);
+                }
+            }
+
+            if (!is_writable($targetDir)) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    $fieldName => "The directory {$folderName} is not writable. Please check folder permissions (755)."
+                ]);
+            }
+
+            try {
+                $file->move($targetDir, $filename);
+                return $folderName . '/' . $filename;
+            } catch (\Exception $e) {
+                \Log::error("Failed to move uploaded file: " . $e->getMessage());
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    $fieldName => 'Failed to move the uploaded file. error: ' . $e->getMessage()
+                ]);
+            }
         }
         return null;
     }
@@ -34,7 +61,7 @@ class ContentCRUDController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
-            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
@@ -60,7 +87,7 @@ class ContentCRUDController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'icon_class' => 'required|string',
-            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean'
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
@@ -83,7 +110,7 @@ class ContentCRUDController extends Controller
 
     // --- Projects ---
     public function storeProject(Request $request) {
-        $data = $request->validate(['title' => 'required|string', 'category' => 'required|string', 'image_path' => 'nullable|image']);
+        $data = $request->validate(['title' => 'required|string', 'category' => 'required|string', 'image_path' => 'required|image']);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         Project::create($data); return back()->with('success', 'Project created.');
     }
@@ -130,7 +157,7 @@ class ContentCRUDController extends Controller
 
     // --- Blog ---
     public function storeBlog(Request $request) {
-        $data = $request->validate(['title' => 'required|string', 'excerpt' => 'required|string', 'date' => 'required|string', 'image_path' => 'nullable|image']);
+        $data = $request->validate(['title' => 'required|string', 'excerpt' => 'required|string', 'date' => 'required|string', 'image_path' => 'required|image']);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         BlogPost::create($data); return back()->with('success', 'Post created.');
     }
