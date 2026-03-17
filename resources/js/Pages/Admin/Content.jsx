@@ -590,9 +590,6 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                                 <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center border border-red-100 flex-shrink-0">
                                                     <i className={`${service.icon_class} text-2xl text-sb-red`}></i>
                                                 </div>
-                                                {service.image_path && (
-                                                    <img src={getAssetUrl(service.image_path)} alt={service.title} className="w-14 h-14 object-cover rounded-md border" />
-                                                )}
                                             </TableCell>
                                             <TableCell className="font-bold text-sb-dark text-lg whitespace-nowrap">{service.title}</TableCell>
                                             <TableCell className="text-gray-500 max-w-md truncate">{service.description}</TableCell>
@@ -783,12 +780,12 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                     <form onSubmit={handleSubmit} className="p-8">
                         <div className="space-y-8">
                             {/* Row 1: Image Upload (Prominent Full Width) */}
-                            {['hero', 'services', 'projects', 'testimonials', 'team', 'logos'].includes(activeTab) && (
+                            {['hero', 'projects', 'testimonials', 'team', 'logos'].includes(activeTab) && (
                                 <div className="space-y-3">
                                     <Label className="text-sm font-bold text-gray-700 flex justify-between">
                                         <span>
                                             {activeTab === 'logos' ? 'Brand Logo Image' : 'Featured Image'} 
-                                            {(!editingItem && !['testimonials', 'services'].includes(activeTab)) && <span className="text-sb-red ml-1">*</span>}
+                                            {(!editingItem && activeTab !== 'testimonials') && <span className="text-sb-red ml-1">*</span>}
                                         </span>
                                         {selectedFileSize && <span className="text-sb-red font-bold">Selected Size: {formatBytes(selectedFileSize)}</span>}
                                     </Label>

@@ -91,7 +91,7 @@ class ContentCRUDController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'icon_class' => 'required|string',
-            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean'
         ], [
             'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',

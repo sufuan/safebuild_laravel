@@ -127,6 +127,14 @@ Route::get('/custom-carpentry', function () {
 
 
 
+// Redirect /admin and /admin/ to dashboard if logged in, otherwise to login
+Route::get('/admin', function () {
+    if (auth()->check()) {
+        return redirect('/admin/dashboard');
+    }
+    return redirect('/admin/login');
+});
+
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/content', [ContentController::class, 'index'])->name('content.index');
