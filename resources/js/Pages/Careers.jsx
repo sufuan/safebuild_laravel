@@ -86,7 +86,7 @@ export default function Careers({ perks, positions }) {
                         {perks && perks.length > 0 ? perks.map((perk) => (
                             <div key={perk.id} className="bg-white p-10 rounded-sm shadow-sm hover:shadow-lg transition-shadow duration-300 text-center group border border-gray-100">
                                 <div className="w-20 h-20 mx-auto bg-sb-red/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-sb-red transition-colors duration-300 overflow-hidden">
-                                    <img src={getAssetUrl(perk.icon_class, 'assets/perk.jpg')} alt={perk.title} className="w-10 h-10 object-contain group-hover:brightness-0 group-hover:invert transition-all duration-300" />
+                                    <img src={getAssetUrl('assets/perk.jpg')} alt={perk.title} className="w-10 h-10 object-contain group-hover:brightness-0 group-hover:invert transition-all duration-300" />
                                 </div>
                                 <h3 className="text-2xl font-bold text-sb-dark mb-4">{perk.title}</h3>
                                 <p className="text-gray-500 leading-relaxed">
