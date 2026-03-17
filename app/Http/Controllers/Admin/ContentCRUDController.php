@@ -35,7 +35,6 @@ class ContentCRUDController extends Controller
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-            'button_text' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
@@ -47,7 +46,6 @@ class ContentCRUDController extends Controller
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
-            'button_text' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }

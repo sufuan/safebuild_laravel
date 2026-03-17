@@ -81,20 +81,16 @@ class AdminSeeder extends Seeder
         // 3. Hero Slides
         HeroSlide::truncate();
         HeroSlide::insert([
-            [
                 'title' => 'SafeBuild Canada',
                 'subtitle' => 'Welcome to',
                 'image_path' => 'assets/steptodown.com618418.webp',
-                'button_text' => 'About Us',
                 'is_active' => true,
                 'order' => 1,
                 'created_at' => now(), 'updated_at' => now(),
-            ],
             [
                 'title' => 'Excellence in Construction & Property Restoration',
                 'subtitle' => null,
                 'image_path' => 'assets/steptodown.com399351.webp',
-                'button_text' => 'About Us',
                 'is_active' => true,
                 'order' => 2,
                 'created_at' => now(), 'updated_at' => now(),

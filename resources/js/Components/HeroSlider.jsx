@@ -19,7 +19,7 @@ export default function HeroSlider({ slides = [] }) {
                             </h1>
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                                 <a href="#about" className="bg-sb-red hover:bg-[#c42d0b] text-white px-8 py-4 rounded-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-2">
-                                    {slide.button_text || 'About Us'} <i className="flaticon-right-arrow-1 text-xs"></i>
+                                    About Us <i className="flaticon-right-arrow-1 text-xs"></i>
                                 </a>
                                 <a href="#contact" className="bg-white hover:bg-gray-100 text-sb-dark px-8 py-4 rounded-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-2">
                                     Contact Us <i className="flaticon-right-arrow-1 text-xs"></i>

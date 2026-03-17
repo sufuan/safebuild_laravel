@@ -413,7 +413,6 @@ export default function Content({ heroSlides, services, projects, testimonials, 
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        // Define endpoints based on active tab
         const endpointMap = {
             'hero': 'content.hero',
             'services': 'content.services',
@@ -764,10 +763,6 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                             <Label className="text-sm font-bold text-gray-700">Subtitle</Label>
                                             <Input value={data.subtitle} onChange={e => setData('subtitle', e.target.value)} placeholder="e.g. Welcome to SafeBuild" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
                                             {errors.subtitle && <p className="text-sm text-sb-red mt-1 font-medium">{errors.subtitle}</p>}
-                                        </div>
-                                        <div className="space-y-3">
-                                            <Label className="text-sm font-bold text-gray-700">Button Text</Label>
-                                            <Input value={data.button_text} onChange={e => setData('button_text', e.target.value)} placeholder="e.g. Discover More" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
                                         </div>
                                     </>
                                 )}
