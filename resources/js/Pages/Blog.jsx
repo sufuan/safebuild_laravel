@@ -23,7 +23,7 @@ export default function Blog({ posts }) {
                 {/* ── PAGE HERO ─────────────────────────────────────────── */}
                 <section className="relative h-[450px] flex items-center justify-center overflow-hidden">
                     <div className="absolute inset-0 bg-sb-dark/65 z-10"></div>
-                    <img src="/assets/blog-v1-1-1.jpg" alt="View All News"
+                    <img src={getAssetUrl('assets/blog-v1-1-1.jpg')} alt="View All News"
                         className="absolute inset-0 w-full h-full object-cover" />
                     <div className="relative z-20 text-center px-4">
                         <h1 className="text-white text-4xl md:text-6xl font-bold uppercase mb-4 tracking-tight font-poppins">

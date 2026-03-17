@@ -1,4 +1,5 @@
 import React from 'react';
+import { getAssetUrl } from '@/lib/utils';
 
 export default function Team({ teamMembers = [] }) {
     return (
@@ -16,7 +17,7 @@ export default function Team({ teamMembers = [] }) {
                     {teamMembers && teamMembers.map((member) => (
                         <div key={member.id} className="group relative">
                             <div className="relative overflow-hidden mb-6">
-                                <img src={`/${member.image_path}`} alt={member.name}
+                                <img src={getAssetUrl(member.image_path)} alt={member.name}
                                     className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110" />
                                 {/* Overlay */}
                                 <div

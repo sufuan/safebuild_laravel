@@ -4,6 +4,7 @@ import Footer from '@/Components/Footer';
 import BrandLogos from '@/Components/BrandLogos';
 import React from 'react';
 import { Toaster, toast } from 'sonner';
+import { getAssetUrl } from '@/lib/utils';
 
 export default function ContactUs() {
     const { siteSettings } = usePage().props;
@@ -37,7 +38,7 @@ export default function ContactUs() {
                 {/* ── PAGE HERO ─────────────────────────────────────────── */}
                 <section className="relative h-[400px] flex items-center justify-center bg-black overflow-hidden">
                     <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                        style={{ backgroundImage: "url('assets/steptodown.com399351.webp')" }}></div>
+                        style={{ backgroundImage: `url(${getAssetUrl('assets/steptodown.com399351.webp')})` }}></div>
                     <div className="absolute inset-0 bg-[#0E0F0F]/70"></div>
                     <div className="relative z-10 text-center px-4">
                         <h1 className="text-white text-5xl md:text-6xl font-poppins font-bold uppercase tracking-wider mb-4">
@@ -151,7 +152,7 @@ export default function ContactUs() {
                                             <p className="text-gray-500 text-xs font-medium uppercase">Commercial Property Owner</p>
                                         </div>
                                         <div className="flex-shrink-0 -ml-12">
-                                            <img src="assets/steptodown.com426279.webp" alt="Linda Murphy"
+                                            <img src={getAssetUrl('assets/steptodown.com426279.webp')} alt="Linda Murphy"
                                                 className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-xl" />
                                         </div>
                                     </div>

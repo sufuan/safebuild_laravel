@@ -1,5 +1,5 @@
-import React from 'react';
 import { Link, usePage } from '@inertiajs/react';
+import { getAssetUrl } from '@/lib/utils';
 
 const instaImages = [
     'project-v1-5-1-1.jpg',
@@ -35,7 +35,7 @@ export default function Footer() {
                             <div className="mt-[20px] mb-[20px]">
                                 <Link href="/" className="block">
                                     <img
-                                        src="/assets/SafeBuild-Logo-Ai-file.png"
+                                        src={getAssetUrl('assets/SafeBuild-Logo-Ai-file.png')}
                                         alt="Logo"
                                         className="max-w-full h-auto brightness-0 invert opacity-100"
                                     />
@@ -164,7 +164,7 @@ export default function Footer() {
                                 {instaImages.map((img, i) => (
                                     <div key={i} className="m-[2px] w-[82px] h-[76px] relative group overflow-hidden">
                                         <img
-                                            src={`/assets/${img}`}
+                                            src={getAssetUrl(`assets/${img}`)}
                                             alt="Insta"
                                             className="w-full h-full object-cover rounded-[3px]"
                                         />

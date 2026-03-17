@@ -14,9 +14,5 @@ export function getAssetUrl(path, defaultPath = '') {
   
   const cleanPath = path.startsWith('/') ? path.substring(1) : path;
   
-  if (cleanPath.startsWith('assets/settings/')) {
-    return `/storage/${cleanPath}`;
-  }
-  
   return `/${cleanPath}`;
 }

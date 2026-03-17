@@ -1,8 +1,5 @@
-import Navbar from '@/Components/Navbar';
-import Footer from '@/Components/Footer';
-import Team from '@/Components/Team';
-import Testimonial from '@/Components/Testimonial';
 import { Link } from '@inertiajs/react';
+import { getAssetUrl } from '@/lib/utils';
 
 const servicesList = [
     { label: 'Property Services & Design', href: '/property-services-design', active: true },
@@ -22,7 +19,7 @@ export default function PropertyServicesDesign() {
             <section className="relative h-[450px] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 bg-sb-dark/65 z-10"></div>
                 <img
-                    src="/assets/project-v1-5-1-1.jpg"
+                    src={getAssetUrl('assets/project-v1-5-1-1.jpg')}
                     alt="Property Services & Design"
                     className="absolute inset-0 w-full h-full object-cover"
                 />
@@ -47,7 +44,7 @@ export default function PropertyServicesDesign() {
                         <div className="lg:w-2/3">
                             <div className="mb-10 overflow-hidden shadow-lg">
                                 <img
-                                    src="/assets/project-v1-1-2.jpg"
+                                    src={getAssetUrl('assets/project-v1-1-2.jpg')}
                                     alt="Property Services & Design"
                                     className="w-full h-[380px] object-cover hover:scale-105 transition-transform duration-700"
                                 />

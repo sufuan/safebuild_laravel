@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm, router } from '@inertiajs/react';
+import { getAssetUrl } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -156,7 +157,7 @@ function SplitPane({ section, data }) {
                                     <div className="flex items-start gap-4 mb-4">
                                         {isPerk && (
                                             <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:shadow-sm transition-colors overflow-hidden">
-                                                <img src="/assets/perk.jpg" alt="Perk Icon" className="w-8 h-8 object-contain" />
+                                                <img src={getAssetUrl('assets/perk.jpg')} alt="Perk Icon" className="w-8 h-8 object-contain" />
                                             </div>
                                         )}
                                         <div className="flex flex-col flex-1">
@@ -377,7 +378,7 @@ function ApplicationsPane({ data }) {
                             {app.resume_path && (
                                 <div className="mt-6 pt-4 border-t border-gray-200">
                                     <a 
-                                        href={`/${app.resume_path}`} 
+                                        href={getAssetUrl(app.resume_path)} 
                                         target="_blank" 
                                         rel="noopener noreferrer" 
                                         onClick={() => handleMarkAsReviewed(app)}

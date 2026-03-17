@@ -533,7 +533,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                     {heroSlides.map((slide) => (
                                         <TableRow key={slide.id} className="hover:bg-gray-50/30 transition-colors">
                                             <TableCell className="px-8 py-4">
-                                                <img src={`/${slide.image_path}`} alt="Hero" className="w-32 h-16 object-cover rounded-md border border-gray-200 shadow-sm" />
+                                                <img src={getAssetUrl(slide.image_path)} alt="Hero" className="w-32 h-16 object-cover rounded-md border border-gray-200 shadow-sm" />
                                             </TableCell>
                                             <TableCell className="font-bold text-sb-dark text-lg">{slide.title}</TableCell>
                                             <TableCell className="text-gray-500">{slide.subtitle}</TableCell>
@@ -631,7 +631,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                     {projects.map((project) => (
                                         <TableRow key={project.id} className="hover:bg-gray-50/30 transition-colors">
                                             <TableCell className="px-8 py-4">
-                                                <img src={`/${project.image_path}`} alt="Project" className="w-20 h-20 object-cover rounded-xl border border-gray-200 shadow-sm" />
+                                                <img src={getAssetUrl(project.image_path)} alt="Project" className="w-20 h-20 object-cover rounded-xl border border-gray-200 shadow-sm" />
                                             </TableCell>
                                             <TableCell className="font-bold text-sb-dark text-lg">{project.title}</TableCell>
                                             <TableCell>
@@ -673,9 +673,9 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                         <TableRow key={testimonial.id} className="hover:bg-gray-50/30 transition-colors">
                                             <TableCell className="px-8 py-4">
                                                 {testimonial.image_path ? (
-                                                    <img src={`/${testimonial.image_path}`} alt={testimonial.name} className="w-14 h-14 object-cover rounded-full border-2 border-white shadow-md shadow-gray-200" />
+                                                    <img src={getAssetUrl(testimonial.image_path)} alt={testimonial.name} className="w-14 h-14 object-cover rounded-full border-2 border-white shadow-md shadow-gray-200" />
                                                 ) : (
-                                                    <img src="/assets/male-avatar-placeholder.png" alt={testimonial.name} className="w-14 h-14 object-cover rounded-full border-2 border-white shadow-md shadow-gray-200" />
+                                                    <img src={getAssetUrl('assets/male-avatar-placeholder.png')} alt={testimonial.name} className="w-14 h-14 object-cover rounded-full border-2 border-white shadow-md shadow-gray-200" />
                                                 )}
                                             </TableCell>
                                             <TableCell>
@@ -718,7 +718,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                     {teamMembers.map((member) => (
                                         <TableRow key={member.id} className="hover:bg-gray-50/30 transition-colors">
                                             <TableCell className="px-8 py-4">
-                                                <img src={`/${member.image_path}`} alt={member.name} className="w-16 h-16 object-cover rounded-2xl border-2 border-white shadow-md shadow-gray-200" />
+                                                <img src={getAssetUrl(member.image_path)} alt={member.name} className="w-16 h-16 object-cover rounded-2xl border-2 border-white shadow-md shadow-gray-200" />
                                             </TableCell>
                                             <TableCell className="font-bold text-sb-dark text-lg">{member.name}</TableCell>
                                             <TableCell>

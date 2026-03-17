@@ -1,10 +1,11 @@
 import React from 'react';
+import { getAssetUrl } from '@/lib/utils';
 
 export default function Testimonial({ testimonials = [] }) {
     return (
         <section className="testimonial-style1-area relative py-24 bg-[#f7f7f7] min-h-[800px]">
             <div className="testimonial-style1-content_bg absolute top-0 left-0 w-full h-[487px] bg-no-repeat bg-top z-20 pointer-events-none"
-                style={{"backgroundImage":"url(/assets/testimonial-style1-content_bg-2.png)","backgroundPosition":"center top"}}>
+                style={{ backgroundImage: `url(${getAssetUrl('assets/testimonial-style1-content_bg-2.png')})`, backgroundPosition: "center top" }}>
             </div>
             <div className="container mx-auto px-6 relative z-10 pt-[250px]">
                 <div className="flex flex-col lg:flex-row items-center justify-center">
@@ -36,10 +37,10 @@ export default function Testimonial({ testimonials = [] }) {
                                         <div className="flex-shrink-0">
                                             <div className="w-56 h-56 md:w-80 md:h-80 rounded-full overflow-hidden border-[15px] border-white shadow-2xl bg-gray-100 flex items-center justify-center">
                                                 {testimonial.image_path ? (
-                                                    <img src={`/${testimonial.image_path}`} alt={testimonial.name}
+                                                    <img src={getAssetUrl(testimonial.image_path)} alt={testimonial.name}
                                                         className="w-full h-full object-cover" />
                                                 ) : (
-                                                    <img src="/assets/male-avatar-placeholder.png" alt={testimonial.name} className="w-full h-full object-cover" />
+                                                    <img src={getAssetUrl('assets/male-avatar-placeholder.png')} alt={testimonial.name} className="w-full h-full object-cover" />
                                                 )}
                                             </div>
                                         </div>

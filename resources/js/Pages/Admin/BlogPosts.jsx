@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Head, useForm } from '@inertiajs/react';
+import { getAssetUrl } from '@/lib/utils';
 import { toast } from 'sonner';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -50,7 +51,7 @@ export default function BlogPosts({ posts }) {
             image_path: null,
             is_active: post.is_active ?? true,
         });
-        setImagePreview(post.image_path ? `/${post.image_path}` : null);
+        setImagePreview(post.image_path ? getAssetUrl(post.image_path) : null);
         setSelectedFileSize(null);
     };
 
@@ -80,7 +81,7 @@ export default function BlogPosts({ posts }) {
             setSelectedFileSize(file.size);
         } else {
             setData('image_path', null);
-            setImagePreview(selectedPost && selectedPost.image_path ? `/${selectedPost.image_path}` : null);
+            setImagePreview(selectedPost && selectedPost.image_path ? getAssetUrl(selectedPost.image_path) : null);
             setSelectedFileSize(null);
         }
     };
@@ -177,7 +178,7 @@ export default function BlogPosts({ posts }) {
                                         }`}
                                     >
                                         <div className="w-24 h-24 shrink-0 rounded-xl overflow-hidden border border-gray-200">
-                                            <img src={`/${postItem.image_path}`} alt="cover" className="w-full h-full object-cover" />
+                                            <img src={getAssetUrl(postItem.image_path)} alt="cover" className="w-full h-full object-cover" />
                                         </div>
                                         <div className="flex-1 min-w-0 flex flex-col justify-center">
                                             <h4 className={`font-bold text-md mb-1 line-clamp-2 ${selectedPost?.id === postItem.id ? 'text-sb-red' : 'text-sb-dark'}`}>

@@ -1,7 +1,5 @@
-import { Head, Link } from '@inertiajs/react';
-import Navbar from '@/Components/Navbar';
-import Footer from '@/Components/Footer';
 import React, { useState } from 'react';
+import { getAssetUrl } from '@/lib/utils';
 
 const projects = [
     { id: 1, img: 'assets/project-v1-1-2.jpg', category: 'architecture', title: 'Architectural Design & Planning' },
@@ -40,7 +38,7 @@ export default function OurProjectsPage() {
                 {/* ── PAGE HERO ─────────────────────────────────────────── */}
                 <section className="relative h-[450px] flex items-center justify-center overflow-hidden">
                     <div className="absolute inset-0 bg-sb-dark/65 z-10"></div>
-                    <img src="assets/project-v1-1-2.jpg" alt="Our Projects"
+                    <img src={getAssetUrl('assets/project-v1-1-2.jpg')} alt="Our Projects"
                         className="absolute inset-0 w-full h-full object-cover" />
                     <div className="relative z-20 text-center px-4">
                         <h1 className="text-white text-4xl md:text-6xl font-bold uppercase mb-4 tracking-tight font-poppins">
@@ -87,7 +85,7 @@ export default function OurProjectsPage() {
                             {visible.map(project => (
                                 <div key={project.id}
                                     className="group relative overflow-hidden shadow-lg h-[320px]">
-                                    <img src={project.img} alt={project.title}
+                                    <img src={getAssetUrl(project.img)} alt={project.title}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-sb-dark/90 via-sb-dark/20 to-transparent opacity-80"></div>
                                     <div className="absolute inset-0 flex flex-col justify-end p-7">

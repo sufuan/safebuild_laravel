@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
+import { getAssetUrl } from '@/lib/utils';
 
 export default function Navbar() {
     const { siteSettings } = usePage().props;
@@ -18,7 +18,7 @@ export default function Navbar() {
                 >
                     <Link href="/" className="inline-block w-full">
                         <img
-                            src="/assets/SafeBuild-Logo-Ai-file-1.png"
+                            src={getAssetUrl('assets/SafeBuild-Logo-Ai-file-1.png')}
                             alt="SafeBuild Logo"
                             className="w-full max-w-[180px] md:max-w-[280px]"
                         />

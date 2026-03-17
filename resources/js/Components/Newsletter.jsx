@@ -1,9 +1,10 @@
 import React from 'react';
+import { getAssetUrl } from '@/lib/utils';
 
 export default function Newsletter() {
     return (
         <section className="relative py-24 bg-cover bg-center bg-no-repeat bg-fixed"
-            style={{ "backgroundImage": "url('/assets/vecteezy_ai-generated-explore-the-role-of-scada-systems-in-industrial_40888741.webp')" }}>
+            style={{ "backgroundImage": `url(${getAssetUrl('assets/vecteezy_ai-generated-explore-the-role-of-scada-systems-in-industrial_40888741.webp')})` }}>
             <div className="absolute inset-0 bg-sb-dark/90"></div> {/* Dark Overlay */}
             <div className="container mx-auto px-4 relative z-10">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-12 max-w-6xl mx-auto">

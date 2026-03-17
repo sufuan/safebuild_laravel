@@ -1,8 +1,5 @@
-import Navbar from '@/Components/Navbar';
-import Footer from '@/Components/Footer';
-import Team from '@/Components/Team';
-import Testimonial from '@/Components/Testimonial';
 import { Link } from '@inertiajs/react';
+import { getAssetUrl } from '@/lib/utils';
 
 const servicesList = [
     { label: 'Property Services & Design', href: '/property-services-design', active: false },
@@ -22,7 +19,7 @@ export default function CustomCarpentry() {
             <section className="relative h-[450px] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 bg-sb-dark/65 z-10"></div>
                 <img
-                    src="/assets/blog-v1-1-1.jpg"
+                    src={getAssetUrl('assets/blog-v1-1-1.jpg')}
                     alt="Custom Carpentry And Cabinetry"
                     className="absolute inset-0 w-full h-full object-cover"
                 />
@@ -47,7 +44,7 @@ export default function CustomCarpentry() {
                         <div className="lg:w-2/3">
                             <div className="mb-10 overflow-hidden shadow-lg">
                                 <img
-                                    src="/assets/blog-v1-2-1.jpg"
+                                    src={getAssetUrl('assets/blog-v1-2-1.jpg')}
                                     alt="Custom Carpentry And Cabinetry Services"
                                     className="w-full h-[380px] object-cover hover:scale-105 transition-transform duration-700"
                                 />

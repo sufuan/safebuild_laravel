@@ -1,4 +1,5 @@
 import React from 'react';
+import { getAssetUrl } from '@/lib/utils';
 
 export default function OurProjects({ projects = [] }) {
     return (
@@ -32,7 +33,7 @@ export default function OurProjects({ projects = [] }) {
                     className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-8">
                     {projects && projects.map((project) => (
                         <div key={project.id} className="min-w-[300px] md:min-w-[400px] snap-start group relative rounded-sm overflow-hidden shadow-lg h-[450px]">
-                            <img src={`/${project.image_path}`} alt={project.title}
+                            <img src={getAssetUrl(project.image_path)} alt={project.title}
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                             <div className="absolute inset-0 bg-gradient-to-t from-sb-dark/90 via-transparent to-transparent opacity-80"></div>
                             <div className="absolute inset-0 flex flex-col justify-end p-8">

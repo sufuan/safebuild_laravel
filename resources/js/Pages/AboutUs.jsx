@@ -4,6 +4,7 @@ import Footer from '@/Components/Footer';
 import BrandLogos from '@/Components/BrandLogos';
 import OurProjects from '@/Components/OurProjects';
 import React from 'react';
+import { getAssetUrl } from '@/lib/utils';
 
 export default function AboutUsPage() {
     const { siteSettings } = usePage().props;
@@ -16,7 +17,7 @@ export default function AboutUsPage() {
                 {/* ── PAGE HERO ─────────────────────────────────────────── */}
                 <section className="relative h-[400px] flex items-center justify-center bg-black overflow-hidden">
                     <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                        style={{ backgroundImage: "url('assets/steptodown.com618418.webp')" }}></div>
+                        style={{ backgroundImage: `url(${getAssetUrl('assets/steptodown.com618418.webp')})` }}></div>
                     <div className="absolute inset-0 bg-[#0E0F0F]/70"></div>
                     <div className="relative z-10 text-center px-4">
                         <h1 className="text-white text-5xl md:text-6xl font-poppins font-bold uppercase tracking-wider mb-4">
@@ -43,10 +44,10 @@ export default function AboutUsPage() {
                                 {/* Main tall image */}
                                 <div className="relative">
                                     <img
-                                        src="/assets/steptodown.com688306.webp"
+                                        src={getAssetUrl('assets/steptodown.com688306.webp')}
                                         alt="SafeBuild construction work"
                                         className="w-full h-[520px] object-cover shadow-2xl"
-                                        onError={e => { e.target.src = '/assets/project-v1-1-2.jpg'; }}
+                                        onError={e => { e.target.src = getAssetUrl('assets/project-v1-1-2.jpg'); }}
                                     />
                                     {/* Red top bar accent */}
                                     <div className="absolute top-0 left-0 w-20 h-1.5 bg-sb-red"></div>
@@ -61,16 +62,16 @@ export default function AboutUsPage() {
                                 {/* Two bottom images */}
                                 <div className="grid grid-cols-2 gap-4 mt-4 pr-8">
                                     <img
-                                        src="/assets/steptodown.com584276.webp"
+                                        src={getAssetUrl('assets/steptodown.com584276.webp')}
                                         alt="SafeBuild project"
                                         className="w-full h-[160px] object-cover shadow-lg"
-                                        onError={e => { e.target.src = '/assets/project-v1-2-2.jpg'; }}
+                                        onError={e => { e.target.src = getAssetUrl('assets/project-v1-2-2.jpg'); }}
                                     />
                                     <img
-                                        src="/assets/steptodown.com481843-1.webp"
+                                        src={getAssetUrl('assets/steptodown.com481843-1.webp')}
                                         alt="SafeBuild project"
                                         className="w-full h-[160px] object-cover shadow-lg"
-                                        onError={e => { e.target.src = '/assets/project-v1-3-1-1.jpg'; }}
+                                        onError={e => { e.target.src = getAssetUrl('assets/project-v1-3-1-1.jpg'); }}
                                     />
                                 </div>
 
@@ -203,7 +204,7 @@ export default function AboutUsPage() {
 
                 {/* ── VIDEO SECTION ────────────────────────────────────────── */}
                 <section className="relative h-[500px] flex items-center justify-center bg-fixed bg-cover bg-center"
-                    style={{ backgroundImage: "url('assets/marek-studzinski-zQBjgS4PGpg-unsplash-1.webp')" }}>
+                    style={{ backgroundImage: `url(${getAssetUrl('assets/marek-studzinski-zQBjgS4PGpg-unsplash-1.webp')})` }}>
                     <div className="absolute inset-0 bg-[#0E0F0F]/60"></div>
                     <a href="https://www.youtube.com/watch?v=QVU_STj_Btc" target="_blank" rel="noreferrer"
                         className="relative z-10 w-24 h-24 bg-sb-red text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-2xl">
@@ -237,7 +238,7 @@ export default function AboutUsPage() {
                                             <p className="text-white/40 text-xs font-medium uppercase">Property Developer</p>
                                         </div>
                                         <div className="flex-shrink-0 -ml-12">
-                                            <img src="assets/steptodown.com584276.webp" alt="Emily Roads"
+                                            <img src={getAssetUrl('assets/steptodown.com584276.webp')} alt="Emily Roads"
                                                 className="w-20 h-20 rounded-full object-cover border-4 border-[#282d35] shadow-xl" />
                                         </div>
                                     </div>
@@ -258,7 +259,7 @@ export default function AboutUsPage() {
                                             <p className="text-white/40 text-xs font-medium uppercase">Commercial Property Owner</p>
                                         </div>
                                         <div className="flex-shrink-0 -ml-12">
-                                            <img src="assets/steptodown.com426279.webp" alt="Linda Murphy"
+                                            <img src={getAssetUrl('assets/steptodown.com426279.webp')} alt="Linda Murphy"
                                                 className="w-20 h-20 rounded-full object-cover border-4 border-[#282d35] shadow-xl" />
                                         </div>
                                     </div>

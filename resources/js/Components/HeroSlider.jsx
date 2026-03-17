@@ -1,4 +1,5 @@
 import React from 'react';
+import { getAssetUrl } from '@/lib/utils';
 
 export default function HeroSlider({ slides = [] }) {
     return (
@@ -6,7 +7,7 @@ export default function HeroSlider({ slides = [] }) {
             {slides && slides.map((slide, index) => (
                 <div key={slide.id} className={`hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 z-0 ${index === 0 ? 'active-slide' : ''}`}>
                     <div className="absolute inset-0 bg-black/40 z-10"></div>
-                    <img src={`/${slide.image_path}`} alt={slide.title} className="w-full h-full object-cover" />
+                    <img src={getAssetUrl(slide.image_path)} alt={slide.title} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 flex items-center justify-center z-20 text-center px-4">
                         <div className="max-w-4xl transform translate-y-10 transition-all duration-700 opacity-0 slide-content">
                             {slide.subtitle && (
