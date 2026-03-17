@@ -70,7 +70,7 @@ export default function BlogPosts({ posts }) {
         const file = e.target.files[0];
         if (file) {
             if (file.size > 5 * 1024 * 1024) {
-                toast.error('The file is too large. Please upload an image smaller than 5MB.');
+                toast.error(`The file is too large (${formatBytes(file.size)}). Please upload an image smaller than 5MB.`);
                 e.target.value = '';
                 setSelectedFileSize(null);
                 return;

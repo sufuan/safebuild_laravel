@@ -3,7 +3,13 @@ import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import { Toaster, toast } from 'sonner';
-import { useEffect } from 'react';
+const formatBytes = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
 
 export default function Careers({ perks, positions }) {
     const { siteSettings } = usePage().props;
@@ -20,7 +26,7 @@ export default function Careers({ perks, positions }) {
         const file = e.target.files[0];
         if (file) {
             if (file.size > 5 * 1024 * 1024) {
-                toast.error('The file is too large. Please upload a file smaller than 5MB.');
+                toast.error(`The file is too large (${formatBytes(file.size)}). Please upload a file smaller than 5MB.`);
                 e.target.value = '';
                 return;
             }

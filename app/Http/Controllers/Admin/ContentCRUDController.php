@@ -64,7 +64,7 @@ class ContentCRUDController extends Controller
             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean',
         ], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         HeroSlide::create($data);
@@ -77,7 +77,7 @@ class ContentCRUDController extends Controller
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean',
         ], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $hero->update($data);
@@ -94,7 +94,7 @@ class ContentCRUDController extends Controller
             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean'
         ], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         Service::create($data); 
@@ -108,7 +108,7 @@ class ContentCRUDController extends Controller
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'is_active' => 'boolean'
         ], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $service->update($data); 
@@ -119,14 +119,14 @@ class ContentCRUDController extends Controller
     // --- Projects ---
     public function storeProject(Request $request) {
         $data = $request->validate(['title' => 'required|string', 'category' => 'required|string', 'image_path' => 'required|image|max:5120'], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         Project::create($data); return back()->with('success', 'Project created.');
     }
     public function updateProject(Request $request, Project $project) {
         $data = $request->validate(['title' => 'required|string', 'category' => 'required|string', 'image_path' => 'nullable|image|max:5120'], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $project->update($data); return back()->with('success', 'Project updated.');
@@ -136,14 +136,14 @@ class ContentCRUDController extends Controller
     // --- Testimonials ---
     public function storeTestimonial(Request $request) {
         $data = $request->validate(['name' => 'required|string', 'role' => 'nullable|string', 'quote' => 'required|string', 'image_path' => 'nullable|image|max:5120'], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         Testimonial::create($data); return back()->with('success', 'Testimonial created.');
     }
     public function updateTestimonial(Request $request, Testimonial $testimonial) {
         $data = $request->validate(['name' => 'required|string', 'role' => 'nullable|string', 'quote' => 'required|string', 'image_path' => 'nullable|image|max:5120'], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $testimonial->update($data); return back()->with('success', 'Testimonial updated.');
@@ -153,14 +153,14 @@ class ContentCRUDController extends Controller
     // --- Team ---
     public function storeTeam(Request $request) {
         $data = $request->validate(['name' => 'required|string', 'role' => 'required|string', 'image_path' => 'required|image|max:5120'], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         TeamMember::create($data); return back()->with('success', 'Member added.');
     }
     public function updateTeam(Request $request, TeamMember $team) {
         $data = $request->validate(['name' => 'required|string', 'role' => 'required|string', 'image_path' => 'nullable|image|max:5120'], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $team->update($data); return back()->with('success', 'Member updated.');
@@ -170,7 +170,7 @@ class ContentCRUDController extends Controller
     // --- Brand Logos ---
     public function storeLogo(Request $request) {
         $data = $request->validate(['image_path' => 'required|image|max:5120'], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         BrandLogo::create($data); return back()->with('success', 'Logo added.');
@@ -180,14 +180,14 @@ class ContentCRUDController extends Controller
     // --- Blog ---
     public function storeBlog(Request $request) {
         $data = $request->validate(['title' => 'required|string', 'excerpt' => 'required|string', 'date' => 'required|string', 'image_path' => 'required|image|max:5120'], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         BlogPost::create($data); return back()->with('success', 'Post created.');
     }
     public function updateBlog(Request $request, BlogPost $blog) {
         $data = $request->validate(['title' => 'required|string', 'excerpt' => 'required|string', 'date' => 'required|string', 'image_path' => 'nullable|image|max:5120'], [
-            'image_path.uploaded' => 'The file is too large. Please upload an image smaller than 5MB.',
+            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }
         $blog->update($data); return back()->with('success', 'Post updated.');
