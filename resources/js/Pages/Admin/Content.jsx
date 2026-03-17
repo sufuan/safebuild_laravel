@@ -112,8 +112,9 @@ function AboutSectionEditor() {
                                     ) : (
                                         <ImageIcon className="h-12 w-12 text-gray-300" />
                                     )}
-                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center">
                                         <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full text-sm">Change Image</span>
+                                        <span className="text-white text-[10px] mt-2 font-medium">Max size: 3MB</span>
                                     </div>
                                     <input id="about-img-upload" type="file" className="hidden" accept="image/*" onChange={handleAboutImageChange} />
                                 </div>
@@ -231,8 +232,9 @@ function WhyUsSectionEditor() {
                                 ) : (
                                     <ImageIcon className="h-12 w-12 text-gray-300" />
                                 )}
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center">
                                     <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full text-sm">Change Image</span>
+                                    <span className="text-white text-[10px] mt-2 font-medium">Max size: 3MB</span>
                                 </div>
                                 <input id="why-img-upload" type="file" className="hidden" accept="image/*" onChange={handleWhyImageChange} />
                             </div>
@@ -323,14 +325,16 @@ function ServicesPageEditor() {
                                 {preview ? (
                                     <div className="relative w-full h-full">
                                         <img src={preview} alt="Hero Preview" className="w-full h-full object-cover rounded-xl" />
-                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl">
+                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center rounded-xl">
                                             <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full">Change Image</span>
+                                            <span className="text-white text-xs mt-2 font-medium">Max size: 3MB</span>
                                         </div>
                                     </div>
                                 ) : (
                                     <div className="text-center">
                                         <ImageIcon className="h-10 w-10 text-gray-300 mx-auto mb-2" />
                                         <p className="text-sm text-gray-500 font-medium">Click to upload banner</p>
+                                        <p className="text-[10px] text-gray-400 mt-1">Recommended size: under 3MB</p>
                                     </div>
                                 )}
                                 <input id="services-hero-upload" type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
@@ -850,7 +854,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                                         <ImageIcon className="h-8 w-8 text-sb-red" />
                                                     </div>
                                                     <p className="font-bold text-gray-700 mb-1">Click to browse or drag image here</p>
-                                                    <p className="text-sm text-gray-400">Supports JPG, PNG, WEBP (Max 5MB)</p>
+                                                    <p className="text-sm text-gray-400">Supports JPG, PNG, WEBP (Max 3MB)</p>
                                                 </div>
                                             )}
                                             <input id="image-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />

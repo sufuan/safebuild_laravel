@@ -68,8 +68,10 @@ class BlogController extends Controller
             'date' => 'required|string',
             'read_time' => 'nullable|string',
             'author' => 'nullable|string',
-            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:3072',
             'is_active' => 'boolean',
+        ], [
+            'image_path.uploaded' => 'The image failed to upload. Please ensure the file is under 3MB.',
         ]);
 
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) {
@@ -90,10 +92,10 @@ class BlogController extends Controller
             'date' => 'required|string',
             'read_time' => 'nullable|string',
             'author' => 'nullable|string',
-            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:3072',
             'is_active' => 'boolean',
         ], [
-            'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits. Please check your cPanel PHP settings.',
+            'image_path.uploaded' => 'The image failed to upload. Please ensure the file is under 3MB.',
         ]);
 
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) {

@@ -219,7 +219,7 @@ export default function BlogPosts({ posts }) {
                                                         <ImageIcon className="h-6 w-6 text-sb-red" />
                                                     </div>
                                                     <p className="font-bold text-gray-700 mb-1">Click to add cover image</p>
-                                                    <p className="text-sm text-gray-400">Recommended size: 1200x800px</p>
+                                                    <p className="text-sm text-gray-400">Recommended: 1200x800px (Max 3MB)</p>
                                                 </div>
                                             )}
                                             <input id="blog-image-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />

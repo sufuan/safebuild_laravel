@@ -80,8 +80,10 @@ class CareersCRUDController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:255',
-            'resume_path' => 'required|file|mimes:pdf,doc,docx|max:5120',
+            'resume_path' => 'required|file|mimes:pdf,doc,docx|max:3072',
             'cover_letter' => 'nullable|string',
+        ], [
+            'resume_path.uploaded' => 'The file failed to upload. Please ensure it is under 3MB.',
         ]);
 
         if ($request->hasFile('resume_path')) {

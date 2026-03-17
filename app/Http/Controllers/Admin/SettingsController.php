@@ -34,6 +34,13 @@ class SettingsController extends Controller
                     ]);
                 }
 
+                // Check size (3MB = 3072KB)
+                if ($file->getSize() > 3072 * 1024) {
+                    throw \Illuminate\Validation\ValidationException::withMessages([
+                        "settings.{$index}.value" => 'The image is too large. Please ensure it is under 3MB.'
+                    ]);
+                }
+
                 $filename = time() . '_' . $key . '.' . $file->getClientOriginalExtension();
                 $targetDir = public_path('assets/settings');
                 

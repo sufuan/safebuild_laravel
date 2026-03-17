@@ -240,7 +240,7 @@ export default function Careers({ perks, positions }) {
                                             onChange={e => setData('resume_path', e.target.files[0])}
                                             required 
                                         />
-                                        <p className="text-xs text-gray-500 mt-2">Accepted formats: PDF, DOC, DOCX. Max size: 5MB.</p>
+                                        <p className="text-xs text-gray-500 mt-2">Accepted formats: PDF, DOC, DOCX. Max size: 3MB.</p>
                                         {errors.resume_path && <p className="text-xs text-red-500 mt-1">{errors.resume_path}</p>}
                                     </div>
                                     <div>
