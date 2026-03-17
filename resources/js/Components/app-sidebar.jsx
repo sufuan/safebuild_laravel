@@ -44,12 +44,6 @@ export function AppSidebar({
         isActive: route().current('admin.content*'),
       },
       {
-        title: "Our Services",
-        url: "/admin/content?tab=services",
-        icon: <BriefcaseIcon />,
-        isActive: route().current('admin.content*') && (new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '').get('tab') === 'services'),
-      },
-      {
         title: "Blog Posts",
         url: "/admin/blog",
         icon: <FileTextIcon />,

@@ -6,14 +6,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Edit2, Trash2, Plus, Calendar, Clock, User, FileText, Image as ImageIcon, Eye, CheckCircle2 } from 'lucide-react';
+import { Edit2, Trash2, Plus, Calendar, Clock, User, FileText, Image as ImageIcon, Eye, CheckCircle2, UploadCloud } from 'lucide-react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+
+const formatBytes = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
 
 export default function BlogPosts({ posts }) {
     const [selectedPost, setSelectedPost] = useState(null);
     const [isCreating, setIsCreating] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
+    const [selectedFileSize, setSelectedFileSize] = useState(null);
 
     const { data, setData, post, delete: destroy, reset, clearErrors, errors, processing } = useForm({
         title: '',
@@ -42,6 +51,7 @@ export default function BlogPosts({ posts }) {
             is_active: post.is_active ?? true,
         });
         setImagePreview(post.image_path ? `/${post.image_path}` : null);
+        setSelectedFileSize(null);
     };
 
     const handleCreateNew = () => {
@@ -50,6 +60,7 @@ export default function BlogPosts({ posts }) {
         clearErrors();
         reset();
         setImagePreview(null);
+        setSelectedFileSize(null);
         // Default today's date
         const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
         setData('date', today);
@@ -61,13 +72,16 @@ export default function BlogPosts({ posts }) {
             if (file.size > 5 * 1024 * 1024) {
                 toast.error('The file is too large. Please upload an image smaller than 5MB.');
                 e.target.value = '';
+                setSelectedFileSize(null);
                 return;
             }
             setData('image_path', file);
             setImagePreview(URL.createObjectURL(file));
+            setSelectedFileSize(file.size);
         } else {
             setData('image_path', null);
             setImagePreview(selectedPost && selectedPost.image_path ? `/${selectedPost.image_path}` : null);
+            setSelectedFileSize(null);
         }
     };
 
@@ -204,28 +218,32 @@ export default function BlogPosts({ posts }) {
                                     )}
                                 </div>
 
-                                <div className="space-y-6 flex-1 overflow-y-auto pr-2 custom-scrollbar pb-6">
-                                    {/* Cover Image Upload */}
+                                <div className="space-y-8 flex-1 overflow-y-auto pr-2 custom-scrollbar pb-6">
+                                    {/* Row 1: Cover Image Upload (Full Width) */}
                                     <div className="space-y-3">
-                                        <Label className="text-sm font-bold text-gray-700">Cover Image <span className="text-sb-red">*</span></Label>
+                                        <Label className="text-sm font-bold text-gray-700 flex justify-between">
+                                            <span>Cover Image <span className="text-sb-red">*</span></span>
+                                            {selectedFileSize && <span className="text-sb-red font-bold">Selected Size: {formatBytes(selectedFileSize)}</span>}
+                                        </Label>
                                         <div 
-                                            className="border-2 border-dashed border-gray-300 rounded-2xl p-6 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 hover:border-sb-red/50 transition-all cursor-pointer relative group overflow-hidden min-h-[250px]"
+                                            className="border-2 border-dashed border-gray-300 rounded-2xl p-6 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 hover:border-sb-red/50 transition-all cursor-pointer relative group overflow-hidden min-h-[300px]"
                                             onClick={() => document.getElementById('blog-image-upload').click()}
                                         >
                                             {imagePreview ? (
                                                 <div className="relative w-full h-full flex items-center justify-center">
-                                                    <img src={imagePreview} alt="Preview" className="max-h-[250px] object-cover rounded-xl shadow-md w-full" />
-                                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl backdrop-blur-sm">
-                                                        <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full">Change Image</span>
+                                                    <img src={imagePreview} alt="Preview" className="max-h-[300px] object-cover rounded-xl shadow-md w-full" />
+                                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center rounded-xl backdrop-blur-sm">
+                                                        <UploadCloud className="w-10 h-10 text-white mb-2" />
+                                                        <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full text-sm">Change Image</span>
                                                     </div>
                                                 </div>
                                             ) : (
                                                 <div className="text-center px-4">
-                                                    <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mx-auto mb-4 border border-gray-100 group-hover:scale-110 transition-transform">
-                                                        <ImageIcon className="h-6 w-6 text-sb-red" />
+                                                    <div className="w-20 h-20 bg-white rounded-full shadow-sm flex items-center justify-center mx-auto mb-4 border border-gray-100 group-hover:scale-110 transition-transform">
+                                                        <UploadCloud className="h-8 w-8 text-sb-red" />
                                                     </div>
-                                                    <p className="font-bold text-gray-700 mb-1">Click to add cover image</p>
-                                                    <p className="text-sm text-gray-400">Recommended: 1200x800px (Max 5MB)</p>
+                                                    <p className="font-bold text-gray-700 mb-1 text-lg">Click to pick a feature image</p>
+                                                    <p className="text-sm text-gray-400">Optimal size: 1200x800px (Max 5MB)</p>
                                                 </div>
                                             )}
                                             <input id="blog-image-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />

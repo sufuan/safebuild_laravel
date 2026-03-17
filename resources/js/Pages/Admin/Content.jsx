@@ -11,7 +11,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Plus, Edit, Trash2, Image as ImageIcon } from 'lucide-react';
+import { Plus, Edit, Trash2, Image as ImageIcon, UploadCloud } from 'lucide-react';
+
+const formatBytes = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
 
 // Curated list of Flaticons available in the theme
 const AVAILABLE_ICONS = [
@@ -375,6 +383,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingItem, setEditingItem] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
+    const [selectedFileSize, setSelectedFileSize] = useState(null);
 
     const { data, setData, post, delete: destroy, reset, clearErrors, errors, processing } = useForm({
         // Generic fields covering all potential tables
@@ -391,6 +400,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
         clearErrors();
         reset();
         setImagePreview(null);
+        setSelectedFileSize(null);
         setIsDialogOpen(true);
     };
 
@@ -408,6 +418,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
         });
 
         setImagePreview(item.image_path ? getAssetUrl(item.image_path) : null);
+        setSelectedFileSize(null);
         setIsDialogOpen(true);
     };
 
@@ -417,13 +428,16 @@ export default function Content({ heroSlides, services, projects, testimonials, 
             if (file.size > 5 * 1024 * 1024) {
                 toast.error('The file is too large. Please upload an image smaller than 5MB.');
                 e.target.value = '';
+                setSelectedFileSize(null);
                 return;
             }
             setData('image_path', file);
             setImagePreview(URL.createObjectURL(file));
+            setSelectedFileSize(file.size);
         } else {
             setData('image_path', null);
             setImagePreview(editingItem && editingItem.image_path ? getAssetUrl(editingItem.image_path) : null);
+            setSelectedFileSize(null);
         }
     };
 
@@ -481,7 +495,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
             </div>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="mb-8 grid w-full grid-cols-2 lg:grid-cols-8 h-auto p-1 bg-white border border-gray-100 shadow-sm rounded-xl overflow-x-auto">
+                <TabsList className="mb-8 grid w-full grid-cols-2 lg:grid-cols-9 h-auto p-1 bg-white border border-gray-100 shadow-sm rounded-xl overflow-x-auto">
                     <TabsTrigger value="hero" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Hero Slides</TabsTrigger>
                     <TabsTrigger value="about" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all whitespace-nowrap">About Section</TabsTrigger>
                     <TabsTrigger value="services" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all whitespace-nowrap">Services List</TabsTrigger>
@@ -758,9 +772,8 @@ export default function Content({ heroSlides, services, projects, testimonials, 
             </Tabs>
 
             {/* --- Global Add/Edit Dialog --- */}
-            {/* Added max-w-4xl for larger, more professional dialog sizing */}
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogContent className="max-w-4xl bg-white p-0 overflow-hidden rounded-3xl shadow-2xl border-0">
+                <DialogContent className="max-w-5xl bg-white p-0 overflow-hidden rounded-3xl shadow-2xl border-0">
                     <DialogHeader className="px-8 py-6 bg-gray-50/80 border-b border-gray-100 m-0">
                         <DialogTitle className="text-2xl font-black text-sb-dark">
                             {editingItem ? `Edit ${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}` : `Add New ${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}`}
@@ -768,9 +781,46 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                     </DialogHeader>
                     
                     <form onSubmit={handleSubmit} className="p-8">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {/* Left Column (Inputs) */}
-                            <div className="space-y-6">
+                        <div className="space-y-8">
+                            {/* Row 1: Image Upload (Prominent Full Width) */}
+                            {['hero', 'services', 'projects', 'testimonials', 'team', 'logos'].includes(activeTab) && (
+                                <div className="space-y-3">
+                                    <Label className="text-sm font-bold text-gray-700 flex justify-between">
+                                        <span>
+                                            {activeTab === 'logos' ? 'Brand Logo Image' : 'Featured Image'} 
+                                            {(!editingItem && !['testimonials', 'services'].includes(activeTab)) && <span className="text-sb-red ml-1">*</span>}
+                                        </span>
+                                        {selectedFileSize && <span className="text-sb-red font-bold">Selected Size: {formatBytes(selectedFileSize)}</span>}
+                                    </Label>
+                                    <div 
+                                        className="border-2 border-dashed border-gray-300 rounded-2xl p-6 h-64 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 hover:border-sb-red/50 transition-all cursor-pointer relative group overflow-hidden"
+                                        onClick={() => document.getElementById('image-upload').click()}
+                                    >
+                                        {imagePreview ? (
+                                            <div className="relative w-full h-full flex items-center justify-center">
+                                                <img src={imagePreview} alt="Preview" className={`max-h-full object-cover rounded-xl ${activeTab === 'logos' ? 'object-contain p-4' : 'shadow-md w-full'}`} />
+                                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center rounded-xl backdrop-blur-sm">
+                                                    <UploadCloud className="w-10 h-10 text-white mb-2" />
+                                                    <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full text-sm shadow-lg">Change Image</span>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="text-center px-4">
+                                                <div className="w-20 h-20 bg-white rounded-full shadow-sm flex items-center justify-center mx-auto mb-4 border border-gray-100 group-hover:scale-110 transition-transform">
+                                                    <UploadCloud className="h-8 w-8 text-sb-red" />
+                                                </div>
+                                                <p className="font-bold text-gray-700 mb-1 text-lg">Click or drag to upload featured image</p>
+                                                <p className="text-sm text-gray-400">Supports JPG, PNG, WEBP (Max 5MB)</p>
+                                            </div>
+                                        )}
+                                        <input id="image-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
+                                    </div>
+                                    {errors.image_path && <p className="text-sm text-sb-red mt-1 font-medium">{errors.image_path}</p>}
+                                </div>
+                            )}
+
+                            {/* Row 2: Grid for Fields */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
                                 {/* Title field (used across many tabs) */}
                                 {['hero', 'services', 'projects'].includes(activeTab) && (
                                     <div className="space-y-3">
@@ -780,119 +830,25 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                     </div>
                                 )}
 
-                                {/* Hero Specific */}
+                                {/* Hero Subtitle */}
                                 {activeTab === 'hero' && (
-                                    <>
-                                        <div className="space-y-3">
-                                            <Label className="text-sm font-bold text-gray-700">Subtitle</Label>
-                                            <Input value={data.subtitle} onChange={e => setData('subtitle', e.target.value)} placeholder="e.g. Welcome to SafeBuild" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
-                                            {errors.subtitle && <p className="text-sm text-sb-red mt-1 font-medium">{errors.subtitle}</p>}
-                                        </div>
-                                    </>
-                                )}
-
-                                {/* Services Specific */}
-                                {activeTab === 'services' && (
-                                    <>
-                                        <div className="space-y-3">
-                                            <Label className="text-sm font-bold text-gray-700">Description <span className="text-sb-red">*</span></Label>
-                                            <Textarea value={data.description} onChange={e => setData('description', e.target.value)} placeholder="Explain the service offering in detail..." rows={4} className="bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl resize-none" />
-                                            {errors.description && <p className="text-sm text-sb-red mt-1 font-medium">{errors.description}</p>}
-                                        </div>
-                                    </>
-                                )}
-
-                                {/* Projects Specific */}
-                                {activeTab === 'projects' && (
                                     <div className="space-y-3">
-                                        <Label className="text-sm font-bold text-gray-700">Category <span className="text-sb-red">*</span></Label>
-                                        <Input value={data.category} onChange={e => setData('category', e.target.value)} placeholder="e.g. Interior Design, Exterior Construction" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
-                                        {errors.category && <p className="text-sm text-sb-red mt-1 font-medium">{errors.category}</p>}
+                                        <Label className="text-sm font-bold text-gray-700">Subtitle</Label>
+                                        <Input value={data.subtitle} onChange={e => setData('subtitle', e.target.value)} placeholder="e.g. Welcome to SafeBuild" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
+                                        {errors.subtitle && <p className="text-sm text-sb-red mt-1 font-medium">{errors.subtitle}</p>}
                                     </div>
                                 )}
 
-                                {/* Testimonials Specific */}
-                                {activeTab === 'testimonials' && (
-                                    <>
-                                        <div className="space-y-3">
-                                            <Label className="text-sm font-bold text-gray-700">Client Name <span className="text-sb-red">*</span></Label>
-                                            <Input value={data.name} onChange={e => setData('name', e.target.value)} placeholder="e.g. John Doe" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
-                                            {errors.name && <p className="text-sm text-sb-red mt-1 font-medium">{errors.name}</p>}
-                                        </div>
-                                        <div className="space-y-3">
-                                            <Label className="text-sm font-bold text-gray-700">Role / Company</Label>
-                                            <Input value={data.role} onChange={e => setData('role', e.target.value)} placeholder="e.g. CEO of TechCorp" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
-                                        </div>
-                                        <div className="space-y-3">
-                                            <Label className="text-sm font-bold text-gray-700">Testimonial Quote <span className="text-sb-red">*</span></Label>
-                                            <Textarea value={data.quote} onChange={e => setData('quote', e.target.value)} placeholder="Their exact words..." rows={4} className="bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl resize-none" />
-                                            {errors.quote && <p className="text-sm text-sb-red mt-1 font-medium">{errors.quote}</p>}
-                                        </div>
-                                    </>
-                                )}
-
-                                {/* Team Specific */}
-                                {activeTab === 'team' && (
-                                    <>
-                                        <div className="space-y-3">
-                                            <Label className="text-sm font-bold text-gray-700">Name <span className="text-sb-red">*</span></Label>
-                                            <Input value={data.name} onChange={e => setData('name', e.target.value)} placeholder="e.g. Jane Doe" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
-                                            {errors.name && <p className="text-sm text-sb-red mt-1 font-medium">{errors.name}</p>}
-                                        </div>
-                                        <div className="space-y-3">
-                                            <Label className="text-sm font-bold text-gray-700">Official Role <span className="text-sb-red">*</span></Label>
-                                            <Input value={data.role} onChange={e => setData('role', e.target.value)} placeholder="e.g. Head Architect" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
-                                            {errors.role && <p className="text-sm text-sb-red mt-1 font-medium">{errors.role}</p>}
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-
-                            {/* Right Column (Image Upload & Specialized Picks) */}
-                            <div className="space-y-6">
-                                {/* Common Image Upload for Tabs that need it */}
-                                {['hero', 'services', 'projects', 'testimonials', 'team', 'logos'].includes(activeTab) && (
-                                    <div className="space-y-3 h-full flex flex-col">
-                                        <Label className="text-sm font-bold text-gray-700">
-                                            {activeTab === 'logos' ? 'Brand Logo Image' : 'Featured Image'} 
-                                            {(!editingItem && !['testimonials', 'services'].includes(activeTab)) && <span className="text-sb-red ml-1">*</span>}
-                                        </Label>
-                                        <div 
-                                            className="border-2 border-dashed border-gray-300 rounded-2xl p-6 flex-1 flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 hover:border-sb-red/50 transition-all cursor-pointer relative group overflow-hidden min-h-[300px]"
-                                            onClick={() => document.getElementById('image-upload').click()}
-                                        >
-                                            {imagePreview ? (
-                                                <div className="relative w-full h-full flex items-center justify-center">
-                                                    <img src={imagePreview} alt="Preview" className={`max-h-[300px] object-cover rounded-xl ${activeTab === 'logos' ? 'object-contain p-4' : 'shadow-md w-full'}`} />
-                                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl backdrop-blur-sm">
-                                                        <span className="text-white font-bold bg-sb-red px-4 py-2 rounded-full">Change Image</span>
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                <div className="text-center px-4">
-                                                    <div className="w-20 h-20 bg-white rounded-full shadow-sm flex items-center justify-center mx-auto mb-4 border border-gray-100 group-hover:scale-110 transition-transform">
-                                                        <ImageIcon className="h-8 w-8 text-sb-red" />
-                                                    </div>
-                                                    <p className="font-bold text-gray-700 mb-1">Click to browse or drag image here</p>
-                                                    <p className="text-sm text-gray-400">Supports JPG, PNG, WEBP (Max 5MB)</p>
-                                                </div>
-                                            )}
-                                            <input id="image-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
-                                        </div>
-                                        {errors.image_path && <p className="text-sm text-sb-red mt-1 font-medium">{errors.image_path}</p>}
-                                    </div>
-                                )}
-
-                                {/* Services Icon Picker instead of text input */}
+                                {/* Services Icon Picker (Span 2) */}
                                 {activeTab === 'services' && (
-                                    <div className="space-y-3">
+                                    <div className="space-y-3 md:col-span-2">
                                         <Label className="text-sm font-bold text-gray-700 flex justify-between items-center">
                                             <span>Select Service Icon <span className="text-sb-red">*</span></span>
                                             <span className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-500 font-normal">Selected: {data.icon_class}</span>
                                         </Label>
                                         
-                                        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 h-[300px] overflow-y-auto custom-scrollbar">
-                                            <div className="grid grid-cols-4 gap-3">
+                                        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 h-[200px] overflow-y-auto custom-scrollbar">
+                                            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12 gap-3">
                                                 {AVAILABLE_ICONS.map((iconClass) => (
                                                     <div 
                                                         key={iconClass}
@@ -904,7 +860,7 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                                         }`}
                                                         title={iconClass}
                                                     >
-                                                        <i className={`${iconClass} text-3xl`}></i>
+                                                        <i className={`${iconClass} text-2xl`}></i>
                                                     </div>
                                                 ))}
                                             </div>
@@ -912,14 +868,76 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                         {errors.icon_class && <p className="text-sm text-sb-red mt-1 font-medium">{errors.icon_class}</p>}
                                     </div>
                                 )}
+
+                                {/* Services Description (Span 2) */}
+                                {activeTab === 'services' && (
+                                    <div className="space-y-3 md:col-span-2">
+                                        <Label className="text-sm font-bold text-gray-700">Description <span className="text-sb-red">*</span></Label>
+                                        <Textarea value={data.description} onChange={e => setData('description', e.target.value)} placeholder="Explain the service offering in detail..." rows={4} className="bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl resize-none" />
+                                        {errors.description && <p className="text-sm text-sb-red mt-1 font-medium">{errors.description}</p>}
+                                    </div>
+                                )}
+
+                                {/* Projects Category */}
+                                {activeTab === 'projects' && (
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-bold text-gray-700">Category <span className="text-sb-red">*</span></Label>
+                                        <Input value={data.category} onChange={e => setData('category', e.target.value)} placeholder="e.g. Interior Design, Exterior Construction" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
+                                        {errors.category && <p className="text-sm text-sb-red mt-1 font-medium">{errors.category}</p>}
+                                    </div>
+                                )}
+
+                                {/* Testimonials Client Name */}
+                                {activeTab === 'testimonials' && (
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-bold text-gray-700">Client Name <span className="text-sb-red">*</span></Label>
+                                        <Input value={data.name} onChange={e => setData('name', e.target.value)} placeholder="e.g. John Doe" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
+                                        {errors.name && <p className="text-sm text-sb-red mt-1 font-medium">{errors.name}</p>}
+                                    </div>
+                                )}
+
+                                {/* Testimonials Role */}
+                                {activeTab === 'testimonials' && (
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-bold text-gray-700">Role / Company</Label>
+                                        <Input value={data.role} onChange={e => setData('role', e.target.value)} placeholder="e.g. CEO of TechCorp" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
+                                    </div>
+                                )}
+
+                                {/* Testimonials Quote (Span 2) */}
+                                {activeTab === 'testimonials' && (
+                                    <div className="space-y-3 md:col-span-2">
+                                        <Label className="text-sm font-bold text-gray-700">Testimonial Quote <span className="text-sb-red">*</span></Label>
+                                        <Textarea value={data.quote} onChange={e => setData('quote', e.target.value)} placeholder="Their exact words..." rows={4} className="bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl resize-none" />
+                                        {errors.quote && <p className="text-sm text-sb-red mt-1 font-medium">{errors.quote}</p>}
+                                    </div>
+                                )}
+
+                                {/* Team Name */}
+                                {activeTab === 'team' && (
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-bold text-gray-700">Name <span className="text-sb-red">*</span></Label>
+                                        <Input value={data.name} onChange={e => setData('name', e.target.value)} placeholder="e.g. Jane Doe" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
+                                        {errors.name && <p className="text-sm text-sb-red mt-1 font-medium">{errors.name}</p>}
+                                    </div>
+                                )}
+
+                                {/* Team Role */}
+                                {activeTab === 'team' && (
+                                    <div className="space-y-3">
+                                        <Label className="text-sm font-bold text-gray-700">Official Role <span className="text-sb-red">*</span></Label>
+                                        <Input value={data.role} onChange={e => setData('role', e.target.value)} placeholder="e.g. Head Architect" className="h-12 bg-gray-50 border-gray-200 focus-visible:ring-sb-red rounded-xl" />
+                                        {errors.role && <p className="text-sm text-sb-red mt-1 font-medium">{errors.role}</p>}
+                                    </div>
+                                )}
                             </div>
                         </div>
 
                         <div className="flex items-center justify-end gap-3 pt-8 mt-8 border-t border-gray-100">
-                            <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="h-12 px-6 rounded-xl border-gray-300 text-gray-700 font-bold hover:bg-gray-50">
+                            <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="h-12 px-8 rounded-xl border-gray-300 text-gray-700 font-bold hover:bg-gray-50 transition-all">
                                 Cancel
                             </Button>
-                            <Button type="submit" disabled={processing} className="h-12 px-8 rounded-xl bg-sb-red hover:bg-sb-dark text-white font-bold shadow-md hover:shadow-lg transition-all">
+                            <Button type="submit" disabled={processing} className="h-12 px-10 rounded-xl bg-sb-red hover:bg-sb-dark text-white font-bold shadow-lg shadow-red-200 hover:shadow-xl transition-all">
                                 {processing ? 'Saving Changes...' : 'Save Content'}
                             </Button>
                         </div>
