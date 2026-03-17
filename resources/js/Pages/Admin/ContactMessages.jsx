@@ -122,10 +122,19 @@ export default function ContactMessages({ messages }) {
                                             <h4 className={`font-bold text-lg pr-6 ${selectedMessage?.id === msg.id ? 'text-sb-red' : 'text-sb-dark'}`}>
                                                 {msg.name}
                                             </h4>
+                                            {msg.is_quote && (
+                                                <span className="shrink-0 bg-sb-red/10 text-sb-red text-[10px] font-bold uppercase px-2 py-0.5 rounded-sm tracking-wider">
+                                                    Quote
+                                                </span>
+                                            )}
                                         </div>
-                                        {msg.subject && <p className="text-sm font-semibold text-gray-700 mb-1 line-clamp-1">{msg.subject}</p>}
+                                        {msg.subject ? (
+                                            <p className="text-sm font-semibold text-gray-700 mb-1 line-clamp-1">{msg.subject}</p>
+                                        ) : msg.is_quote && msg.service_type ? (
+                                            <p className="text-sm font-semibold text-sb-red mb-1 line-clamp-1">{msg.service_type}</p>
+                                        ) : null}
                                         <p className="text-sm text-gray-500 line-clamp-2">
-                                            {msg.message}
+                                            {msg.is_quote ? msg.project_details : msg.message}
                                         </p>
                                         <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center bg-transparent">
                                             <span className="text-xs text-gray-400 flex items-center">
@@ -146,7 +155,16 @@ export default function ContactMessages({ messages }) {
                                 <div className="flex justify-between items-start mb-8 pb-8 border-b border-gray-100">
                                     <div className="space-y-4">
                                         <div>
-                                            <h3 className="text-3xl font-black text-sb-dark mb-2">{selectedMessage.subject || 'No Subject Provided'}</h3>
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <h3 className="text-3xl font-black text-sb-dark">
+                                                    {selectedMessage.is_quote ? 'Quote Request' : (selectedMessage.subject || 'No Subject Provided')}
+                                                </h3>
+                                                {selectedMessage.is_quote && (
+                                                    <span className="bg-sb-red text-white text-[10px] font-bold uppercase px-2 py-1 rounded-sm tracking-wider">
+                                                        Quote
+                                                    </span>
+                                                )}
+                                            </div>
                                             <div className="flex flex-wrap items-center gap-4 text-sm mt-4">
                                                 <span className="flex items-center text-gray-600 font-medium bg-gray-100 px-3 py-1.5 rounded-full">
                                                     <Mail className="w-4 h-4 mr-2 text-sb-red" />
@@ -178,10 +196,55 @@ export default function ContactMessages({ messages }) {
                                 </div>
 
                                 <div className="flex-1">
-                                    <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Message Content</h4>
-                                    <div className="prose max-w-none text-gray-700 leading-relaxed bg-gray-50/50 p-8 rounded-2xl border border-gray-100 h-full min-h-[300px] whitespace-pre-wrap">
-                                        {selectedMessage.message}
-                                    </div>
+                                    {selectedMessage.is_quote ? (
+                                        <div className="space-y-6">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">Service Type</span>
+                                                    <span className="text-gray-900 font-semibold">{selectedMessage.service_type || 'Not specified'}</span>
+                                                </div>
+                                                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">Budget Range</span>
+                                                    <span className="text-gray-900 font-semibold">{selectedMessage.budget_range || 'Not specified'}</span>
+                                                </div>
+                                                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 md:col-span-2">
+                                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-1">Project Location</span>
+                                                    <span className="text-gray-900 font-semibold">{selectedMessage.location || 'Not specified'}</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div>
+                                                <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3">Project Details</h4>
+                                                <div className="prose max-w-none text-gray-700 leading-relaxed bg-gray-50/50 p-6 rounded-2xl border border-gray-100 min-h-[150px] whitespace-pre-wrap">
+                                                    {selectedMessage.project_details || 'No details provided.'}
+                                                </div>
+                                            </div>
+
+                                            {selectedMessage.attachment_path && (
+                                                <div>
+                                                    <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3">Attachment</h4>
+                                                    <a 
+                                                        href={`/storage/${selectedMessage.attachment_path}`} 
+                                                        target="_blank" 
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center space-x-2 bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-4 py-2 rounded-lg transition-colors font-semibold text-sm"
+                                                    >
+                                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                                        </svg>
+                                                        <span>View Attachment</span>
+                                                    </a>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Message Content</h4>
+                                            <div className="prose max-w-none text-gray-700 leading-relaxed bg-gray-50/50 p-8 rounded-2xl border border-gray-100 h-full min-h-[300px] whitespace-pre-wrap">
+                                                {selectedMessage.message}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                                 
                                 <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between text-sm text-gray-500">

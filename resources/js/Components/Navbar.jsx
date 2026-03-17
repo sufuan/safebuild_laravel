@@ -159,7 +159,7 @@ export default function Navbar() {
                         </svg>
                     </button>
                     <div className="hidden md:flex items-center ml-4">
-                        <a href="#" className="bg-sb-dark text-white font-poppins font-semibold text-[15px] leading-6 px-11 py-5 rounded-[40px] hover:bg-black transition-colors">Request a Quote</a>
+                        <Link href="/contact-us?quote=true" className="bg-sb-dark text-white font-poppins font-semibold text-[15px] leading-6 px-11 py-5 rounded-[40px] hover:bg-black transition-colors">Request a Quote</Link>
                     </div>
                 </div>
                 {/* Mobile Menu */}

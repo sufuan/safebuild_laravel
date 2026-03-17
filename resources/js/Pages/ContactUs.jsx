@@ -8,23 +8,31 @@ import { getAssetUrl } from '@/lib/utils';
 
 export default function ContactUs() {
     const { siteSettings } = usePage().props;
+    const isQuoteMode = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('quote') === 'true' : false;
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
         phone: '',
         subject: '',
         message: '',
+        is_quote: isQuoteMode,
+        service_type: '',
+        location: '',
+        project_details: '',
+        budget_range: '',
+        attachment: null,
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route('contact.store'), {
+            forceFormData: true,
             onSuccess: () => {
                 reset();
-                toast.success('Your message has been sent successfully!');
+                toast.success(data.is_quote ? 'Your quote request has been submitted successfully!' : 'Your message has been sent successfully!');
             },
             onError: () => {
-                toast.error('There was an error sending your message. Please check the fields.');
+                toast.error('There was an error submitting your request. Please check the fields.');
             }
         });
     };
@@ -58,11 +66,32 @@ export default function ContactUs() {
                         <div className="flex flex-col lg:flex-row gap-16">
                             {/* Left: Contact Form */}
                             <div className="lg:w-2/3">
-                                <h2 className="text-sb-dark text-3xl font-bold uppercase mb-4">REQUEST A QUOTE</h2>
-                                <p className="text-gray-600 mb-12">We'd love to hear from you! Send us your requirements &amp; get a
-                                    quote. We will get back to you soon<span className="text-sb-red">*</span></p>
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-10 pb-6 border-b border-gray-100 gap-6">
+                                    <div>
+                                        <h2 className="text-sb-dark text-3xl font-bold uppercase mb-2">
+                                            {data.is_quote ? 'REQUEST A QUOTE' : 'CONTACT US'}
+                                        </h2>
+                                        <p className="text-gray-600">
+                                            {data.is_quote 
+                                                ? 'Request a Quote: For project details and quotation requests.' 
+                                                : 'Contact Us: For general inquiries only.'}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center gap-4 shrink-0 bg-gray-50 px-4 py-3 rounded-xl border border-gray-100">
+                                        <span className={`text-sm font-bold uppercase tracking-widest ${!data.is_quote ? 'text-sb-dark' : 'text-gray-400'}`}>Contact Us</span>
+                                        <button 
+                                            type="button" 
+                                            onClick={() => setData('is_quote', !data.is_quote)}
+                                            className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-sb-red focus:ring-offset-2 ${data.is_quote ? 'bg-sb-red' : 'bg-gray-300'}`}
+                                        >
+                                            <span className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${data.is_quote ? 'translate-x-[26px]' : 'translate-x-1'}`} />
+                                        </button>
+                                        <span className={`text-sm font-bold uppercase tracking-widest ${data.is_quote ? 'text-sb-red' : 'text-gray-400'}`}>Request a Quote</span>
+                                    </div>
+                                </div>
 
                                 <form onSubmit={handleSubmit} className="space-y-6">
+                                    {/* General Fields */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-1">
                                             <input 
@@ -70,10 +99,10 @@ export default function ContactUs() {
                                                 placeholder="Your Name*"
                                                 value={data.name}
                                                 onChange={e => setData('name', e.target.value)}
-                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" 
+                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none transition-shadow" 
                                                 required
                                             />
-                                            {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
+                                            {errors.name && <p className="text-xs text-red-500 font-bold mt-1 max-w-full">{errors.name}</p>}
                                         </div>
                                         <div className="space-y-1">
                                             <input 
@@ -81,12 +110,13 @@ export default function ContactUs() {
                                                 placeholder="Email*"
                                                 value={data.email}
                                                 onChange={e => setData('email', e.target.value)}
-                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" 
+                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none transition-shadow" 
                                                 required
                                             />
-                                            {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
+                                            {errors.email && <p className="text-xs text-red-500 font-bold mt-1 max-w-full">{errors.email}</p>}
                                         </div>
                                     </div>
+                                    
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-1">
                                             <input 
@@ -94,40 +124,114 @@ export default function ContactUs() {
                                                 placeholder="Phone*"
                                                 value={data.phone}
                                                 onChange={e => setData('phone', e.target.value)}
-                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" 
+                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none transition-shadow" 
                                                 required
                                             />
-                                            {errors.phone && <p className="text-xs text-red-500">{errors.phone}</p>}
+                                            {errors.phone && <p className="text-xs text-red-500 font-bold mt-1 max-w-full">{errors.phone}</p>}
                                         </div>
-                                        <div className="space-y-1">
+                                        {/* Subject is full-width in Contact mode unless we need symmetry */}
+                                        <div className={`${data.is_quote ? 'hidden' : 'space-y-1'}`}>
                                             <input 
                                                 type="text" 
                                                 placeholder="Subject"
                                                 value={data.subject}
                                                 onChange={e => setData('subject', e.target.value)}
-                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none" 
+                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none transition-shadow" 
                                             />
-                                            {errors.subject && <p className="text-xs text-red-500">{errors.subject}</p>}
+                                            {errors.subject && <p className="text-xs text-red-500 font-bold mt-1 max-w-full">{errors.subject}</p>}
+                                        </div>
+                                        {/* Show Location instead of Subject in Quote mode */}
+                                        <div className={`${!data.is_quote ? 'hidden' : 'space-y-1'}`}>
+                                            <input 
+                                                type="text" 
+                                                placeholder="Project Location*"
+                                                value={data.location}
+                                                onChange={e => setData('location', e.target.value)}
+                                                className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none transition-shadow" 
+                                                required={data.is_quote}
+                                            />
+                                            {errors.location && <p className="text-xs text-red-500 font-bold mt-1 max-w-full">{errors.location}</p>}
                                         </div>
                                     </div>
+
+                                    {/* Quote Extra Fields */}
+                                    {data.is_quote && (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in slide-in-from-top-4 fade-in duration-300">
+                                            <div className="space-y-1">
+                                                <select
+                                                    value={data.service_type}
+                                                    onChange={e => setData('service_type', e.target.value)}
+                                                    className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none text-gray-700 transition-shadow appearance-none cursor-pointer"
+                                                    required={data.is_quote}
+                                                >
+                                                    <option value="" disabled>Select Service Type*</option>
+                                                    <option value="New Construction">New Construction</option>
+                                                    <option value="Renovation">Renovation</option>
+                                                    <option value="Architectural Design">Architectural Design</option>
+                                                    <option value="Custom Carpentry">Custom Carpentry</option>
+                                                    <option value="Excavation & Prep">Excavation & Prep</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                                {errors.service_type && <p className="text-xs text-red-500 font-bold mt-1 max-w-full">{errors.service_type}</p>}
+                                            </div>
+                                            <div className="space-y-1">
+                                                <input
+                                                    type="text" 
+                                                    placeholder="Budget Range (Optional)"
+                                                    value={data.budget_range}
+                                                    onChange={e => setData('budget_range', e.target.value)}
+                                                    className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none transition-shadow"
+                                                />
+                                                {errors.budget_range && <p className="text-xs text-red-500 font-bold mt-1 max-w-full">{errors.budget_range}</p>}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Message or Project Details */}
                                     <div className="space-y-1">
                                         <textarea 
                                             rows="6" 
-                                            placeholder="message"
-                                            value={data.message}
-                                            onChange={e => setData('message', e.target.value)}
-                                            className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none resize-none"
+                                            placeholder={data.is_quote ? 'Project Details & Requirements*' : 'Message*'}
+                                            value={data.is_quote ? data.project_details : data.message}
+                                            onChange={e => data.is_quote ? setData('project_details', e.target.value) : setData('message', e.target.value)}
+                                            className="w-full bg-gray-100 border-none px-6 py-4 rounded-sm focus:ring-1 focus:ring-sb-red outline-none resize-none transition-shadow"
                                             required
                                         ></textarea>
-                                        {errors.message && <p className="text-xs text-red-500">{errors.message}</p>}
+                                        {data.is_quote ? (
+                                            errors.project_details && <p className="text-xs text-red-500 font-bold mt-1 max-w-full">{errors.project_details}</p>
+                                        ) : (
+                                            errors.message && <p className="text-xs text-red-500 font-bold mt-1 max-w-full">{errors.message}</p>
+                                        )}
                                     </div>
+
+                                    {/* Optional File Attachment for Quote */}
+                                    {data.is_quote && (
+                                        <div className="space-y-2 animate-in slide-in-from-top-4 fade-in duration-300">
+                                            <label className="block text-sm font-bold text-gray-700">Attach Floor Plans, Photos, or Documents: (Optional)</label>
+                                            <div className="flex items-center gap-4">
+                                                <label className="bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-700 cursor-pointer px-6 py-3 rounded-sm font-semibold transition-colors">
+                                                    <span>Choose File</span>
+                                                    <input 
+                                                        type="file" 
+                                                        className="hidden" 
+                                                        onChange={e => setData('attachment', e.target.files[0])}
+                                                        accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.webp"
+                                                    />
+                                                </label>
+                                                <span className="text-sm text-gray-500 font-medium">
+                                                    {data.attachment ? data.attachment.name : 'No file selected. (Max 10MB)'}
+                                                </span>
+                                            </div>
+                                            {errors.attachment && <p className="text-xs text-red-500 font-bold mt-1 max-w-full">{errors.attachment}</p>}
+                                        </div>
+                                    )}
 
                                     <button 
                                         type="submit"
                                         disabled={processing}
-                                        className="bg-sb-dark text-white px-10 py-5 font-bold uppercase flex items-center gap-3 hover:bg-sb-red transition-all duration-300 disabled:opacity-50"
+                                        className="bg-sb-dark text-white px-10 py-5 font-bold uppercase flex items-center gap-3 hover:bg-sb-red transition-all duration-300 disabled:opacity-50 mt-8"
                                     >
-                                        {processing ? 'SENDING...' : 'SEND MESSAGE'}
+                                        {processing ? 'SENDING...' : (data.is_quote ? 'SUBMIT QUOTE REQUEST' : 'SEND MESSAGE')}
                                         <i className="fas fa-long-arrow-alt-right"></i>
                                     </button>
                                 </form>
