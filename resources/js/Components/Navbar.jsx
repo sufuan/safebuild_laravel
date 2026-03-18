@@ -19,7 +19,7 @@ export default function Navbar() {
                 >
                     <Link href="/" className="inline-block w-full">
                         <img
-                            src={getAssetUrl('assets/SafeBuild-Logo-Ai-file-1.png')}
+                            src={getAssetUrl('assets/safebuild horizontal logo.png')}
                             alt="SafeBuild Logo"
                             className="w-full max-w-[180px] md:max-w-[280px]"
                         />

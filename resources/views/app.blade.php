@@ -14,6 +14,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Icons -->
+        <link rel="icon" type="image/png" href="/assets/safebuild favicon.png">
         <link rel="stylesheet" href="/assets/flaticon.css">
         <link rel="stylesheet" href="/assets/fontawesome-all.css">
 

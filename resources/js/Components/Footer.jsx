@@ -35,7 +35,7 @@ export default function Footer() {
                             <div className="mt-[20px] mb-[20px]">
                                 <Link href="/" className="block">
                                     <img
-                                        src={getAssetUrl('assets/SafeBuild-Logo-Ai-file.png')}
+                                        src={getAssetUrl('assets/safebuild horizontal logo.png')}
                                         alt="Logo"
                                         className="max-w-full h-auto brightness-0 invert opacity-100"
                                     />
