@@ -1,7 +1,9 @@
 import React from 'react';
 import { getAssetUrl } from '@/lib/utils';
+import { usePage } from '@inertiajs/react';
 
 export default function Newsletter() {
+    const { siteSettings } = usePage().props;
     return (
         <section className="relative py-24 bg-cover bg-center bg-no-repeat bg-fixed"
             style={{ "backgroundImage": `url(${getAssetUrl('assets/vecteezy_ai-generated-explore-the-role-of-scada-systems-in-industrial_40888741.webp')})` }}>
@@ -51,8 +53,11 @@ export default function Newsletter() {
                             <div>
                                 <p className="text-sm text-gray-300 uppercase tracking-widest mb-1">Our 24/7 Phone
                                     Services</p>
-                                <h3 className="text-3xl font-bold hover:text-sb-red transition-colors"><a
-                                    href="tel:+12508860059">+1 (250) 886-0059</a></h3>
+                                <h3 className="text-3xl font-bold hover:text-sb-red transition-colors">
+                                    <a href={`tel:${siteSettings?.contact_phone || '+12509860012'}`}>
+                                        {siteSettings?.contact_phone || '+1 (250) 986-0012'}
+                                    </a>
+                                </h3>
                             </div>
                         </div>
                     </div>

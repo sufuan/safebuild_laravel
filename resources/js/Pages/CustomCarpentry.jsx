@@ -1,5 +1,9 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { getAssetUrl } from '@/lib/utils';
+import Navbar from '@/Components/Navbar';
+import Footer from '@/Components/Footer';
+import Team from '@/Components/Team';
+import Testimonial from '@/Components/Testimonial';
 
 const servicesList = [
     { label: 'Property Services & Design', href: '/property-services-design', active: false },
@@ -11,6 +15,7 @@ const servicesList = [
 ];
 
 export default function CustomCarpentry() {
+    const { siteSettings } = usePage().props;
     return (
         <>
             <Navbar />
@@ -97,10 +102,10 @@ export default function CustomCarpentry() {
                                 <h4 className="text-xl font-bold uppercase mb-2">Need Help?</h4>
                                 <p className="text-gray-400 text-sm mb-6">Talk to our carpentry experts today and get a free consultation.</p>
                                 <a
-                                    href="tel:+12508860059"
+                                    href={`tel:${siteSettings?.contact_phone || '+12508860059'}`}
                                     className="block bg-sb-red text-white font-bold py-4 px-8 hover:bg-white hover:text-sb-red transition-all uppercase tracking-wider text-sm"
                                 >
-                                    +1 (250) 886-0059
+                                    {siteSettings?.contact_phone || '+1 (250) 886-0059'}
                                 </a>
                             </div>
                         </div>
