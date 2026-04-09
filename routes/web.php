@@ -31,7 +31,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
         'heroSlides' => HeroSlide::where('is_active', true)->orderBy('order')->get(),
         'services' => Service::where('is_active', true)->orderBy('order')->take(4)->get(),
-        'projects' => Project::latest()->take(5)->get(),
+        'projects' => Project::where('is_active', true)->latest()->get(),
         'testimonials' => Testimonial::where('is_active', true)->latest()->get(),
         'teamMembers' => TeamMember::orderBy('order')->take(4)->get(),
         'brandLogos' => BrandLogo::orderBy('order')->get(),

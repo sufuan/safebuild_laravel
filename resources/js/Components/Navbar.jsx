@@ -19,7 +19,7 @@ export default function Navbar() {
                         <img
                             src={getAssetUrl('assets/safebuild horizontal logo.png')}
                             alt="SafeBuild Logo"
-                            className="w-full max-w-[180px] md:max-w-[280px]"
+                            className="w-full max-w-[198px] md:max-w-[308px]"
                         />
                     </Link>
                 </div>
