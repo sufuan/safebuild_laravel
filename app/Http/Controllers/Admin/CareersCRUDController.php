@@ -8,6 +8,7 @@ use App\Models\CareerPerk;
 use App\Models\OpenPosition;
 use App\Models\JobApplication;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class CareersCRUDController extends Controller
 {
@@ -50,7 +51,18 @@ class CareersCRUDController extends Controller
             'location' => 'required|string|max:255',
             'type' => 'required|string|max:255',
             'experience' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:10240',
         ]);
+
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            unset($validated['attachment']);
+            $path = $file->store('uploads/positions', 'public');
+            $validated['attachment_path'] = $path;
+            $validated['attachment_type'] = str_contains($file->getMimeType(), 'pdf') ? 'pdf' : 'image';
+        }
+
         OpenPosition::create($validated);
         return back()->with('success', 'Open position created successfully.');
     }
@@ -62,13 +74,32 @@ class CareersCRUDController extends Controller
             'location' => 'required|string|max:255',
             'type' => 'required|string|max:255',
             'experience' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:10240',
         ]);
+
+        if ($request->hasFile('attachment')) {
+            if ($position->attachment_path && Storage::disk('public')->exists($position->attachment_path)) {
+                Storage::disk('public')->delete($position->attachment_path);
+            }
+
+            $file = $request->file('attachment');
+            unset($validated['attachment']);
+            $path = $file->store('uploads/positions', 'public');
+            $validated['attachment_path'] = $path;
+            $validated['attachment_type'] = str_contains($file->getMimeType(), 'pdf') ? 'pdf' : 'image';
+        }
+
         $position->update($validated);
         return back()->with('success', 'Open position updated successfully.');
     }
 
     public function deletePosition(OpenPosition $position)
     {
+        if ($position->attachment_path && Storage::disk('public')->exists($position->attachment_path)) {
+            Storage::disk('public')->delete($position->attachment_path);
+        }
+
         $position->delete();
         return back()->with('success', 'Open position deleted successfully.');
     }

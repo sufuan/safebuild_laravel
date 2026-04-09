@@ -64,7 +64,7 @@ function SplitPane({ section, data }) {
     const { data: formData, setData, post, put, delete: destroy, reset, processing, errors } = useForm(
         isPerk 
         ? { title: '', description: '', order: '' }
-        : { title: '', location: '', type: '', experience: '' }
+        : { title: '', location: '', type: '', experience: '', description: '', attachment: null }
     );
 
     const handleEdit = (item) => {
@@ -78,6 +78,7 @@ function SplitPane({ section, data }) {
             location: item.location || '',
             type: item.type || '',
             experience: item.experience || '',
+            attachment: null,
         });
         setShowForm(true);
     };
@@ -107,16 +108,15 @@ function SplitPane({ section, data }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const options = {
+            preserveScroll: true,
+            forceFormData: !isPerk,
+            onSuccess: () => handleCancel(),
+        };
         if (editingItem) {
-            put(route(`admin.careers.${section}.update`, editingItem.id), {
-                preserveScroll: true,
-                onSuccess: () => handleCancel(),
-            });
+            put(route(`admin.careers.${section}.update`, editingItem.id), options);
         } else {
-            post(route(`admin.careers.${section}.store`), {
-                preserveScroll: true,
-                onSuccess: () => handleCancel(),
-            });
+            post(route(`admin.careers.${section}.store`), options);
         }
     };
 
@@ -163,7 +163,7 @@ function SplitPane({ section, data }) {
                                         <div className="flex flex-col flex-1">
                                             <h4 className="font-bold text-sb-dark text-lg group-hover:text-sb-red transition-colors">{item.title}</h4>
                                             <p className="text-sm text-gray-500 line-clamp-2 mt-1">
-                                                {isPerk ? item.description : `${item.location} • ${item.type}`}
+                                                {isPerk ? item.description : item.description || `${item.location} • ${item.type}`}
                                             </p>
                                             {!isPerk && <span className="text-xs font-bold text-sb-red mt-2 uppercase tracking-wider">{item.experience}</span>}
                                         </div>
@@ -281,6 +281,35 @@ function SplitPane({ section, data }) {
                                         />
                                         {errors.experience && <p className="text-sm text-red-500">{errors.experience}</p>}
                                     </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="description" className="font-bold text-gray-700">Job Description</Label>
+                                    <Textarea 
+                                        id="description" 
+                                        name="description" 
+                                        value={formData.description} 
+                                        onChange={e => setData('description', e.target.value)} 
+                                        className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red min-h-[120px] rounded-xl resize-none"
+                                        placeholder="Describe this position..."
+                                    />
+                                    {errors.description && <p className="text-sm text-red-500">{errors.description}</p>}
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="attachment" className="font-bold text-gray-700">Image or PDF Attachment <span className="text-gray-400">(optional)</span></Label>
+                                    <Input 
+                                        id="attachment" 
+                                        name="attachment" 
+                                        type="file"
+                                        accept="image/*,.pdf"
+                                        onChange={e => setData('attachment', e.target.files?.[0] || null)}
+                                        className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-12 rounded-xl file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-sb-red file:text-white hover:file:bg-sb-dark file:cursor-pointer"
+                                    />
+                                    {editingItem?.attachment_path && (
+                                        <p className="text-xs text-gray-500">
+                                            Current attachment: {editingItem.attachment_type || 'file'}
+                                        </p>
+                                    )}
+                                    {errors.attachment && <p className="text-sm text-red-500">{errors.attachment}</p>}
                                 </div>
                             </>
                         )}

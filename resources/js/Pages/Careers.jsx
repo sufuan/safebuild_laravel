@@ -14,6 +14,7 @@ const formatBytes = (bytes) => {
 
 export default function Careers({ perks, positions }) {
     const { siteSettings } = usePage().props;
+    const [activeJobId, setActiveJobId] = useState(null);
     const { data, setData, post, processing, reset, errors, recentlySuccessful } = useForm({
         name: '',
         email: '',
@@ -46,6 +47,22 @@ export default function Careers({ perks, positions }) {
                 toast.error('There was an error submitting your application. Please check the fields and try again.');
             }
         });
+    };
+
+    const getAttachmentLink = (job) => {
+        if (!job?.attachment_path) {
+            return null;
+        }
+
+        return getAssetUrl(`storage/${job.attachment_path}`);
+    };
+
+    const isPdfAttachment = (job) => {
+        if (!job?.attachment_path) {
+            return false;
+        }
+
+        return String(job.attachment_type || job.attachment_path).toLowerCase().includes('pdf') || job.attachment_path.toLowerCase().endsWith('.pdf');
     };
 
     return (
@@ -112,7 +129,7 @@ export default function Careers({ perks, positions }) {
 
                     <div className="space-y-6">
                         {positions && positions.length > 0 ? positions.map((job) => (
-                            <div key={job.id} className="border border-gray-200 rounded-sm p-8 flex flex-col md:flex-row items-start md:items-center justify-between hover:border-sb-red transition-colors duration-300 shadow-sm hover:shadow-md transition-all">
+                            <div key={job.id} className="border border-gray-200 rounded-sm p-8 flex flex-col gap-6 hover:border-sb-red transition-colors duration-300 shadow-sm hover:shadow-md transition-all bg-white">
                                 <div>
                                     <h3 className="text-2xl font-bold text-sb-dark mb-2">{job.title}</h3>
                                     <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 font-medium">
@@ -120,9 +137,14 @@ export default function Careers({ perks, positions }) {
                                         <span className="flex items-center gap-1"><i className="fas fa-clock text-sb-red"></i> {job.type}</span>
                                         <span className="flex items-center gap-1"><i className="fas fa-briefcase text-sb-red"></i> {job.experience}</span>
                                     </div>
+                                    {job.description && (
+                                        <p className="mt-4 text-gray-600 leading-relaxed max-w-3xl">
+                                            {job.description}
+                                        </p>
+                                    )}
                                 </div>
-                                <div className="mt-6 md:mt-0">
-                                    <button 
+                                <div className="flex flex-wrap items-center gap-3">
+                                    <button
                                         onClick={() => {
                                             const applySection = document.getElementById('apply');
                                             if (applySection) {
@@ -134,7 +156,52 @@ export default function Careers({ perks, positions }) {
                                     >
                                         Apply Now
                                     </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setActiveJobId(activeJobId === job.id ? null : job.id)}
+                                        className="inline-block border border-sb-red text-sb-red font-bold uppercase tracking-widest px-8 py-3 hover:bg-sb-red hover:text-white transition-colors duration-300"
+                                    >
+                                        Job Position Details
+                                    </button>
                                 </div>
+                                {activeJobId === job.id && (
+                                    <div className="mt-2 rounded-xl border border-gray-200 bg-gray-50 p-6">
+                                        <h4 className="text-lg font-bold text-sb-dark mb-3">Position Details</h4>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            {job.description || 'No additional description has been added for this position yet.'}
+                                        </p>
+                                        {job.attachment_path && (
+                                            <div className="mt-5">
+                                                {isPdfAttachment(job) ? (
+                                                    <a
+                                                        href={getAttachmentLink(job)}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-2 bg-sb-dark text-white px-5 py-3 font-bold uppercase tracking-widest hover:bg-black transition-colors"
+                                                    >
+                                                        View PDF <i className="fas fa-file-pdf"></i>
+                                                    </a>
+                                                ) : (
+                                                    <div className="grid gap-4 md:grid-cols-[220px_1fr] items-start">
+                                                        <img
+                                                            src={getAttachmentLink(job)}
+                                                            alt={job.title}
+                                                            className="w-full h-56 object-cover rounded-lg border border-gray-200"
+                                                        />
+                                                        <a
+                                                            href={getAttachmentLink(job)}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-flex items-center gap-2 bg-sb-red text-white px-5 py-3 font-bold uppercase tracking-widest hover:bg-red-700 transition-colors w-fit"
+                                                        >
+                                                            Open Image <i className="fas fa-image"></i>
+                                                        </a>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         )) : (
                             <div className="text-center py-12 text-gray-400 border border-dashed border-gray-200 rounded-xl">
