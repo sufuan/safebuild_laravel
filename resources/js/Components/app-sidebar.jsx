@@ -10,13 +10,15 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { 
-  LayoutDashboard, 
-  FileTextIcon, 
-  BriefcaseIcon, 
-  MessageSquareIcon, 
-  BadgeDollarSignIcon, 
-  SettingsIcon 
+import {
+  LayoutDashboard,
+  FileTextIcon,
+  BriefcaseIcon,
+  MessageSquareIcon,
+  BadgeDollarSignIcon,
+  SettingsIcon,
+  FolderOpenIcon,
+  LayoutPanelLeftIcon,
 } from "lucide-react"
 
 export function AppSidebar({
@@ -41,7 +43,21 @@ export function AppSidebar({
         title: "Content",
         url: "/admin/content",
         icon: <FileTextIcon />,
-        isActive: route().current('admin.content*'),
+        isActive: route().current('admin.content*') || route().current('admin.projects*'),
+        children: [
+          {
+            title: "Content Settings",
+            url: "/admin/content",
+            icon: <LayoutPanelLeftIcon className="h-4 w-4" />,
+            isActive: route().current('admin.content.index'),
+          },
+          {
+            title: "Projects",
+            url: "/admin/projects",
+            icon: <FolderOpenIcon className="h-4 w-4" />,
+            isActive: route().current('admin.projects*'),
+          },
+        ],
       },
       {
         title: "Blog Posts",

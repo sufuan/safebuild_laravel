@@ -377,7 +377,7 @@ function ServicesPageEditor() {
 }
 
 
-export default function Content({ heroSlides, services, projects, testimonials, teamMembers, brandLogos }) {
+export default function Content({ heroSlides, services, testimonials, teamMembers, brandLogos }) {
     // --- State & Forms ---
     const [activeTab, setActiveTab] = useState(new URLSearchParams(window.location.search).get('tab') || 'hero');
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -454,7 +454,6 @@ export default function Content({ heroSlides, services, projects, testimonials, 
         const endpointMap = {
             'hero': 'content.hero',
             'services': 'content.services',
-            'projects': 'content.projects',
             'testimonials': 'content.testimonials',
             'team': 'content.team',
             'logos': 'content.logos',
@@ -495,13 +494,12 @@ export default function Content({ heroSlides, services, projects, testimonials, 
             </div>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="mb-8 grid w-full grid-cols-2 lg:grid-cols-9 h-auto p-1 bg-white border border-gray-100 shadow-sm rounded-xl overflow-x-auto">
+                <TabsList className="mb-8 grid w-full grid-cols-2 lg:grid-cols-8 h-auto p-1 bg-white border border-gray-100 shadow-sm rounded-xl overflow-x-auto">
                     <TabsTrigger value="hero" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Hero Slides</TabsTrigger>
                     <TabsTrigger value="about" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all whitespace-nowrap">About Section</TabsTrigger>
                     <TabsTrigger value="services" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all whitespace-nowrap">Services List</TabsTrigger>
                     <TabsTrigger value="services_intro" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all whitespace-nowrap">Services Intro</TabsTrigger>
                     <TabsTrigger value="why" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Why Us</TabsTrigger>
-                    <TabsTrigger value="projects" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Projects</TabsTrigger>
                     <TabsTrigger value="testimonials" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Testimonials</TabsTrigger>
                     <TabsTrigger value="team" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all">Team</TabsTrigger>
                     <TabsTrigger value="logos" className="py-2.5 rounded-lg data-[state=active]:bg-sb-red data-[state=active]:text-white font-medium text-sm transition-all whitespace-nowrap">Brand Logos</TabsTrigger>
@@ -601,47 +599,6 @@ export default function Content({ heroSlides, services, projects, testimonials, 
                                     ))}
                                     {services.length === 0 && (
                                         <TableRow><TableCell colSpan="4" className="text-center text-muted-foreground py-12">No services found.</TableCell></TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
-                        </CardContent>
-                    </Card>
-                </TabsContent>
-
-                {/* --- Projects Tab --- */}
-                <TabsContent value="projects" className="mt-0">
-                    <Card className="border-0 shadow-sm rounded-3xl overflow-hidden">
-                        <CardHeader className="bg-white border-b border-gray-100 px-8 py-6">
-                            <CardTitle className="text-2xl font-black text-sb-dark">Projects</CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-0">
-                            <Table>
-                                <TableHeader className="bg-gray-50/50">
-                                    <TableRow>
-                                        <TableHead className="px-8 font-bold">Image</TableHead>
-                                        <TableHead className="font-bold">Title</TableHead>
-                                        <TableHead className="font-bold">Category</TableHead>
-                                        <TableHead className="text-right px-8 font-bold">Actions</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {projects.map((project) => (
-                                        <TableRow key={project.id} className="hover:bg-gray-50/30 transition-colors">
-                                            <TableCell className="px-8 py-4">
-                                                <img src={getAssetUrl(project.image_path)} alt="Project" className="w-20 h-20 object-cover rounded-xl border border-gray-200 shadow-sm" />
-                                            </TableCell>
-                                            <TableCell className="font-bold text-sb-dark text-lg">{project.title}</TableCell>
-                                            <TableCell>
-                                                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">{project.category}</span>
-                                            </TableCell>
-                                            <TableCell className="text-right px-8">
-                                                <Button variant="ghost" size="sm" onClick={() => openEditDialog(project)} className="hover:text-sb-red hover:bg-red-50"><Edit className="h-4 w-4" /></Button>
-                                                <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-600 hover:bg-red-50" onClick={() => handleDelete('content.projects.delete', project.id)}><Trash2 className="h-4 w-4" /></Button>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                    {projects.length === 0 && (
-                                        <TableRow><TableCell colSpan="4" className="text-center text-muted-foreground py-12">No projects found.</TableCell></TableRow>
                                     )}
                                 </TableBody>
                             </Table>

@@ -116,16 +116,16 @@ class ContentCRUDController extends Controller
     }
     public function deleteService(Service $service) { $service->delete(); return back()->with('success', 'Service deleted.'); }
 
-    // --- Projects ---
+    // --- Projects (kept for route compatibility, new dedicated page uses ProjectController) ---
     public function storeProject(Request $request) {
-        $data = $request->validate(['title' => 'required|string', 'category' => 'required|string', 'image_path' => 'required|image|max:5120'], [
+        $data = $request->validate(['title' => 'required|string', 'category' => 'required|string', 'description' => 'nullable|string', 'image_path' => 'required|image|max:5120'], [
             'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; }
         Project::create($data); return back()->with('success', 'Project created.');
     }
     public function updateProject(Request $request, Project $project) {
-        $data = $request->validate(['title' => 'required|string', 'category' => 'required|string', 'image_path' => 'nullable|image|max:5120'], [
+        $data = $request->validate(['title' => 'required|string', 'category' => 'required|string', 'description' => 'nullable|string', 'image_path' => 'nullable|image|max:5120'], [
             'image_path.uploaded' => 'The image failed to upload. This is usually due to server-side limits (max file size). Please ensure the file is under 5MB or check your cPanel PHP settings (upload_max_filesize).',
         ]);
         if ($path = $this->uploadImage($request, 'image_path', 'assets')) { $data['image_path'] = $path; } else { unset($data['image_path']); }

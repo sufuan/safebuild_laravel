@@ -273,8 +273,7 @@ export default function ContactUs() {
                             {/* Address */}
                             <div className="flex flex-col">
                                 <h4 className="text-sb-dark font-bold uppercase tracking-widest text-sm mb-6">ADDRESS</h4>
-                                <p className="text-gray-500 leading-relaxed font-medium">3448 Karger Terrace, Victoria, British
-                                    Columbia V9C 3N2, Canada.</p>
+                                <p className="text-gray-500 leading-relaxed font-medium">{siteSettings.office_address || '3448 Karger Terrace, Victoria, British Columbia V9C 3N2, Canada.'}</p>
                             </div>
                             {/* Email */}
                             <div className="flex flex-col">

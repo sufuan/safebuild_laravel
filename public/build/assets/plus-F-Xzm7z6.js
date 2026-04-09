@@ -1,1 +1,0 @@
-import{c as o}from"./app-sidebar-CWBgVHTV.js";const a=[["path",{d:"M12 13v8",key:"1l5pq0"}],["path",{d:"M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242",key:"1pljnt"}],["path",{d:"m8 17 4-4 4 4",key:"1quai1"}]],e=o("cloud-upload",a);const t=[["path",{d:"M5 12h14",key:"1ays0h"}],["path",{d:"M12 5v14",key:"s699le"}]],p=o("plus",t);export{e as C,p as P};

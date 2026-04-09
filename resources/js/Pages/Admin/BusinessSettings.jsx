@@ -20,6 +20,7 @@ export default function BusinessSettings({ settings }) {
             { key: 'site_name', value: getSetting('site_name') },
             { key: 'contact_email', value: getSetting('contact_email') },
             { key: 'contact_phone', value: getSetting('contact_phone') },
+            { key: 'office_address', value: getSetting('office_address') },
             { key: 'careers_email', value: getSetting('careers_email') },
             { key: 'facebook_url', value: getSetting('facebook_url') },
             { key: 'twitter_url', value: getSetting('twitter_url') },
@@ -135,6 +136,18 @@ export default function BusinessSettings({ settings }) {
                                     type="email"
                                     value={getValue('careers_email')} 
                                     onChange={e => handleChange('careers_email', e.target.value)} 
+                                    className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-14 rounded-xl"
+                                />
+                            </div>
+                            <div className="space-y-3 md:col-span-2">
+                                <Label htmlFor="office_address" className="font-bold text-gray-700 flex items-center gap-2">
+                                    <MapPin className="w-4 h-4 text-gray-400" /> Office Address
+                                </Label>
+                                <Input 
+                                    id="office_address" 
+                                    value={getValue('office_address')} 
+                                    onChange={e => handleChange('office_address', e.target.value)} 
+                                    placeholder="e.g. 3448 Karger Terrace, Victoria, BC, V9C 3K5"
                                     className="bg-gray-50/50 border-gray-200 focus-visible:ring-sb-red h-14 rounded-xl"
                                 />
                             </div>

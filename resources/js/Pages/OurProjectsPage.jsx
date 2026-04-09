@@ -1,33 +1,16 @@
 import React, { useState } from 'react';
+import { Head, Link } from '@inertiajs/react';
 import { getAssetUrl } from '@/lib/utils';
+import Navbar from '@/Components/Navbar';
+import Footer from '@/Components/Footer';
 
-const projects = [
-    { id: 1, img: 'assets/project-v1-1-2.jpg', category: 'architecture', title: 'Architectural Design & Planning' },
-    { id: 2, img: 'assets/project-v1-2-2.jpg', category: 'renovation', title: 'Full Home Renovation' },
-    { id: 3, img: 'assets/project-v1-3-1-1.jpg', category: 'excavation', title: 'Site Excavation & Grading' },
-    { id: 4, img: 'assets/project-v1-4-1-1.jpg', category: 'carpentry', title: 'Custom Carpentry & Cabinetry' },
-    { id: 5, img: 'assets/project-v1-5-1-1.jpg', category: 'renovation', title: 'Commercial Renovation' },
-    { id: 6, img: 'assets/project-v1-2-1-1.jpg', category: 'architecture', title: 'Structural Engineering' },
-    { id: 7, img: 'assets/pexels-tima-miroshnichenko-6196225.webp', category: 'excavation', title: 'Foundation & Trenching' },
-    { id: 8, img: 'assets/marek-studzinski-zQBjgS4PGpg-unsplash-1.webp', category: 'carpentry', title: 'Millwork & Interior Wood Finishing' },
-    { id: 9, img: 'assets/vecteezy_ai-generated-explore-the-role-of-scada-systems-in-industrial_40888741.webp', category: 'renovation', title: 'Industrial Renovation' },
-    { id: 10, img: 'assets/blog-v1-1-1.jpg', category: 'architecture', title: 'Residential Architecture' },
-    { id: 11, img: 'assets/blog-v1-2-1.jpg', category: 'carpentry', title: 'Deck & Outdoor Carpentry' },
-    { id: 12, img: 'assets/blog-v1-3-1.jpg', category: 'excavation', title: 'Rock Blasting & Removal' },
-    { id: 13, img: 'assets/pexels-toni-30123884-1.webp', category: 'renovation', title: 'Restoration & Abatement' },
-    { id: 14, img: 'assets/pexels-tima-miroshnichenko-6474475.webp', category: 'architecture', title: 'Energy Efficient Design' },
-    { id: 15, img: 'assets/mina-rad-K9T9hdf4PmI-unsplash.webp', category: 'carpentry', title: 'Built-in Shelving & Storage' },
-    { id: 16, img: 'assets/emmanuel-ikwuegbu-KHO_jvns5Xc-unsplash.webp', category: 'excavation', title: 'Land Clearing & Preparation' },
-    { id: 17, img: 'assets/steptodown.com399351.webp', category: 'renovation', title: 'Property Restoration Project' },
-    { id: 18, img: 'assets/steptodown.com481843-1.webp', category: 'architecture', title: 'Heritage Building Conversion' },
-];
-
-const filters = ['all', 'renovation', 'architecture', 'excavation', 'carpentry'];
-
-export default function OurProjectsPage() {
+export default function OurProjectsPage({ projects = [], categories = [] }) {
     const [active, setActive] = useState('all');
 
-    const visible = active === 'all' ? projects : projects.filter(p => p.category === active);
+    const allFilters = ['all', ...categories];
+    const visible = active === 'all' ? projects : projects.filter(p =>
+        p.category?.toLowerCase() === active.toLowerCase()
+    );
 
     return (
         <>
@@ -66,48 +49,68 @@ export default function OurProjectsPage() {
                         </div>
 
                         {/* Filter Buttons */}
-                        <div className="flex flex-wrap justify-center gap-3 mb-12">
-                            {filters.map(f => (
-                                <button key={f}
-                                    onClick={() => setActive(f)}
-                                    className={`px-6 py-3 border-2 font-bold text-sm uppercase tracking-wider transition-all
-                                        ${active === f
-                                            ? 'bg-sb-red text-white border-sb-red'
-                                            : 'border-gray-300 text-gray-600 hover:bg-sb-red hover:text-white hover:border-sb-red'
-                                        }`}>
-                                    {f === 'all' ? 'All' : f.charAt(0).toUpperCase() + f.slice(1)}
-                                </button>
-                            ))}
-                        </div>
+                        {allFilters.length > 1 && (
+                            <div className="flex flex-wrap justify-center gap-3 mb-12">
+                                {allFilters.map(f => (
+                                    <button key={f}
+                                        onClick={() => setActive(f)}
+                                        className={`px-6 py-3 border-2 font-bold text-sm uppercase tracking-wider transition-all
+                                            ${active === f
+                                                ? 'bg-sb-red text-white border-sb-red'
+                                                : 'border-gray-300 text-gray-600 hover:bg-sb-red hover:text-white hover:border-sb-red'
+                                            }`}>
+                                        {f === 'all' ? 'All' : f.charAt(0).toUpperCase() + f.slice(1)}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
 
                         {/* Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {visible.map(project => (
-                                <div key={project.id}
-                                    className="group relative overflow-hidden shadow-lg h-[320px]">
-                                    <img src={getAssetUrl(project.img)} alt={project.title}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-sb-dark/90 via-sb-dark/20 to-transparent opacity-80"></div>
-                                    <div className="absolute inset-0 flex flex-col justify-end p-7">
-                                        <span className="text-sb-orange text-xs font-bold uppercase tracking-widest mb-2">
-                                            {project.category.charAt(0).toUpperCase() + project.category.slice(1)}
-                                        </span>
-                                        <h4 className="text-white text-xl font-bold uppercase font-poppins mb-2">{project.title}</h4>
-                                        <a href="#"
-                                            className="inline-flex items-center gap-2 text-white text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-sb-orange">
-                                            Project Details <i className="fas fa-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                    <div className="absolute top-4 right-4 w-10 h-10 bg-sb-red rounded-full flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                                        <i className="fas fa-search-plus text-white text-sm"></i>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        {visible.length > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {visible.map(project => (
+                                    <Link key={project.id} href={`/our-projects/${project.id}`}
+                                        className="group relative overflow-hidden shadow-lg h-[320px] block">
+                                        <img src={getAssetUrl(project.image_path)} alt={project.title}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-sb-dark/90 via-sb-dark/20 to-transparent opacity-80"></div>
+
+                                        {/* ── Status badge ── */}
+                                        {project.project_status === 'complete' ? (
+                                            <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-emerald-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">
+                                                <svg className="w-3 h-3 fill-white" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd"/></svg>
+                                                Completed
+                                            </div>
+                                        ) : (
+                                            <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-blue-500 text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">
+                                                <span className="w-2 h-2 rounded-full bg-white animate-pulse inline-block"></span>
+                                                In Progress
+                                            </div>
+                                        )}
+
+                                        <div className="absolute inset-0 flex flex-col justify-end p-7">
+                                            <span className="text-sb-orange text-xs font-bold uppercase tracking-widest mb-2">
+                                                {project.category?.charAt(0).toUpperCase() + project.category?.slice(1)}
+                                            </span>
+                                            <h4 className="text-white text-xl font-bold uppercase font-poppins mb-2">{project.title}</h4>
+                                            <span className="inline-flex items-center gap-2 text-white text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-sb-orange">
+                                                View Details <i className="fas fa-arrow-right"></i>
+                                            </span>
+                                        </div>
+                                        <div className="absolute bottom-4 right-4 w-10 h-10 bg-sb-red rounded-full flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                                            <i className="fas fa-arrow-right text-white text-sm"></i>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-24 text-gray-400">
+                                <i className="flaticon-architect text-5xl mb-4 block"></i>
+                                <p className="text-lg font-semibold">No projects found in this category.</p>
+                            </div>
+                        )}
                     </div>
                 </section>
-
-
 
                 <Footer />
             </div>

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\HeroSlide;
 use App\Models\Service;
-use App\Models\Project;
 use App\Models\Testimonial;
 use App\Models\TeamMember;
 use App\Models\BrandLogo;
@@ -20,7 +19,6 @@ class ContentController extends Controller
         return Inertia::render('Admin/Content', [
             'heroSlides' => HeroSlide::orderBy('order')->get(),
             'services' => Service::orderBy('order')->get(),
-            'projects' => Project::latest()->get(),
             'testimonials' => Testimonial::latest()->get(),
             'teamMembers' => TeamMember::orderBy('order')->get(),
             'brandLogos' => BrandLogo::orderBy('order')->get(),

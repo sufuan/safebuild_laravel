@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\QuoteRequestController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -82,8 +83,28 @@ Route::get('/careers', function () {
 Route::post('/careers/apply', [CareersCRUDController::class, 'storeApplication'])->name('careers.apply');
 
 Route::get('/our-projects', function () {
-    return Inertia::render('OurProjectsPage');
-});
+    $projects = Project::where('is_active', true)->latest()->get();
+    $categories = $projects->pluck('category')->unique()->filter()->values();
+    return Inertia::render('OurProjectsPage', [
+        'projects' => $projects,
+        'categories' => $categories,
+    ]);
+})->name('projects.index');
+
+Route::get('/our-projects/{project}', function (Project $project) {
+    if (!$project->is_active) {
+        abort(404);
+    }
+    return Inertia::render('ProjectDetail', [
+        'project' => $project,
+        'relatedProjects' => Project::where('is_active', true)
+            ->where('id', '!=', $project->id)
+            ->where('category', $project->category)
+            ->latest()
+            ->take(3)
+            ->get(),
+    ]);
+})->name('projects.show');
 
 Route::get('/our-team', function () {
     return Inertia::render('OurTeam');
@@ -167,6 +188,15 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     // Logos CRUD
     Route::post('/content/logos', [ContentCRUDController::class, 'storeLogo'])->name('content.logos.store');
     Route::delete('/content/logos/{logo}', [ContentCRUDController::class, 'deleteLogo'])->name('content.logos.delete');
+
+    // Projects (dedicated page)
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+    Route::get('/projects/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+    Route::post('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::post('/projects/{project}/gallery/remove', [ProjectController::class, 'removeGalleryImage'])->name('projects.gallery.remove');
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.delete');
 
     // Blog
     Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');

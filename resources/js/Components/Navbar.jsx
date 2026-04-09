@@ -6,8 +6,6 @@ export default function Navbar() {
     const { siteSettings } = usePage().props;
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [servicesSubmenuOpen, setServicesSubmenuOpen] = useState(false);
-    const [pagesSubmenuOpen, setPagesSubmenuOpen] = useState(false);
-    const [blogSubmenuOpen, setBlogSubmenuOpen] = useState(false);
 
     return (
         <>
@@ -82,7 +80,7 @@ export default function Navbar() {
                                 </svg>
                                 <div>
                                     <p className="text-white text-xs leading-tight opacity-90">Office Address</p>
-                                    <p className="text-black font-bold text-sm leading-tight">3448 Karger Terrace, Victoria, BC ,V9C 3K5</p>
+                                    <p className="text-black font-bold text-sm leading-tight">{siteSettings.office_address || '3448 Karger Terrace, Victoria, BC ,V9C 3K5'}</p>
                                 </div>
                             </div>
                         </div>
@@ -118,19 +116,8 @@ export default function Navbar() {
                                     <li><Link href="/custom-carpentry" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Custom Carpentry &amp; Cabinetry</Link></li>
                                 </ul>
                             </li>
-                            <li className="relative group">
-                                <Link href="/our-projects" className="flex items-center gap-1 px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">
-                                    Pages
-                                    <svg className="w-3 h-3 fill-current" viewBox="0 0 448 512">
-                                        <path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" />
-                                    </svg>
-                                </Link>
-                                <ul className="invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 absolute top-full left-0 min-w-[220px] bg-white rounded-md shadow-lg py-2 z-50">
-                                    <li><Link href="/our-team" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Our Team</Link></li>
-                                    <li><Link href="/testimonials" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Testimonials</Link></li>
-                                    <li><Link href="/faq" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">FAQ</Link></li>
-                                    <li><Link href="/our-projects" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Our All Projects</Link></li>
-                                </ul>
+                            <li>
+                                <Link href="/our-projects" className="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">Our Projects</Link>
                             </li>
                             <li>
                                 <Link href="/blog" className="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">Blog</Link>
@@ -189,25 +176,7 @@ export default function Navbar() {
                                     </ul>
                                 )}
                             </li>
-                            <li className="border-b border-white/10">
-                                <button
-                                    onClick={() => setPagesSubmenuOpen(!pagesSubmenuOpen)}
-                                    className="flex items-center justify-between w-full py-3 text-white text-sm font-bold uppercase"
-                                >
-                                    Pages
-                                    <svg className={`w-3 h-3 fill-current transition-transform duration-200 ${pagesSubmenuOpen ? 'rotate-180' : ''}`} viewBox="0 0 448 512">
-                                        <path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" />
-                                    </svg>
-                                </button>
-                                {pagesSubmenuOpen && (
-                                    <ul className="pl-4 pb-2 space-y-1">
-                                        <li><Link href="/our-team" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">Our Team</Link></li>
-                                        <li><Link href="/testimonials" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">Testimonials</Link></li>
-                                        <li><Link href="/faq" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">FAQ</Link></li>
-                                        <li><Link href="/our-projects" className="block py-2 text-white/80 text-sm font-semibold hover:text-white">Our All Projects</Link></li>
-                                    </ul>
-                                )}
-                            </li>
+                            <li><Link href="/our-projects" className="block py-3 text-white text-sm font-bold uppercase border-b border-white/10">Our Projects</Link></li>
                             <li><Link href="/blog" className="block py-3 text-white text-sm font-bold uppercase border-b border-white/10">Blog</Link></li>
                             <li><Link href="/careers" className="block py-3 text-white text-sm font-bold uppercase border-b border-white/10">Careers</Link></li>
                             <li><Link href="/contact-us" className="block py-3 text-white text-sm font-bold uppercase">Contact Us</Link></li>
