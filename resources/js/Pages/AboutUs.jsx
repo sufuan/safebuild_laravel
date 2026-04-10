@@ -116,13 +116,13 @@ export default function AboutUsPage() {
                                         With more than 20 years of combined industry experience, we bring expertise in General Contracting, Construction Management, Design-Build, Renovations, Tenant Improvements, and Property Maintenance. Our work reflects the highest standards of planning, craftsmanship, and project execution.
                                     </p>
                                     <p>
-                                        At SafeBuild, we operate not as brokers but as hands-on builders. By employing our own skilled trades professionals, we maintain full control over timelines, quality, and the critical path of every project—ensuring results are delivered on time and on budget, without compromising design intent or safety expectations.
+                                        
                                     </p>
 
                                     {/* Highlight box */}
                                     <div className="bg-gray-50 border-l-4 border-sb-red p-6 my-6">
                                         <p className="text-sb-dark font-semibold italic text-base leading-relaxed">
-                                            "As part of our commitment to responsible and inclusive development, we respect the diverse communities we serve and acknowledge the longstanding presence and stewardship of Indigenous peoples throughout Vancouver Island."
+                                           "Fully insured  with $5 million liability coverage and work safe BC insurance, so our clients are fully protected."
                                         </p>
                                     </div>
 

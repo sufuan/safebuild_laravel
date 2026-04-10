@@ -101,12 +101,12 @@ export default function Navbar() {
                                 <Link href="/about-us" className="block px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">About us</Link>
                             </li>
                             <li className="relative group">
-                                <Link href="/our-services.html" className="flex items-center gap-1 px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors">
+                                <button className="flex items-center gap-1 px-4 text-white text-sm font-bold uppercase leading-[70px] hover:text-sb-navy transition-colors cursor-pointer">
                                     Services
                                     <svg className="w-3 h-3 fill-current" viewBox="0 0 448 512">
                                         <path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" />
                                     </svg>
-                                </Link>
+                                </button>
                                 <ul className="invisible opacity-0 translate-y-2 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 absolute top-full left-0 min-w-[260px] bg-white rounded-md shadow-lg py-2 z-50">
                                     <li><Link href="/our-services" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Our Services</Link></li>
                                     <li><Link href="/property-services-design" className="block px-5 py-2 text-sm font-bold uppercase text-gray-800 hover:bg-gray-100 hover:text-sb-red transition-colors">Property Services &amp; Design</Link></li>
