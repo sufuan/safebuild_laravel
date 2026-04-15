@@ -202,16 +202,7 @@ export default function AboutUsPage() {
                     </div>
                 </section>
 
-                {/* ── VIDEO SECTION ────────────────────────────────────────── */}
-                <section className="relative h-[500px] flex items-center justify-center bg-fixed bg-cover bg-center"
-                    style={{ backgroundImage: `url(${getAssetUrl('assets/marek-studzinski-zQBjgS4PGpg-unsplash-1.webp')})` }}>
-                    <div className="absolute inset-0 bg-[#0E0F0F]/60"></div>
-                    <a href="https://www.youtube.com/watch?v=QVU_STj_Btc" target="_blank" rel="noreferrer"
-                        className="relative z-10 w-24 h-24 bg-sb-red text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-2xl">
-                        <i className="fas fa-play text-2xl ml-1"></i>
-                        <span className="absolute inset-0 rounded-full border-2 border-sb-red animate-ping"></span>
-                    </a>
-                </section>
+            
 
                 {/* �
 				{/* -- PROJECTS SECTION */}
