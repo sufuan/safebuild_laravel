@@ -1,4 +1,5 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
 import { getAssetUrl } from '@/lib/utils';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
@@ -16,8 +17,26 @@ const servicesList = [
 
 export default function RenovationRemodeling() {
     const { siteSettings } = usePage().props;
+
+    const serviceSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        '@id': 'https://safebuild.ca/renovation-remodeling#service',
+        name: 'Renovation & Remodeling Services',
+        serviceType: 'Home & Commercial Renovation',
+        provider: { '@id': 'https://safebuild.ca/#organization' },
+        areaServed: { '@type': 'AdministrativeArea', name: 'Greater Victoria, BC' },
+        description: 'Expert home and commercial renovation & remodeling services in Victoria BC. Kitchens, bathrooms, full house remodels & structural alterations.'
+    };
+
     return (
         <>
+            <SEOHead
+                title="Home & Commercial Renovation & Remodeling Victoria BC"
+                description="Transform your home or business with SafeBuild Canada. Victoria BC's top renovation contractor for kitchens, bathrooms, additions & full remodels."
+                canonical="https://safebuild.ca/renovation-remodeling"
+                schema={serviceSchema}
+            />
             <Navbar />
 
             {/* Page Hero */}

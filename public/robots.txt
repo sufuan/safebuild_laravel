@@ -1,2 +1,11 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin/
+Disallow: /profile
+Disallow: /login
+Disallow: /register
+Disallow: /password/
+
+# Host & Sitemap
+Host: https://safebuild.ca
+Sitemap: https://safebuild.ca/sitemap.xml

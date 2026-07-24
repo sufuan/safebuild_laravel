@@ -1,4 +1,5 @@
-import { Head, Link } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
+import { Link } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import React from 'react';
@@ -16,9 +17,51 @@ export default function BlogDetail({ post, recentPosts }) {
 
     const { day, month, year } = formatDate(post.date || post.created_at);
 
+    const postImage = post.image_path
+        ? `https://safebuild.ca/${post.image_path.replace(/^\//, '')}`
+        : 'https://safebuild.ca/assets/blog-v1-1-1.jpg';
+
+    const blogSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `https://safebuild.ca/blog/${post.id}#article`,
+        headline: post.title,
+        description: post.excerpt || post.title,
+        image: postImage,
+        datePublished: post.date || post.created_at,
+        dateModified: post.updated_at || post.date || post.created_at,
+        author: {
+            '@type': 'Organization',
+            name: post.author || 'SafeBuild Canada',
+            url: 'https://safebuild.ca'
+        },
+        publisher: {
+            '@id': 'https://safebuild.ca/#organization'
+        },
+        mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': `https://safebuild.ca/blog/${post.id}`
+        },
+        isPartOf: { '@id': 'https://safebuild.ca/#website' },
+        breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://safebuild.ca' },
+                { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://safebuild.ca/blog' },
+                { '@type': 'ListItem', position: 3, name: post.title, item: `https://safebuild.ca/blog/${post.id}` }
+            ]
+        }
+    };
+
     return (
         <>
-            <Head title={`${post.title} – SafeBuild Canada`} />
+            <SEOHead
+                title={post.title}
+                description={post.excerpt || `Read about ${post.title} on the SafeBuild Canada blog. Expert construction insights from Victoria BC's trusted general contractor.`}
+                canonical={`https://safebuild.ca/blog/${post.id}`}
+                ogImage={postImage}
+                schema={blogSchema}
+            />
             <div className="boxed_wrapper">
                 <Navbar />
 

@@ -1,4 +1,5 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import BrandLogos from '@/Components/BrandLogos';
@@ -37,9 +38,25 @@ export default function ContactUs() {
         });
     };
 
+    const contactSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'ContactPage',
+        '@id': 'https://safebuild.ca/contact-us#contactpage',
+        name: 'Contact SafeBuild Canada',
+        description: 'Get in touch with SafeBuild Canada for a free construction or renovation quote in Victoria BC. Call +1 (250) 886-0059 or send an online message.',
+        url: 'https://safebuild.ca/contact-us',
+        mainEntity: { '@id': 'https://safebuild.ca/#organization' },
+        isPartOf: { '@id': 'https://safebuild.ca/#website' }
+    };
+
     return (
         <>
-            <Head title="Contact Us – SafeBuild Canada" />
+            <SEOHead
+                title="Contact Us – Get a Free Quote Victoria BC General Contractor"
+                description="Contact SafeBuild Canada for your next renovation, remodeling, or construction project in Victoria BC. Free quotes, on-site assessments & expert advice. Call +1 (250) 886-0059."
+                canonical="https://safebuild.ca/contact-us"
+                schema={contactSchema}
+            />
             <div className="boxed_wrapper">
                 <Navbar />
 

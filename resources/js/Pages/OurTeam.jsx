@@ -1,4 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import Team from '@/Components/Team';
@@ -7,7 +8,11 @@ import React from 'react';
 export default function OurTeam() {
     return (
         <>
-            <Head title="Our Team – SafeBuild Canada" />
+            <SEOHead
+                title="Our Team – Skilled Construction Professionals Victoria BC"
+                description="Meet the experienced team of general contractors, project managers, and carpenters behind SafeBuild Canada in Victoria, British Columbia."
+                canonical="https://safebuild.ca/our-team"
+            />
             <div className="boxed_wrapper">
                 <Navbar />
 

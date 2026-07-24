@@ -1,4 +1,5 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
 import { getAssetUrl } from '@/lib/utils';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
@@ -16,8 +17,26 @@ const servicesList = [
 
 export default function ArchitecturalDesign() {
     const { siteSettings } = usePage().props;
+
+    const serviceSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        '@id': 'https://safebuild.ca/architectural-design#service',
+        name: 'Architectural Design Services',
+        serviceType: 'Architectural Design & Planning',
+        provider: { '@id': 'https://safebuild.ca/#organization' },
+        areaServed: { '@type': 'AdministrativeArea', name: 'Greater Victoria, BC' },
+        description: 'Professional architectural design and planning services in Victoria BC. Custom home designs, commercial blueprints, 3D modeling & permit drawings.'
+    };
+
     return (
         <>
+            <SEOHead
+                title="Architectural Design & Planning Services Victoria BC"
+                description="Professional architectural design services in Victoria BC. SafeBuild Canada delivers custom blueprints, 3D renderings, interior planning & building permits."
+                canonical="https://safebuild.ca/architectural-design"
+                schema={serviceSchema}
+            />
             <Navbar />
 
             {/* Page Hero */}

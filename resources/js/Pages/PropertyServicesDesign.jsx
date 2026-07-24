@@ -1,4 +1,5 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
 import { getAssetUrl } from '@/lib/utils';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
@@ -16,8 +17,26 @@ const servicesList = [
 
 export default function PropertyServicesDesign() {
     const { siteSettings } = usePage().props;
+
+    const serviceSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        '@id': 'https://safebuild.ca/property-services-design#service',
+        name: 'Property Services & Design',
+        serviceType: 'Property Management & Design',
+        provider: { '@id': 'https://safebuild.ca/#organization' },
+        areaServed: { '@type': 'AdministrativeArea', name: 'Greater Victoria, BC' },
+        description: 'Comprehensive property services and design solutions by SafeBuild Canada in Victoria BC. Maintenance, improvements, and architectural planning.'
+    };
+
     return (
         <>
+            <SEOHead
+                title="Property Services & Design Victoria BC"
+                description="Comprehensive property services and design solutions in Victoria BC. SafeBuild Canada delivers end-to-end property maintenance, upgrades, and planning."
+                canonical="https://safebuild.ca/property-services-design"
+                schema={serviceSchema}
+            />
             <Navbar />
 
             {/* Page Hero */}

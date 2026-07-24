@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
+import { Link } from '@inertiajs/react';
 import { getAssetUrl } from '@/lib/utils';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
@@ -8,9 +9,38 @@ export default function ProjectDetail({ project, relatedProjects = [] }) {
     const [lightboxImg, setLightboxImg] = useState(null);
     const gallery = project.gallery_images || [];
 
+    const projectImage = project.image_path
+        ? `https://safebuild.ca/${project.image_path.replace(/^\//, '')}`
+        : 'https://safebuild.ca/assets/og-image.jpg';
+
+    const projectSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        '@id': `https://safebuild.ca/our-projects/${project.id}#webpage`,
+        name: `${project.title} | SafeBuild Canada`,
+        description: project.description || `View the ${project.title} project by SafeBuild Canada in Victoria BC.`,
+        url: `https://safebuild.ca/our-projects/${project.id}`,
+        image: projectImage,
+        isPartOf: { '@id': 'https://safebuild.ca/#website' },
+        breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://safebuild.ca' },
+                { '@type': 'ListItem', position: 2, name: 'Our Projects', item: 'https://safebuild.ca/our-projects' },
+                { '@type': 'ListItem', position: 3, name: project.title, item: `https://safebuild.ca/our-projects/${project.id}` }
+            ]
+        }
+    };
+
     return (
         <>
-            <Head title={`${project.title} – SafeBuild Canada`} />
+            <SEOHead
+                title={`${project.title} – Project Portfolio`}
+                description={project.description || `Explore the ${project.title} project by SafeBuild Canada in Victoria BC. ${project.category ? project.category + ' project' : 'Construction & renovation'} by Victoria\'s trusted general contractor.`}
+                canonical={`https://safebuild.ca/our-projects/${project.id}`}
+                ogImage={projectImage}
+                schema={projectSchema}
+            />
             <div className="boxed_wrapper">
                 <Navbar />
 

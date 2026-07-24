@@ -1,4 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import React, { useState } from 'react';
@@ -99,9 +100,38 @@ function FaqItem({ q, a }) {
 }
 
 export default function Faq() {
+    const faqEntities = faqs.flatMap(cat => cat.items.map(item => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.a
+        }
+    })));
+
+    const faqSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': 'https://safebuild.ca/faq#faqpage',
+        mainEntity: faqEntities,
+        isPartOf: { '@id': 'https://safebuild.ca/#website' },
+        breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://safebuild.ca' },
+                { '@type': 'ListItem', position: 2, name: 'FAQ', item: 'https://safebuild.ca/faq' }
+            ]
+        }
+    };
+
     return (
         <>
-            <Head title="FAQ – SafeBuild Canada" />
+            <SEOHead
+                title="Frequently Asked Questions – General Contractor Victoria BC"
+                description="Find answers to common questions about SafeBuild Canada's services, project timelines, pricing, warranties, licensing, and renovation process in Victoria BC."
+                canonical="https://safebuild.ca/faq"
+                schema={faqSchema}
+            />
             <div className="boxed_wrapper">
                 <Navbar />
 

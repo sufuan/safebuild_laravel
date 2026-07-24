@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEOHead from '@/Components/SEOHead';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
@@ -67,7 +68,11 @@ export default function Careers({ perks, positions }) {
 
     return (
         <div className="boxed_wrapper">
-            <Head title="Careers – SafeBuild Canada" />
+            <SEOHead
+                title="Careers & Job Opportunities – Join SafeBuild Canada Victoria BC"
+                description="Build your construction career with SafeBuild Canada in Victoria BC. Explore open positions in project management, carpentry, site supervision & skilled trades."
+                canonical="https://safebuild.ca/careers"
+            />
             <Navbar />
 
             {/* ── HERO SECTION ────────────────────────────────────────── */}

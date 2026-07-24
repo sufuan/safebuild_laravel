@@ -1,14 +1,38 @@
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
-import { Link, usePage } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { getAssetUrl } from '@/lib/utils';
 import React from 'react';
 
 export default function OurServices({ services = [] }) {
     const { siteSettings = {} } = usePage().props;
 
+    const servicesSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        '@id': 'https://safebuild.ca/our-services#webpage',
+        name: 'Our Services – SafeBuild Canada Victoria BC',
+        description: 'Explore SafeBuild Canada\'s full range of construction and property services in Victoria BC: renovation, remodeling, architectural design, excavation, custom carpentry, and more.',
+        url: 'https://safebuild.ca/our-services',
+        isPartOf: { '@id': 'https://safebuild.ca/#website' },
+        breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://safebuild.ca' },
+                { '@type': 'ListItem', position: 2, name: 'Our Services', item: 'https://safebuild.ca/our-services' }
+            ]
+        }
+    };
+
     return (
         <>
+            <SEOHead
+                title="Our Services – Construction & Property Services Victoria BC"
+                description="SafeBuild Canada offers renovation, remodeling, architectural design, excavation & site prep, custom carpentry, and full property services in Victoria BC. Request a free quote today."
+                canonical="https://safebuild.ca/our-services"
+                schema={servicesSchema}
+            />
             <Navbar />
 
             {/* Page Hero */}

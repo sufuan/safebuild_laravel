@@ -1,4 +1,5 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
 import { getAssetUrl } from '@/lib/utils';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
@@ -16,8 +17,26 @@ const servicesList = [
 
 export default function ExcavationSitePrep() {
     const { siteSettings } = usePage().props;
+
+    const serviceSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        '@id': 'https://safebuild.ca/excavation-site-prep#service',
+        name: 'Excavation & Site Preparation',
+        serviceType: 'Excavation & Earthmoving Construction',
+        provider: { '@id': 'https://safebuild.ca/#organization' },
+        areaServed: { '@type': 'AdministrativeArea', name: 'Greater Victoria, BC' },
+        description: 'Professional excavation and site preparation services in Victoria BC. Land clearing, foundation digging, grading, and utility trenching.'
+    };
+
     return (
         <>
+            <SEOHead
+                title="Excavation & Site Preparation Services Victoria BC"
+                description="Professional excavation & site prep contractor in Victoria BC. Land clearing, trenching, foundation excavation, and site grading by SafeBuild Canada."
+                canonical="https://safebuild.ca/excavation-site-prep"
+                schema={serviceSchema}
+            />
             <Navbar />
 
             {/* Page Hero */}

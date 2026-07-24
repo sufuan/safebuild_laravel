@@ -1,4 +1,5 @@
 import { Head, Link, usePage } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import BrandLogos from '@/Components/BrandLogos';
@@ -8,9 +9,33 @@ import { getAssetUrl } from '@/lib/utils';
 
 export default function AboutUsPage() {
     const { siteSettings } = usePage().props;
+
+    const aboutSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        '@id': 'https://safebuild.ca/about-us#webpage',
+        name: 'About SafeBuild Canada – Victoria BC General Contractor',
+        description: 'Learn about SafeBuild Canada, Victoria BC\'s trusted general contractor. Over a decade of excellence in renovation, construction, and property services. Licensed, insured & BBB accredited.',
+        url: 'https://safebuild.ca/about-us',
+        isPartOf: { '@id': 'https://safebuild.ca/#website' },
+        about: { '@id': 'https://safebuild.ca/#organization' },
+        breadcrumb: {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://safebuild.ca' },
+                { '@type': 'ListItem', position: 2, name: 'About Us', item: 'https://safebuild.ca/about-us' }
+            ]
+        }
+    };
+
     return (
         <>
-            <Head title="About Us – SafeBuild Canada" />
+            <SEOHead
+                title="About Us – Trusted General Contractor Victoria BC"
+                description="Learn about SafeBuild Canada – Victoria BC's trusted general contractor with over a decade of excellence. Renovation, remodeling, architectural design & property services. Licensed, insured & BBB accredited."
+                canonical="https://safebuild.ca/about-us"
+                schema={aboutSchema}
+            />
             <div className="boxed_wrapper">
                 <Navbar />
 

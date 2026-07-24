@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import React, { useEffect } from 'react';
@@ -52,9 +52,31 @@ export default function Welcome({
 		};
 	}, []);
 
+	const homepageSchema = {
+		'@context': 'https://schema.org',
+		'@type': 'WebPage',
+		'@id': 'https://safebuild.ca/#webpage',
+		name: 'SafeBuild Canada – Expert Construction & Renovation Victoria BC',
+		description: "Victoria BC's trusted general contractor. Expert renovation, remodeling, architectural design, excavation, custom carpentry & property services. Licensed, insured & BBB accredited.",
+		url: 'https://safebuild.ca',
+		isPartOf: { '@id': 'https://safebuild.ca/#website' },
+		about: { '@id': 'https://safebuild.ca/#organization' },
+		breadcrumb: {
+			'@type': 'BreadcrumbList',
+			itemListElement: [
+				{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://safebuild.ca' }
+			]
+		}
+	};
+
 	return (
 		<>
-			<Head title="Welcome to SafeBuild Canada" />
+			<SEOHead
+				title="Expert Construction & Renovation Victoria BC"
+				description="SafeBuild Canada – Victoria BC's #1 trusted general contractor. Renovation, remodeling, architectural design, excavation, custom carpentry & property services. Licensed, insured & BBB accredited. Call +1 (250) 886-0059."
+				canonical="https://safebuild.ca"
+				schema={homepageSchema}
+			/>
 			<div className="boxed_wrapper">
 				<Navbar />
 

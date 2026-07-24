@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
+import { Link } from '@inertiajs/react';
 import { getAssetUrl } from '@/lib/utils';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
@@ -14,7 +15,11 @@ export default function OurProjectsPage({ projects = [], categories = [] }) {
 
     return (
         <>
-            <Head title="Our Projects – SafeBuild Canada" />
+            <SEOHead
+                title="Our Projects – Construction & Renovation Portfolio Victoria BC"
+                description="Browse SafeBuild Canada's project portfolio in Victoria BC. Residential & commercial renovations, custom builds, architectural projects and more. See our quality work."
+                canonical="https://safebuild.ca/our-projects"
+            />
             <div className="boxed_wrapper">
                 <Navbar />
 

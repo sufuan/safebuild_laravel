@@ -1,4 +1,5 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
 import { getAssetUrl } from '@/lib/utils';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
@@ -16,8 +17,26 @@ const servicesList = [
 
 export default function CustomCarpentry() {
     const { siteSettings } = usePage().props;
+
+    const serviceSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        '@id': 'https://safebuild.ca/custom-carpentry#service',
+        name: 'Custom Carpentry & Cabinetry',
+        serviceType: 'Carpentry & Millwork',
+        provider: { '@id': 'https://safebuild.ca/#organization' },
+        areaServed: { '@type': 'AdministrativeArea', name: 'Greater Victoria, BC' },
+        description: 'Bespoke custom carpentry and custom cabinetry services in Victoria BC. Architectural millwork, finish carpentry, custom shelving & built-ins.'
+    };
+
     return (
         <>
+            <SEOHead
+                title="Custom Carpentry & Cabinetry Victoria BC"
+                description="High-end custom carpentry & cabinetry services in Victoria BC. SafeBuild Canada crafts bespoke woodwork, millwork, built-ins, and architectural finishes."
+                canonical="https://safebuild.ca/custom-carpentry"
+                schema={serviceSchema}
+            />
             <Navbar />
 
             {/* Page Hero */}

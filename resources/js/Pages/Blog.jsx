@@ -1,4 +1,5 @@
-import { Head, Link } from '@inertiajs/react';
+import SEOHead from '@/Components/SEOHead';
+import { Link } from '@inertiajs/react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import React from 'react';
@@ -16,7 +17,11 @@ export default function Blog({ posts }) {
 
     return (
         <>
-            <Head title="Blog – SafeBuild Canada" />
+            <SEOHead
+                title="Blog & News – Construction Tips, Renovation Ideas Victoria BC"
+                description="Read SafeBuild Canada's latest construction news, renovation tips, project updates, and industry insights from our experts in Victoria BC."
+                canonical="https://safebuild.ca/blog"
+            />
             <div className="boxed_wrapper">
                 <Navbar />
 

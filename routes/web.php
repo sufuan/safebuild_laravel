@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\SitemapController;
 
 use App\Models\HeroSlide;
 use App\Models\Service;
@@ -22,6 +23,8 @@ use App\Models\Testimonial;
 use App\Models\TeamMember;
 use App\Models\BrandLogo;
 use App\Models\BlogPost;
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
