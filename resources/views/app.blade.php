@@ -5,9 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        {{-- ═══════════════════════════════════════════════════════════════
-             PRIMARY SEO META TAGS (Server-Side – Google reads these first)
-        ══════════════════════════════════════════════════════════════════ --}}
+        {{-- Primary SEO Meta Tags --}}
         <title inertia>{{ config('app.name', 'SafeBuild Canada') }}</title>
 
         <meta name="description" content="SafeBuild Canada – Victoria BC's trusted general contractor. Expert renovation, remodeling, architectural design, excavation, custom carpentry & property services. Licensed, insured & BBB accredited. Call +1 (250) 886-0059.">
@@ -20,9 +18,7 @@
         {{-- Canonical URL --}}
         <link rel="canonical" href="{{ config('app.url') }}{{ request()->getPathInfo() }}">
 
-        {{-- ═══════════════════════════════════════════════════════════════
-             OPEN GRAPH (Facebook, LinkedIn, WhatsApp previews)
-        ══════════════════════════════════════════════════════════════════ --}}
+        {{-- Open Graph --}}
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="SafeBuild Canada">
         <meta property="og:title" content="SafeBuild Canada – Expert Construction & Renovation Victoria BC">
@@ -34,50 +30,38 @@
         <meta property="og:image:alt" content="SafeBuild Canada – Construction & Renovation">
         <meta property="og:locale" content="en_CA">
 
-        {{-- ═══════════════════════════════════════════════════════════════
-             TWITTER / X CARDS
-        ══════════════════════════════════════════════════════════════════ --}}
+        {{-- Twitter Cards --}}
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="SafeBuild Canada – Expert Construction & Renovation Victoria BC">
         <meta name="twitter:description" content="Victoria BC's trusted general contractor. Renovation, remodeling, architectural design, excavation & custom carpentry. Licensed & BBB accredited.">
         <meta name="twitter:image" content="{{ config('app.url') }}/assets/og-image.jpg">
         <meta name="twitter:image:alt" content="SafeBuild Canada – Construction & Renovation">
 
-        {{-- ═══════════════════════════════════════════════════════════════
-             GEO / LOCAL SEO TAGS
-        ══════════════════════════════════════════════════════════════════ --}}
+        {{-- Geo / Local SEO --}}
         <meta name="geo.region" content="CA-BC">
         <meta name="geo.placename" content="Victoria, British Columbia, Canada">
         <meta name="geo.position" content="48.4284;-123.3656">
         <meta name="ICBM" content="48.4284, -123.3656">
 
-        {{-- ═══════════════════════════════════════════════════════════════
-             FAVICONS & APP ICONS
-        ══════════════════════════════════════════════════════════════════ --}}
+        {{-- Favicons & App Icons --}}
         <link rel="icon" type="image/png" sizes="32x32" href="/assets/safebuild favicon.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/assets/safebuild favicon.png">
         <link rel="apple-touch-icon" href="/assets/safebuild favicon.png">
         <link rel="shortcut icon" href="/assets/safebuild favicon.png">
 
-        {{-- ═══════════════════════════════════════════════════════════════
-             FONTS (preconnect first for speed, then load)
-        ══════════════════════════════════════════════════════════════════ --}}
+        {{-- Fonts --}}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        {{-- ═══════════════════════════════════════════════════════════════
-             ICONS
-        ══════════════════════════════════════════════════════════════════ --}}
+        {{-- Icons --}}
         <link rel="stylesheet" href="/assets/flaticon.css">
         <link rel="stylesheet" href="/assets/fontawesome-all.css">
 
-        {{-- ═══════════════════════════════════════════════════════════════
-             SCHEMA.ORG – LocalBusiness / HomeImprovementBusiness
-             (Google reads this server-side – critical for rich results)
-        ══════════════════════════════════════════════════════════════════ --}}
+        {{-- Schema.org LocalBusiness --}}
+        @verbatim
         <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -194,10 +178,9 @@
             ]
         }
         </script>
+        @endverbatim
 
-        {{-- ═══════════════════════════════════════════════════════════════
-             INERTIA / VITE SCRIPTS
-        ══════════════════════════════════════════════════════════════════ --}}
+        {{-- Scripts --}}
         @routes
         @viteReactRefresh
         @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
